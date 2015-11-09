@@ -1,28 +1,36 @@
 import React, {Component} from 'react';
+import AppDispatcher from '../Dispatcher'
+import DraggableAction from '../actions/DraggableAction';
+import DraggableStore from '../stores/DraggableStore'
+var EventEmitter = require('events').EventEmitter;
 
 export default class Draggable extends Component{
-   // constructor(){
-   //    this.state.dragging =  false;
-   // }
    constructor(){
       super();
-      this.clickedStyle = {
-         'backgroundColor': 'gray'
-      };
-      this.nonClickStyle = {
-         'backgroundColor': 'pink'
-      };
+      this.nonClickedStyle = {'backgroundColor': 'pink'};
+		this.finalStyle = this.nonClickedStyle;
+		this.da = new DraggableAction();
+		this.emitter = new EventEmitter();
    }
-   handleClick = (e) =>{
-      console.log('got here');
-      this.finalStyle = this.clickedStyle;
-      this.setState({clicked: true});
-   }
-   render(){
-      return (
-         <div onClick={this.handleClick} style={this.finalStyle}>
-            {this.props.children}
-         </div>
-      );
-   }
+
+	componentWillMount(){
+		this.emitter.addListener('Draggable-Is-Clicked', function(data){
+			this.finalStyle = data;
+		})
+	}
+
+	render(){
+		return (
+			<div onClick={this.handleClick.bind(null, this)} style={this.finalStyle}>
+				{this.props.children}
+			</div>
+		);
+	}
+
+	handleClick(context){
+
+		var self = context;
+		self.da.loadDrag();
+	}
+
 }

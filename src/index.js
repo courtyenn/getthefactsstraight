@@ -1,10 +1,10 @@
-// import 'babel-core/polyfill'
 import React from 'react'
 import { render } from 'react-dom'
-// import { Provider } from 'react-redux'
-import App from './App'
+// import App from './App'
+import Game from './Game'
+import Data from './presidential_candidate_game.json'
 
 render(
- <App />,
+<Game {...Data} id={1} />,
   document.getElementById('root')
 )

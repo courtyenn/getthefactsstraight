@@ -26,8 +26,9 @@ export default class List extends Component{
       let choices = this.props.choices.filter((choice) => {
          return this.props.answers.indexOf(choice.id) > -1;
       });
-      choices.forEach((choice) => {
-         this.listItems.push(<Draggable><ListItem key={choice.id} {...choice} /></Draggable>);
+      choices.forEach((choice, index) => {
+			var componentId = this.props.id + "." + index;
+         this.listItems.push(<Draggable key={componentId}><ListItem key={componentId + "." + choice.id} {...choice} /></Draggable>);
       }
       );
    }
