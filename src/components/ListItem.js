@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ListItemDecorator from './ListItemDecorator'
+import Dispatcher from 'flux';
 
 export default class ListItem extends Component {
    constructor(){

@@ -10,7 +10,7 @@ class App extends Component {
 	render() {
 		return (
 			<div style={this.bodyStyle}>
-				<Game {...Data} />
+				<Game {...Data} id={1} />
 			</div>
 		);
 	}

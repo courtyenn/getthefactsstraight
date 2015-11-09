@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Draggable from './Draggable'
 import ListItem from './ListItem'
 
 export default class List extends Component{
@@ -26,7 +27,7 @@ export default class List extends Component{
          return this.props.answers.indexOf(choice.id) > -1;
       });
       choices.forEach((choice) => {
-         this.listItems.push(<ListItem key={choice.id} {...choice} />);
+         this.listItems.push(<Draggable><ListItem key={choice.id} {...choice} /></Draggable>);
       }
       );
    }

@@ -10,16 +10,13 @@ export default class Game extends Component{
       return(
          <div className="Game">
             <h1>{this.props.title}</h1>
-            {this.createColumns()}
+            {this.renderColumns()}
          </div>
       );
    }
-   componentWillMount(){
-
-   }
-   createColumns(){
+   renderColumns(){
       this.props.columns.forEach((column, index) =>{
-         this.columns.push(<List key={index} {...column} choices={this.props.choices} />);
+         this.columns.push(<List key={this.props.key +"."+ index} choices={this.props.choices} {...column} />);
       });
       return this.columns;
    }

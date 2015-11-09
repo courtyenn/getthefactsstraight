@@ -1,3 +1,4 @@
+var path = require('path');
 module.exports = {
     entry: "./src/index",
     output: {
@@ -9,7 +10,8 @@ module.exports = {
             {
                test: /\.js$/,
                exclude: /node_modules/,
-               loaders: ["babel-loader"]
+               loaders: ["babel"],
+					include: path.join(__dirname, 'src')
             },
             {
                test: /\.json$/,
