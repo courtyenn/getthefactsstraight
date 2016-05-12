@@ -1,4 +1,4 @@
-var CuteData = function(){
+module.exports = {
   init: function(){
     localStorage.clear();
     localStorage.setItem('game', JSON.stringify({
@@ -36,4 +36,4 @@ var CuteData = function(){
       ]
     }));
   }
-}
+};

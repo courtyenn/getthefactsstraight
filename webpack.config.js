@@ -1,7 +1,7 @@
 var path = require('path');
 module.exports = {
   entry: {
-    "./dist/index": "./src/index.es6"
+    "./dist/index": "./src/index"
   },
   module: {
     debug: true,
@@ -10,10 +10,11 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel",
-        include: [
-          path.resolve(__dirname, 'src')
-        ]
+        loader: "babel-loader",
+        include: path.resolve(__dirname, 'src'),
+        query: {
+          presets: ['react', 'es2015']
+        }
       }
     ]
   },

@@ -1,6 +1,7 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var App = require('./app');
 var CuteData = require('./cuteData');
 
 CuteData.init();
-React.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));
