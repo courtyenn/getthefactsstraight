@@ -1,17 +1,15 @@
-var React = require("react");
-var ReactDom = require('react-dom');
-// var DropTarget = require("react-dragndrop").DropTarget;
+import React, { Component } from 'react';
+import ReactDom from 'react-dom';
+import { DropTarget } from 'react-dragndrop';
 
-var Column = React.createClass({
-  componentDidMount: function(){
-  },
-  getDefaultProps: function(){
+export default class Column extends Component {
+  getDefaultProps(){
     return {
       title: "Default Column Name",
       correctId: "any"
     }
-  },
-  render: function(){
+  }
+  render(){
     return (
       <div>
         <DropTarget>
@@ -23,4 +21,4 @@ var Column = React.createClass({
       </div>
     );
   }
-});
+}

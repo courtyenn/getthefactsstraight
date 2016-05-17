@@ -1,19 +1,19 @@
-var React = require("react");
-var Draggable = require("react-dragndrop").Draggable;
+import React, { Component } from 'react';
+import { Draggable } from 'react-dragndrop';
 
-var Choice = React.createClass({
-  getDefaultProps: function(){
+export default class Choice extends Component {
+  getDefaultProps(){
     return {
       title: "default title",
       correctId: "any"
     }
-  },
-  render: function(){
+  }
+
+  render(){
     return (
-      // <Draggable>
-      //   <h2>{this.props.title}</h2>
-      // </Draggable>
-      <li>hi</li>
+      <Draggable manager={this.props.manager}>
+        <h2>{this.props.title}</h2>
+      </Draggable>
     );
   }
-});
+}

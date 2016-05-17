@@ -3,9 +3,13 @@ module.exports = {
   entry: {
     "./dist/index": "./src/index"
   },
+  output: {
+    filename: '[name].js',
+    targetLibrary: 'umd'
+  },
+  debug: true,
+  devtool: "source-map",
   module: {
-    debug: true,
-    devtool: "source-map",
     loaders: [
       {
         test: /\.js$/,
@@ -17,8 +21,5 @@ module.exports = {
         }
       }
     ]
-  },
-  output: {
-    filename: '[name].js',
   }
 };

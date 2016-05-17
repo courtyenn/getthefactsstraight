@@ -1,14 +1,17 @@
-var React = require('react');
-var Choice = require('./components/Choice');
-var Column = require('./components/Column');
-// var DragDropManager = require('react-dragndrop').DragDropManager;
+import React from 'react';
+import { DragDropManager } from 'react-dragndrop';
+import Choice from './components/Choice';
+import Column from './components/Column';
 
-var App = React.createClass({
-  componentWillMount: function(){
+const dragDropManager = new DragDropManager();
+
+export default class App extends Component {
+  componentWillMount(){
     this.columns = JSON.parse(localStorage.getItem('game')).columns;
     this.choices = JSON.parse(localStorage.getItem('game')).choices;
-  },
-  render: function(){
+  }
+
+  render(){
     var columns = this.renderColumns();
     var choices = this.renderChoices();
     return (
@@ -17,21 +20,23 @@ var App = React.createClass({
         {choices}
       </div>
     )
-  },
-  renderColumns: function(){
+  }
+
+  renderColumns(){
     var columns = this.columns.map(function(column, index){
       return (
-        <Column {...column} key={index + "-column"} />
+        <Column {...column} manager={dragDropManager} key={index + "-column"} />
       );
     });
     return columns;
-  },
-  renderChoices: function(){
+  }
+
+  renderChoices(){
     var choices = this.choices.map(function(choice, index){
       return (
-        <Choice {...choice} key={index + "-choice"} />
+        <Choice {...choice} manager={dragDropManager} key={index + "-choice"} />
       );
     });
     return choices;
   }
-});
+}
