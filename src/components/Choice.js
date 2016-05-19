@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import { Draggable } from 'react-dragndrop';
 
 export default class Choice extends Component {
-  getDefaultProps(){
-    return {
-      title: "default title",
-      correctId: "any"
-    }
-  }
 
   render(){
     return (

@@ -12,7 +12,7 @@ export default class Column extends Component {
   render(){
     return (
       <div>
-        <DropTarget>
+        <DropTarget manager={this.props.manager}>
           <h2>{this.props.title}</h2>
           <ul>
             {this.props.children}

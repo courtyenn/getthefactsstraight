@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { DragDropManager } from 'react-dragndrop';
 import Choice from './components/Choice';
 import Column from './components/Column';
