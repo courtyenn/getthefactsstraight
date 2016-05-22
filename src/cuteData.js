@@ -4,7 +4,7 @@ module.exports = {
     localStorage.setItem('game', JSON.stringify({
       columns: [
         {
-          tite: "Cute",
+          title: "Cute",
           id: "cuteness"
         },
         {

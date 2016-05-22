@@ -1,11 +1,16 @@
-var DraggableStyle = {
-	"Normal": {
-		"backgroundColor": "gray",
-		"width": "300px",
+var ChoiceStyle = {
+	"Base": {
+		"display": "inline-block",
+		"backgroundColor": "pink",
+		"width": "100px",
 		"height":"60px",
 		"textAlign": "center",
 		"fontFamily": "sans-serif",
-		"cursor": "-webkit-grab"
+		"cursor": "-webkit-grab",
+		"fontSize": "15px",
+		"width": "100%",
+		"margin": "0 0 15px 0",
+		zIndex: 2
 	},
 	"Clicking": {
 		"backgroundColor":"pink",
@@ -19,4 +24,4 @@ var DraggableStyle = {
 	}
 };
 
-module.exports = DraggableStyle;
+module.exports = ChoiceStyle;
