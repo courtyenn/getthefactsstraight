@@ -19,7 +19,8 @@
   "dependencies": {
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
-    "react-dragndrop": "^1.0.10"
+    "react-dragndrop": "^1.0.10",
+    "reflux": "^0.4.1"
   },
   "devDependencies": {
     "babel": "^6.5.2",

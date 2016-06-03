@@ -5,33 +5,33 @@ module.exports = {
       columns: [
         {
           title: "Cute",
-          id: "cuteness"
+          id: "1"
         },
         {
           title: "Edible",
-          id: "yummy"
+          id: "2"
         },
         {
-          title: "Admirable",
-          id: "taco"
+          title: "Horrid",
+          id: "3"
         }
       ],
       choices: [
         {
           title: "Tacos",
-          correctId: "yummy"
+          correctId: "2"
         },
         {
           title: "Kitties",
-          correctId: "cuteness"
+          correctId: "1"
         },
         {
-          title: "APotato",
-          correctId: "taco"
+          title: "Smelly socks",
+          correctId: "3"
         },
         {
           title: "Ferrets",
-          correctId: "cuteness"
+          correctId: "1"
         }
       ]
     }));
