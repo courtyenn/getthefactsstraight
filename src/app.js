@@ -1,16 +1,13 @@
+import React from 'react';
+import ReactDom from 'react-dom';
 import Board from './components/Board';
 
-export default App = React.createClass({
-  componentWillMount(){
-
-  }
-
-  render(){
-
+let App =  React.createClass({
+  render: function(){
     return (
-      <div className="root">
-        <Board {...this.props.game} />
-      </div>
+      <Board {...this.props.game} />
     )
   }
 });
+
+export default App;

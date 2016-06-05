@@ -1,5 +1,8 @@
 import Reflux from 'reflux';
 
-export default Actions = Reflux.createActions([
-  "reset"
+let Actions = Reflux.createActions([
+  "reset",
+  "choiceDropped"
 ]);
+
+export default Actions;

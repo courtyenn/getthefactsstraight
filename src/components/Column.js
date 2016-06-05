@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import { DropTarget } from 'react-dragndrop';
+import Actions from '../actions';
 
-export default class Column extends Component {
-  render(){
+let Column = React.createClass({
+  render: function(){
     return (
       <DropTarget manager={this.props.manager} style={this.props.style}>
         <h2>{this.props.title}</h2>
@@ -12,5 +13,10 @@ export default class Column extends Component {
         </ul>
       </DropTarget>
     );
+  },
+  handleDroppedChoice: function(){
+    Actions.choiceDropped();
   }
-}
+});
+
+export default Column;

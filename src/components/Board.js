@@ -1,19 +1,29 @@
 import React, { Component } from 'react';
+import Reflux from 'reflux';
 import { DragDropManager } from 'react-dragndrop';
 import Choice from './Choice';
 import Column from './Column';
-import ChoiceStyle from './../styles/ChoiceStyle';
 import ColumnStyle from './../styles/ColumnStyle';
 import Actions from '../actions';
+import appStore from '../AppStore';
+import boardStore from '../stores/BoardStore';
 
 const dragDropManager = new DragDropManager();
 
-const Board = React.createClass({
-  render(){
+let Board = React.createClass({
+  mixins: [Reflux.connect(boardStore, "boardState")],
+  componentDidMount: function(){
+    this.listenTo(boardStore, this.handleChoiceDropped);
+    // this.setState({
+    //   columns: columns,
+    //   choices: choices
+    // });
+  },
+  render: function(){
     var columns = this.renderColumns();
     var choices = this.renderChoices();
     return (
-      <div>
+      <div className="root">
         <div style={ColumnStyle.Test}>
           {choices}
           <button onClick={this.handleReset}>Reset</button>
@@ -22,25 +32,36 @@ const Board = React.createClass({
       </div>
     )
   },
-  renderColumns(){
-    var columns = this.props.columns.map(function(column, index){
+  renderColumns: function(){
+    var columns = this.state.boardState.columns.map(function(column, index){
+      var listItems = column.list.map((item) => {
+        return (<li>{item}</li>);
+      });
+      // var handleDrop = (draggable) => {
+      //   return this.handleDroppedDraggable(draggable, index);
+      // };
       return (
-        <Column {...column} manager={dragDropManager} key={index + "-column"} style={ColumnStyle.Base}/>
+        <Column {...column} manager={dragDropManager} key={index + "-column"} style={ColumnStyle.Base}>
+          {listItems}
+        </Column>
       );
     });
     return columns;
   },
-  renderChoices(){
-    var choices = this.props.choices.map(function(choice, index){
+  renderChoices: function(){
+    var choices = this.state.boardState.choices.map(function(choice, index){
       return (
-        <Choice {...choice} manager={dragDropManager} key={index + "-choice"} style={ChoiceStyle.Base}/>
+        <Choice {...choice} manager={dragDropManager} key={index + "-choice"} id={index+"-choice"} />
       );
     });
     return choices;
   },
-  handleReset(){
-    actions.reset();
+  handleReset: function(){
+    Actions.reset();
+  },
+  handleDroppedDraggable: function(choice, index){
+    Actions.choiceDropped(choice, index);
   }
 });
 
-module.exports = Board;
+export default Board;

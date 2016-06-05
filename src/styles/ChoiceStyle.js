@@ -21,7 +21,20 @@ var ChoiceStyle = {
 		"transform": "rotate(-2deg)",
 		"cursor": "-webkit-grabbing",
 		"position": "absolute"
-	}
+	},
+  "Dropped": {
+    "display": "inline-block",
+    "backgroundColor": "seagreen",
+    "width": "100px",
+    "height":"60px",
+    "textAlign": "center",
+    "fontFamily": "sans-serif",
+    "cursor": "-webkit-grab",
+    "fontSize": "13px",
+    "width": "100%",
+    "margin": "0 0 15px 0",
+    zIndex: 2
+  }
 };
 
 module.exports = ChoiceStyle;

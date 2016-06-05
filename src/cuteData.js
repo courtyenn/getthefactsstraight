@@ -5,15 +5,18 @@ module.exports = {
       columns: [
         {
           title: "Cute",
-          id: "1"
+          id: "1",
+          list: []
         },
         {
           title: "Edible",
-          id: "2"
+          id: "2",
+          list: []
         },
         {
           title: "Horrid",
-          id: "3"
+          id: "3",
+          list: []
         }
       ],
       choices: [

@@ -1,14 +1,21 @@
 import Reflux from 'reflux';
+import Actions from '../actions';
+import AppStore from '../AppStore';
 
-const BoardStore = (appStore) => {
-
-  let store = Reflux.createStore({
-    init: () => {
-      Reflux.listenTo(appStore, )
-    },
-    onGameOver: = () => {
-      this.trigger("gameOver");
+var BoardStore = Reflux.createStore({
+  getInitialState: function(){
+    this.boardState = AppStore.getAppState().game;
+    Reflux.listenTo(Actions.choiceDropped, this.onChoiceDropped);
+    return this.boardState;
+  },
+  onGameOver: function() {
+    this.trigger("gameOver");
+  },
+  onChoiceDropped: function(choice, index){
+    if(this.boardState){
+      this.boardState.column[index].list.push(choice);
     }
-  });
-  return store;
-};
+  }
+});
+
+module.exports = BoardStore;
