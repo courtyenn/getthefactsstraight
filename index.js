@@ -58,7 +58,7 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _cuteData = __webpack_require__(196);
+	var _cuteData = __webpack_require__(197);
 	
 	var _cuteData2 = _interopRequireDefault(_cuteData);
 	
@@ -66,7 +66,7 @@
 	
 	var _AppStore2 = _interopRequireDefault(_AppStore);
 	
-	var _BoardStore = __webpack_require__(197);
+	var _BoardStore = __webpack_require__(196);
 	
 	var _BoardStore2 = _interopRequireDefault(_BoardStore);
 	
@@ -20423,7 +20423,7 @@
 	
 	var _AppStore2 = _interopRequireDefault(_AppStore);
 	
-	var _BoardStore = __webpack_require__(197);
+	var _BoardStore = __webpack_require__(196);
 	
 	var _BoardStore2 = _interopRequireDefault(_BoardStore);
 	
@@ -20436,11 +20436,17 @@
 	
 	  mixins: [_reflux2.default.connect(_BoardStore2.default, "boardState")],
 	  componentDidMount: function componentDidMount() {
-	    this.listenTo(_BoardStore2.default, this.handleChoiceDropped);
+	    this.listenTo(_BoardStore2.default, this.handleSetBoard);
 	    // this.setState({
 	    //   columns: columns,
 	    //   choices: choices
 	    // });
+	  },
+	  handleSetBoard: function handleSetBoard(board) {
+	    this.setState({
+	      columns: board.columns,
+	      choices: board.choices
+	    });
 	  },
 	  render: function render() {
 	    var columns = this.renderColumns();
@@ -20462,22 +20468,17 @@
 	    );
 	  },
 	  renderColumns: function renderColumns() {
+	    var that = this;
 	    var columns = this.state.boardState.columns.map(function (column, index) {
-	      var listItems = column.list.map(function (item) {
-	        return _react2.default.createElement(
-	          'li',
-	          null,
-	          item
-	        );
-	      });
-	      // var handleDrop = (draggable) => {
-	      //   return this.handleDroppedDraggable(draggable, index);
-	      // };
-	      return _react2.default.createElement(
-	        _Column2.default,
-	        _extends({}, column, { manager: dragDropManager, key: index + "-column", style: _ColumnStyle2.default.Base }),
-	        listItems
-	      );
+	
+	      var handleDrop = function handleDrop(drop, drag) {
+	        return that.handleDroppedDraggable(drop, drag, index);
+	      };
+	      return _react2.default.createElement(_Column2.default, _extends({}, column, {
+	        manager: dragDropManager,
+	        handleDrop: handleDrop,
+	        list: column.list,
+	        key: index + "-column", style: _ColumnStyle2.default.Base }));
 	    });
 	    return columns;
 	  },
@@ -20490,8 +20491,8 @@
 	  handleReset: function handleReset() {
 	    _actions2.default.reset();
 	  },
-	  handleDroppedDraggable: function handleDroppedDraggable(choice, index) {
-	    _actions2.default.choiceDropped(choice, index);
+	  handleDroppedDraggable: function handleDroppedDraggable(dropTarget, draggable, index) {
+	    _actions2.default.choiceDropped(dropTarget, draggable, index);
 	  }
 	});
 	
@@ -43213,7 +43214,7 @@
 		        if (draggable.props.droppedStyle) {
 		          newStyle = Object.assign({}, draggable.props.droppedStyle, draggable.props.children.style);
 		        }
-		        var content = _react2.default.createElement('div', { key: draggable.id + '-dropped-draggable', style: newStyle }, draggable.props.children);
+		        var content = draggable.props.children;
 		        if (draggable.props.setContentOnDrop) {
 		          dropTargetBeingHovered.setContent(content);
 		        } else {
@@ -43586,41 +43587,11 @@
 		      var type = (0, _typeof3.default)(this.props.wrapper);
 		      var content = this.content.length > 0 ? this.content : '';
 		
-		      if (type === "string") {
-		        if (this.props.children) {
-		          var allTheProps = Object.assign({}, this.props, this.props.children.props, { style: style, ref: this.setInitialDimensions });
-		          var innards = _react2.default.createElement(this.props.wrapper, allTheProps, content);
-		          dropTargetElement = innards;
-		        } else {
-		          var innards = _react2.default.createElement(this.props.wrapper, { style: style, ref: this.setInitialDimensions }, content);
-		          dropTargetElement = innards;
-		        }
-		      } else if (type === "object") {
-		        wrapper = _react2.default.createElement(this.props.wrapper.type, this.props.wrapper.props, content);
-		        dropTargetElement = _react2.default.createElement(
-		          'div',
-		          { style: style, ref: this.setInitialDimensions },
-		          wrapper
-		        );
-		      } else {
-		        var childToSetContentOn = null;
-		        var allTheChildren = [];
-		        this.props.children.forEach(function (child, index) {
-		          var keyProps = Object.assign({}, child.props, { key: index + "-droptarget-module" });
-		          if (child.props.children === '' || typeof child.props.children === 'undefined' || child.props.children.length === 0) {
-		            allTheChildren.push(_react2.default.createElement(child.type, keyProps, content));
-		          } else {
-		            allTheChildren.push(_react2.default.createElement(child.type, keyProps));
-		          }
-		        });
-		        dropTargetElement = _react2.default.createElement(
-		          'div',
-		          { style: style, ref: this.setInitialDimensions },
-		          allTheChildren
-		        );
-		      }
-		
-		      return dropTargetElement;
+		      return _react2.default.createElement(
+		        'div',
+		        { style: style, ref: this.setInitialDimensions },
+		        this.props.children
+		      );
 		    }
 		  }, {
 		    key: 'setContent',
@@ -43645,7 +43616,7 @@
 		    key: 'droppedDraggable',
 		    value: function droppedDraggable(draggable) {
 		      if (this.props.handleDroppedDraggable) {
-		        this.props.handleDroppedDraggable(this, draggable);
+		        this.props.handleDroppedDraggable(this, draggable.props.children);
 		      }
 		    }
 		  }]);
@@ -43735,15 +43706,29 @@
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
+	var _ChoiceStyle = __webpack_require__(193);
+	
+	var _ChoiceStyle2 = _interopRequireDefault(_ChoiceStyle);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Column = _react2.default.createClass({
 	  displayName: 'Column',
 	
 	  render: function render() {
+	    var listItems = this.props.list.map(function (item, index) {
+	      return _react2.default.createElement(
+	        'li',
+	        { key: "column-" + index, style: _ChoiceStyle2.default.Dropped },
+	        item
+	      );
+	    });
 	    return _react2.default.createElement(
 	      _reactDragndrop.DropTarget,
-	      { manager: this.props.manager, style: this.props.style },
+	      {
+	        manager: this.props.manager,
+	        handleDroppedDraggable: this.props.handleDrop,
+	        style: this.props.style },
 	      _react2.default.createElement(
 	        'h2',
 	        null,
@@ -43752,12 +43737,9 @@
 	      _react2.default.createElement(
 	        'ul',
 	        null,
-	        this.props.children
+	        listItems
 	      )
 	    );
-	  },
-	  handleDroppedChoice: function handleDroppedChoice() {
-	    _actions2.default.choiceDropped();
 	  }
 	});
 	
@@ -43880,8 +43862,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var AppStore = _reflux2.default.createStore({
+	  listenables: [_actions2.default],
 	  init: function init() {
-	    _reflux2.default.listenTo(_actions2.default.reset, this.onReset);
+	    // Reflux.listenTo('reset', this.onReset);
 	    this.appState = this.getInitialState();
 	  },
 	  onReset: function onReset() {
@@ -43907,6 +43890,54 @@
 
 /***/ },
 /* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _reflux = __webpack_require__(170);
+	
+	var _reflux2 = _interopRequireDefault(_reflux);
+	
+	var _actions = __webpack_require__(192);
+	
+	var _actions2 = _interopRequireDefault(_actions);
+	
+	var _AppStore = __webpack_require__(195);
+	
+	var _AppStore2 = _interopRequireDefault(_AppStore);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var BoardStore = _reflux2.default.createStore({
+	  listenables: [_actions2.default],
+	  init: function init() {
+	    this.listenTo(_AppStore2.default, this.setBoard);
+	  },
+	  setBoard: function setBoard(appState) {
+	    this.boardState = appState.game;
+	    this.trigger(this.boardState);
+	  },
+	  getInitialState: function getInitialState() {
+	    this.boardState = _AppStore2.default.getAppState().game;
+	    // Reflux.listenTo(Actions.choiceDropped, this.onChoiceDropped);
+	    return this.boardState;
+	  },
+	  onGameOver: function onGameOver() {
+	    this.trigger("gameOver");
+	  },
+	  onChoiceDropped: function onChoiceDropped(drop, drag, index) {
+	    if (this.boardState) {
+	      this.boardState.columns[index].list.push(drag.props.children);
+	      // this.boardState.choices[]
+	      this.trigger(this.boardState);
+	    }
+	  }
+	});
+	
+	module.exports = BoardStore;
+
+/***/ },
+/* 197 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -43944,44 +43975,6 @@
 	    }));
 	  }
 	};
-
-/***/ },
-/* 197 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _reflux = __webpack_require__(170);
-	
-	var _reflux2 = _interopRequireDefault(_reflux);
-	
-	var _actions = __webpack_require__(192);
-	
-	var _actions2 = _interopRequireDefault(_actions);
-	
-	var _AppStore = __webpack_require__(195);
-	
-	var _AppStore2 = _interopRequireDefault(_AppStore);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var BoardStore = _reflux2.default.createStore({
-	  getInitialState: function getInitialState() {
-	    this.boardState = _AppStore2.default.getAppState().game;
-	    _reflux2.default.listenTo(_actions2.default.choiceDropped, this.onChoiceDropped);
-	    return this.boardState;
-	  },
-	  onGameOver: function onGameOver() {
-	    this.trigger("gameOver");
-	  },
-	  onChoiceDropped: function onChoiceDropped(choice, index) {
-	    if (this.boardState) {
-	      this.boardState.column[index].list.push(choice);
-	    }
-	  }
-	});
-	
-	module.exports = BoardStore;
 
 /***/ }
 /******/ ]);

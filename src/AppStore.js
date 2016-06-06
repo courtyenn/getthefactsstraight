@@ -2,8 +2,9 @@ import Reflux from 'reflux';
 import Actions from './actions';
 
 const AppStore = Reflux.createStore({
+  listenables: [Actions],
   init: function(){
-    Reflux.listenTo(Actions.reset, this.onReset);
+    // Reflux.listenTo('reset', this.onReset);
     this.appState = this.getInitialState();
   },
   onReset: function(){

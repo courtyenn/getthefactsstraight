@@ -13,11 +13,17 @@ const dragDropManager = new DragDropManager();
 let Board = React.createClass({
   mixins: [Reflux.connect(boardStore, "boardState")],
   componentDidMount: function(){
-    this.listenTo(boardStore, this.handleChoiceDropped);
+    this.listenTo(boardStore, this.handleSetBoard);
     // this.setState({
     //   columns: columns,
     //   choices: choices
     // });
+  },
+  handleSetBoard: function(board){
+    this.setState({
+      columns: board.columns,
+      choices: board.choices
+    });
   },
   render: function(){
     var columns = this.renderColumns();
@@ -33,17 +39,18 @@ let Board = React.createClass({
     )
   },
   renderColumns: function(){
+    var that = this;
     var columns = this.state.boardState.columns.map(function(column, index){
-      var listItems = column.list.map((item) => {
-        return (<li>{item}</li>);
-      });
-      // var handleDrop = (draggable) => {
-      //   return this.handleDroppedDraggable(draggable, index);
-      // };
+
+      let handleDrop = function(drop, drag){
+        return that.handleDroppedDraggable(drop, drag, index);
+      };
       return (
-        <Column {...column} manager={dragDropManager} key={index + "-column"} style={ColumnStyle.Base}>
-          {listItems}
-        </Column>
+        <Column {...column}
+        manager={dragDropManager}
+        handleDrop={handleDrop}
+        list={column.list}
+        key={index + "-column"} style={ColumnStyle.Base} />
       );
     });
     return columns;
@@ -59,8 +66,8 @@ let Board = React.createClass({
   handleReset: function(){
     Actions.reset();
   },
-  handleDroppedDraggable: function(choice, index){
-    Actions.choiceDropped(choice, index);
+  handleDroppedDraggable: function(dropTarget, draggable, index){
+    Actions.choiceDropped(dropTarget, draggable, index);
   }
 });
 
