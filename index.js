@@ -1129,7 +1129,7 @@
 	var warning = emptyFunction;
 	
 	if (process.env.NODE_ENV !== 'production') {
-	  warning = function warning(condition, format) {
+	  warning = function (condition, format) {
 	    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
 	      args[_key - 2] = arguments[_key];
 	    }
@@ -1177,7 +1177,6 @@
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * 
 	 */
 	
 	function makeEmptyFunction(arg) {
@@ -1191,7 +1190,7 @@
 	 * primarily useful idiomatically for overridable function endpoints which
 	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
 	 */
-	var emptyFunction = function emptyFunction() {};
+	function emptyFunction() {}
 	
 	emptyFunction.thatReturns = makeEmptyFunction;
 	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
@@ -2080,11 +2079,11 @@
 	 * because of Facebook's testing infrastructure.
 	 */
 	if (performance.now) {
-	  performanceNow = function performanceNow() {
+	  performanceNow = function () {
 	    return performance.now();
 	  };
 	} else {
-	  performanceNow = function performanceNow() {
+	  performanceNow = function () {
 	    return Date.now();
 	  };
 	}
@@ -3172,7 +3171,7 @@
 	 * @param {object} obj
 	 * @return {object}
 	 */
-	var keyMirror = function keyMirror(obj) {
+	var keyMirror = function (obj) {
 	  var ret = {};
 	  var key;
 	  !(obj instanceof Object && !Array.isArray(obj)) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'keyMirror(...): Argument must be an object.') : invariant(false) : void 0;
@@ -3244,7 +3243,7 @@
 	 * 'xa12' in that case. Resolve keys you want to use once at startup time, then
 	 * reuse those resolutions.
 	 */
-	var keyOf = function keyOf(oneKeyObj) {
+	var keyOf = function (oneKeyObj) {
 	  var key;
 	  for (key in oneKeyObj) {
 	    if (!oneKeyObj.hasOwnProperty(key)) {
@@ -11734,7 +11733,6 @@
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * 
 	 * @typechecks static-only
 	 */
 	
@@ -11742,6 +11740,9 @@
 	
 	/**
 	 * Memoizes the return value of a function that accepts one string argument.
+	 *
+	 * @param {function} callback
+	 * @return {function}
 	 */
 	
 	function memoizeStringOnly(callback) {
@@ -16986,18 +16987,18 @@
 	   * @param {function} callback Callback function.
 	   * @return {object} Object with a `remove` method.
 	   */
-	  listen: function listen(target, eventType, callback) {
+	  listen: function (target, eventType, callback) {
 	    if (target.addEventListener) {
 	      target.addEventListener(eventType, callback, false);
 	      return {
-	        remove: function remove() {
+	        remove: function () {
 	          target.removeEventListener(eventType, callback, false);
 	        }
 	      };
 	    } else if (target.attachEvent) {
 	      target.attachEvent('on' + eventType, callback);
 	      return {
-	        remove: function remove() {
+	        remove: function () {
 	          target.detachEvent('on' + eventType, callback);
 	        }
 	      };
@@ -17012,11 +17013,11 @@
 	   * @param {function} callback Callback function.
 	   * @return {object} Object with a `remove` method.
 	   */
-	  capture: function capture(target, eventType, callback) {
+	  capture: function (target, eventType, callback) {
 	    if (target.addEventListener) {
 	      target.addEventListener(eventType, callback, true);
 	      return {
-	        remove: function remove() {
+	        remove: function () {
 	          target.removeEventListener(eventType, callback, true);
 	        }
 	      };
@@ -17030,7 +17031,7 @@
 	    }
 	  },
 	
-	  registerDefault: function registerDefault() {}
+	  registerDefault: function () {}
 	};
 	
 	module.exports = EventListener;
@@ -17726,7 +17727,7 @@
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * 
+	 * @typechecks
 	 */
 	
 	var isTextNode = __webpack_require__(144);
@@ -17735,6 +17736,10 @@
 	
 	/**
 	 * Checks if a given DOM node contains or is another DOM node.
+	 *
+	 * @param {?DOMNode} outerNode Outer DOM node.
+	 * @param {?DOMNode} innerNode Inner DOM node.
+	 * @return {boolean} True if `outerNode` contains or is `innerNode`.
 	 */
 	function containsNode(outerNode, innerNode) {
 	  if (!outerNode || !innerNode) {
@@ -17745,7 +17750,7 @@
 	    return false;
 	  } else if (isTextNode(innerNode)) {
 	    return containsNode(outerNode, innerNode.parentNode);
-	  } else if ('contains' in outerNode) {
+	  } else if (outerNode.contains) {
 	    return outerNode.contains(innerNode);
 	  } else if (outerNode.compareDocumentPosition) {
 	    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
@@ -20407,7 +20412,7 @@
 	
 	var _Choice2 = _interopRequireDefault(_Choice);
 	
-	var _Column = __webpack_require__(191);
+	var _Column = __webpack_require__(192);
 	
 	var _Column2 = _interopRequireDefault(_Column);
 	
@@ -20415,7 +20420,7 @@
 	
 	var _ColumnStyle2 = _interopRequireDefault(_ColumnStyle);
 	
-	var _actions = __webpack_require__(192);
+	var _actions = __webpack_require__(193);
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
@@ -20437,15 +20442,13 @@
 	  mixins: [_reflux2.default.connect(_BoardStore2.default, "boardState")],
 	  componentDidMount: function componentDidMount() {
 	    this.listenTo(_BoardStore2.default, this.handleSetBoard);
-	    // this.setState({
-	    //   columns: columns,
-	    //   choices: choices
-	    // });
 	  },
 	  handleSetBoard: function handleSetBoard(board) {
 	    this.setState({
-	      columns: board.columns,
-	      choices: board.choices
+	      boardState: {
+	        columns: board.columns,
+	        choices: board.choices
+	      }
 	    });
 	  },
 	  render: function render() {
@@ -20484,7 +20487,7 @@
 	  },
 	  renderChoices: function renderChoices() {
 	    var choices = this.state.boardState.choices.map(function (choice, index) {
-	      return _react2.default.createElement(_Choice2.default, _extends({}, choice, { manager: dragDropManager, key: index + "-choice", id: index + "-choice" }));
+	      return _react2.default.createElement(_Choice2.default, _extends({ index: index }, choice, { manager: dragDropManager, key: index + "-choice", id: index + "-choice" }));
 	    });
 	    return choices;
 	  },
@@ -43214,12 +43217,6 @@
 		        if (draggable.props.droppedStyle) {
 		          newStyle = Object.assign({}, draggable.props.droppedStyle, draggable.props.children.style);
 		        }
-		        var content = draggable.props.children;
-		        if (draggable.props.setContentOnDrop) {
-		          dropTargetBeingHovered.setContent(content);
-		        } else {
-		          dropTargetBeingHovered.appendToContent(content);
-		        }
 		        dropTargetBeingHovered.droppedDraggable(draggable);
 		        draggable.hideDraggable();
 		      }
@@ -43298,8 +43295,8 @@
 		
 		    _this.hoveringStyle = {};
 		    _this.domDraggableElement;
-		    var html = document.getElementsByTagName('html')[0];
-		    html.addEventListener('mousemove', _this.setMousePosition.bind(_this), false);
+		    _this.html = document.getElementsByTagName('html')[0];
+		    _this.html.addEventListener('mousemove', _this.setMousePosition.bind(_this), false);
 		
 		    _this.currentPosition = { x: 0, y: 0 };
 		    _this.clicked = false;
@@ -43355,7 +43352,7 @@
 		        { ref: this.setInitialDimensions,
 		          style: styleOutput,
 		          className: classOutput,
-		          key: 'draggable-' + Math.random(),
+		          key: this.props.id,
 		          onMouseDown: this.handleMouseDown,
 		          onMouseUp: this.handleMouseUp
 		        },
@@ -43369,6 +43366,7 @@
 		      var styleOutput = '';
 		      var clickedStyle = '';
 		      var draggingStyle = '';
+		      var baseStyle = this.state ? this.state.baseStyle : '';
 		
 		      if (this.dragging && this.props.draggingStyle) {
 		        draggingStyle = this.props.draggingStyle;
@@ -43377,9 +43375,9 @@
 		        clickedStyle = this.props.clickedStyle;
 		      }
 		      if (this.props.style) {
-		        styleOutput = Object.assign({}, draggingStyle, clickedStyle, this.baseStyle, this.props.style);
+		        styleOutput = Object.assign({}, draggingStyle, clickedStyle, baseStyle, this.props.style);
 		      } else {
-		        styleOutput = Object.assign({}, draggingStyle, clickedStyle, this.baseStyle);
+		        styleOutput = Object.assign({}, draggingStyle, clickedStyle, baseStyle);
 		      }
 		      return styleOutput;
 		    }
@@ -43420,10 +43418,12 @@
 		          y: this.localNextPosition.y
 		        });
 		        this.dimensions = dimensions;
-		        this.baseStyle.left = dimensions.x;
-		        this.baseStyle.top = dimensions.y;
-		        this.baseStyle.position = 'absolute';
-		        var newHoveringStyle = Object.assign({}, this.hoveringStyle);
+		        var styling = {
+		          left: dimensions.x,
+		          top: dimensions.y,
+		          position: 'absolute'
+		        };
+		        var newHoveringStyle = Object.assign({}, this.hoveringStyle, styling);
 		
 		        this.setState({
 		          baseStyle: newHoveringStyle
@@ -43446,9 +43446,11 @@
 		    value: function handleMouseUp(ev) {
 		      this.clicked = false;
 		      this.dragging = false;
+		      this.html.removeEventListener('mousemove', this.setMousePosition.bind(this), false);
 		      this.setState({
 		        clicked: false,
-		        dragging: false
+		        dragging: false,
+		        baseStyle: {}
 		      });
 		      if (this.props.handleMouseUp) {
 		        this.props.handleMouseUp(ev);
@@ -43460,8 +43462,9 @@
 		  }, {
 		    key: 'hideDraggable',
 		    value: function hideDraggable() {
-		      this.baseStyle = Object.assign({}, this.baseStyle, { visibility: 'hidden' });
-		      this.setState({ baseStyle: this.baseStyle });
+		      if (this.props.handleHideDraggable) {
+		        this.props.handleHideDraggable();
+		      }
 		    }
 		  }]);
 		  return Draggable;
@@ -43472,7 +43475,7 @@
 		
 		Draggable.prototype.localNextPosition = { x: 0, y: 0 };
 		Draggable.propTypes = {
-		  id: _react2.default.PropTypes.string,
+		  id: _react2.default.PropTypes.string.isRequired,
 		  manager: _react2.default.PropTypes.instanceOf(_DragDropManager2.default).isRequired,
 		  draggingStyle: _react2.default.PropTypes.object,
 		  clickedStyle: _react2.default.PropTypes.object,
@@ -43480,7 +43483,8 @@
 		  clickedClassName: _react2.default.PropTypes.string,
 		  draggingClassName: _react2.default.PropTypes.string,
 		  handleMouseUp: _react2.default.PropTypes.func,
-		  handleMouseDown: _react2.default.PropTypes.func
+		  handleMouseDown: _react2.default.PropTypes.func,
+		  handleHideDraggable: _react2.default.PropTypes.func
 		};
 	
 	/***/ },
@@ -43540,7 +43544,6 @@
 		    _this.baseStyle = {
 		      "zIndex": 1
 		    };
-		    _this.content = [];
 		    _this.dimensions = {
 		      x: 0,
 		      y: 0,
@@ -43585,25 +43588,12 @@
 		      }
 		
 		      var type = (0, _typeof3.default)(this.props.wrapper);
-		      var content = this.content.length > 0 ? this.content : '';
 		
 		      return _react2.default.createElement(
 		        'div',
 		        { style: style, ref: this.setInitialDimensions },
 		        this.props.children
 		      );
-		    }
-		  }, {
-		    key: 'setContent',
-		    value: function setContent(content) {
-		      this.content = content;
-		      this.setState({ content: this.content });
-		    }
-		  }, {
-		    key: 'appendToContent',
-		    value: function appendToContent(content) {
-		      this.content.push(content);
-		      this.setState({ content: this.content });
 		    }
 		  }, {
 		    key: 'draggableHoveringOverDropTarget',
@@ -43616,7 +43606,7 @@
 		    key: 'droppedDraggable',
 		    value: function droppedDraggable(draggable) {
 		      if (this.props.handleDroppedDraggable) {
-		        this.props.handleDroppedDraggable(this, draggable.props.children);
+		        this.props.handleDroppedDraggable(this, draggable);
 		      }
 		    }
 		  }]);
@@ -43650,123 +43640,74 @@
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
 	var _reactDragndrop = __webpack_require__(189);
 	
-	var _ChoiceStyle = __webpack_require__(193);
+	var _ChoiceStyle = __webpack_require__(191);
 	
 	var _ChoiceStyle2 = _interopRequireDefault(_ChoiceStyle);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Choice = _react2.default.createClass({
-	  displayName: 'Choice',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      _reactDragndrop.Draggable,
-	      {
-	        id: this.props.id + 'draggable',
-	        manager: this.props.manager,
-	        style: _ChoiceStyle2.default.Base },
-	      _react2.default.createElement(
-	        'h2',
-	        { style: _ChoiceStyle2.default.Base },
-	        this.props.title
-	      )
-	    );
-	  }
-	});
-	
-	exports.default = Choice;
-
-/***/ },
-/* 191 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(38);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _reactDragndrop = __webpack_require__(189);
-	
-	var _actions = __webpack_require__(192);
+	var _actions = __webpack_require__(193);
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
-	var _ChoiceStyle = __webpack_require__(193);
-	
-	var _ChoiceStyle2 = _interopRequireDefault(_ChoiceStyle);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Column = _react2.default.createClass({
-	  displayName: 'Column',
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  render: function render() {
-	    var listItems = this.props.list.map(function (item, index) {
-	      return _react2.default.createElement(
-	        'li',
-	        { key: "column-" + index, style: _ChoiceStyle2.default.Dropped },
-	        item
-	      );
-	    });
-	    return _react2.default.createElement(
-	      _reactDragndrop.DropTarget,
-	      {
-	        manager: this.props.manager,
-	        handleDroppedDraggable: this.props.handleDrop,
-	        style: this.props.style },
-	      _react2.default.createElement(
-	        'h2',
-	        null,
-	        this.props.title
-	      ),
-	      _react2.default.createElement(
-	        'ul',
-	        null,
-	        listItems
-	      )
-	    );
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Choice = function (_React$Component) {
+	  _inherits(Choice, _React$Component);
+	
+	  function Choice() {
+	    _classCallCheck(this, Choice);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Choice).call(this));
+	
+	    _this.removeChoice = _this.removeChoice.bind(_this);
+	    return _this;
 	  }
-	});
 	
-	exports.default = Column;
+	  _createClass(Choice, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactDragndrop.Draggable,
+	        {
+	          id: this.props.id + 'draggable',
+	          manager: this.props.manager,
+	          handleHideDraggable: this.removeChoice,
+	          style: _ChoiceStyle2.default.Base },
+	        _react2.default.createElement(
+	          'h2',
+	          { style: _ChoiceStyle2.default.Base },
+	          this.props.title
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'removeChoice',
+	    value: function removeChoice() {
+	      _actions2.default.removeChoice(this.props.index);
+	    }
+	  }]);
+	
+	  return Choice;
+	}(_react2.default.Component);
+	
+	exports.default = Choice;
+	;
 
 /***/ },
-/* 192 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reflux = __webpack_require__(170);
-	
-	var _reflux2 = _interopRequireDefault(_reflux);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Actions = _reflux2.default.createActions(["reset", "choiceDropped"]);
-	
-	exports.default = Actions;
-
-/***/ },
-/* 193 */
+/* 191 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -43809,6 +43750,89 @@
 	};
 	
 	module.exports = ChoiceStyle;
+
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(38);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _reactDragndrop = __webpack_require__(189);
+	
+	var _actions = __webpack_require__(193);
+	
+	var _actions2 = _interopRequireDefault(_actions);
+	
+	var _ChoiceStyle = __webpack_require__(191);
+	
+	var _ChoiceStyle2 = _interopRequireDefault(_ChoiceStyle);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Column = _react2.default.createClass({
+	  displayName: 'Column',
+	
+	  render: function render() {
+	    var listItems = this.props.list.map(function (item, index) {
+	      return _react2.default.createElement(
+	        'li',
+	        { key: "column-" + index, style: _ChoiceStyle2.default.Dropped },
+	        item
+	      );
+	    });
+	    return _react2.default.createElement(
+	      _reactDragndrop.DropTarget,
+	      {
+	        manager: this.props.manager,
+	        handleDroppedDraggable: this.props.handleDrop,
+	        style: this.props.style },
+	      _react2.default.createElement(
+	        'h2',
+	        null,
+	        this.props.title
+	      ),
+	      _react2.default.createElement(
+	        'ul',
+	        null,
+	        listItems
+	      )
+	    );
+	  }
+	});
+	
+	exports.default = Column;
+
+/***/ },
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reflux = __webpack_require__(170);
+	
+	var _reflux2 = _interopRequireDefault(_reflux);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Actions = _reflux2.default.createActions(["reset", "choiceDropped", "removeChoice"]);
+	
+	exports.default = Actions;
 
 /***/ },
 /* 194 */
@@ -43855,7 +43879,7 @@
 	
 	var _reflux2 = _interopRequireDefault(_reflux);
 	
-	var _actions = __webpack_require__(192);
+	var _actions = __webpack_require__(193);
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
@@ -43898,7 +43922,7 @@
 	
 	var _reflux2 = _interopRequireDefault(_reflux);
 	
-	var _actions = __webpack_require__(192);
+	var _actions = __webpack_require__(193);
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
@@ -43928,9 +43952,13 @@
 	  onChoiceDropped: function onChoiceDropped(drop, drag, index) {
 	    if (this.boardState) {
 	      this.boardState.columns[index].list.push(drag.props.children);
-	      // this.boardState.choices[]
+	
 	      this.trigger(this.boardState);
 	    }
+	  },
+	  onRemoveChoice: function onRemoveChoice(index) {
+	    this.boardState.choices.splice(index, 1);
+	    this.trigger(this.boardState);
 	  }
 	});
 	

@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import Actions from '../actions';
 import AppStore from '../AppStore';
 
-var BoardStore = Reflux.createStore({
+let BoardStore = Reflux.createStore({
   listenables: [Actions],
   init: function(){
     this.listenTo(AppStore, this.setBoard);
@@ -22,9 +22,13 @@ var BoardStore = Reflux.createStore({
   onChoiceDropped: function(drop, drag, index){
     if(this.boardState){
       this.boardState.columns[index].list.push(drag.props.children);
-      // this.boardState.choices[]
+      
       this.trigger(this.boardState);
     }
+  },
+  onRemoveChoice: function(index){
+    this.boardState.choices.splice(index, 1);
+    this.trigger(this.boardState);
   }
 });
 

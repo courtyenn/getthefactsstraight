@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Reflux from 'reflux';
 import { DragDropManager } from 'react-dragndrop';
-import Choice from './Choice';
+import { default as Choice } from './Choice';
 import Column from './Column';
 import ColumnStyle from './../styles/ColumnStyle';
 import Actions from '../actions';
@@ -14,15 +14,14 @@ let Board = React.createClass({
   mixins: [Reflux.connect(boardStore, "boardState")],
   componentDidMount: function(){
     this.listenTo(boardStore, this.handleSetBoard);
-    // this.setState({
-    //   columns: columns,
-    //   choices: choices
-    // });
   },
   handleSetBoard: function(board){
-    this.setState({
-      columns: board.columns,
-      choices: board.choices
+    this.setState(
+    {
+      boardState: {
+        columns: board.columns,
+        choices: board.choices
+      }
     });
   },
   render: function(){
@@ -41,7 +40,7 @@ let Board = React.createClass({
   renderColumns: function(){
     var that = this;
     var columns = this.state.boardState.columns.map(function(column, index){
-
+ 
       let handleDrop = function(drop, drag){
         return that.handleDroppedDraggable(drop, drag, index);
       };
@@ -58,7 +57,7 @@ let Board = React.createClass({
   renderChoices: function(){
     var choices = this.state.boardState.choices.map(function(choice, index){
       return (
-        <Choice {...choice} manager={dragDropManager} key={index + "-choice"} id={index+"-choice"} />
+        <Choice index={index} {...choice} manager={dragDropManager} key={index + "-choice"} id={index+"-choice"} />
       );
     });
     return choices;

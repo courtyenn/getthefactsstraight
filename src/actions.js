@@ -2,7 +2,8 @@ import Reflux from 'reflux';
 
 let Actions = Reflux.createActions([
   "reset",
-  "choiceDropped"
+  "choiceDropped",
+  "removeChoice" 
 ]);
 
 export default Actions;
