@@ -40,7 +40,7 @@ let Board = React.createClass({
   renderColumns: function(){
     var that = this;
     var columns = this.state.boardState.columns.map(function(column, index){
- 
+
       let handleDrop = function(drop, drag){
         return that.handleDroppedDraggable(drop, drag, index);
       };
@@ -66,7 +66,14 @@ let Board = React.createClass({
     Actions.reset();
   },
   handleDroppedDraggable: function(dropTarget, draggable, index){
-    Actions.choiceDropped(dropTarget, draggable, index);
+    console.log(this.state.boardState);
+    var choiceIndex = null;
+    this.state.boardState.choices.forEach(function(choice, i){
+      if(draggable.props.title == choice.title){
+        choiceIndex = i;
+      }
+    });
+    Actions.choiceDropped(choiceIndex, index);
   }
 });
 

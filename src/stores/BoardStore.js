@@ -19,16 +19,17 @@ let BoardStore = Reflux.createStore({
   onGameOver: function() {
     this.trigger("gameOver");
   },
-  onChoiceDropped: function(drop, drag, index){
+  onChoiceDropped: function(choiceIndex, index){
     if(this.boardState){
-      this.boardState.columns[index].list.push(drag.props.children);
-      
+      var choice = this.boardState.choices[choiceIndex];
+      this.boardState.columns[index].list.push(choice);
+      this.boardState.choices.splice(choiceIndex, 1);
       this.trigger(this.boardState);
     }
   },
   onRemoveChoice: function(index){
-    this.boardState.choices.splice(index, 1);
-    this.trigger(this.boardState);
+    // this.boardState.choices.splice(index, 1);
+    // this.trigger(this.boardState);
   }
 });
 

@@ -7,14 +7,17 @@ export default class Choice extends React.Component {
   constructor(){
     super();
     this.removeChoice = this.removeChoice.bind(this);
+    this.style = ChoiceStyle.Base;
   }
   render(){
     return (
       <Draggable
       id={this.props.id + 'draggable'}
       manager={this.props.manager}
-      handleHideDraggable={this.removeChoice}
-      style={ChoiceStyle.Base}>
+      handleMouseUp={this.removeChoice}
+      handleDrop={this.props.handleDrop}
+      title={this.props.title}
+      style={this.style}>
         <h2 style={ChoiceStyle.Base}>{this.props.title}</h2>
       </Draggable>
     );

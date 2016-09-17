@@ -34,6 +34,32 @@ var ChoiceStyle = {
     "width": "100%",
     "margin": "0 0 15px 0",
     zIndex: 2
+  },
+	"Correct": {
+    "display": "inline-block",
+    "backgroundColor": "seagreen",
+    "width": "100px",
+    "height":"60px",
+    "textAlign": "center",
+    "fontFamily": "sans-serif",
+    "cursor": "-webkit-grab",
+    "fontSize": "13px",
+    "width": "100%",
+    "margin": "0 0 15px 0",
+    zIndex: 2
+  },
+	"Incorrect": {
+    "display": "inline-block",
+    "backgroundColor": "red",
+    "width": "100px",
+    "height":"60px",
+    "textAlign": "center",
+    "fontFamily": "sans-serif",
+    "cursor": "-webkit-grab",
+    "fontSize": "13px",
+    "width": "100%",
+    "margin": "0 0 15px 0",
+    zIndex: 2
   }
 };
 

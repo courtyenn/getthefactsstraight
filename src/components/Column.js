@@ -7,7 +7,11 @@ import ChoiceStyles from '../styles/ChoiceStyle';
 let Column = React.createClass({
   render: function(){
     var listItems = this.props.list.map((item, index) => {
-      return (<li key={"column-" + index} style={ChoiceStyles.Dropped}>{item}</li>);
+      var style = ChoiceStyles.Correct;
+      if(item.correctId !== this.props.id){
+        style = ChoiceStyles.Incorrect;
+      }
+      return (<li key={"column-" + index} style={style}>{item.title}</li>);
     });
     return (
       <DropTarget

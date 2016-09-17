@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import App from './app';
 import CuteData from './cuteData';
 import AppStore from './AppStore';
 import BoardStore from './stores/BoardStore';
+import App from './app';
 
 CuteData.init();
 
