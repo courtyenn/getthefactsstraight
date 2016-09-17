@@ -13,27 +13,35 @@ const dragDropManager = new DragDropManager();
 let Board = React.createClass({
   mixins: [Reflux.connect(boardStore, "boardState")],
   componentDidMount: function(){
-    this.listenTo(boardStore, this.handleSetBoard);
+    // this.listenTo(boardStore, this.handleSetBoard);
   },
-  handleSetBoard: function(board){
-    this.setState(
-    {
-      boardState: {
-        columns: board.columns,
-        choices: board.choices
-      }
-    });
+  onGameOver: function(){
+    console.log('SETTING GAME OVER');
+    this.show = true;
   },
   render: function(){
     var columns = this.renderColumns();
     var choices = this.renderChoices();
+    var message = this.getMessage();
+    var style = {
+      display: 'none'
+    };
+    if(this.state.boardState.gameOver == true){
+      style = {
+        display: 'block'
+      }
+    }
     return (
       <div className="root">
         <div style={ColumnStyle.Test}>
           {choices}
-          <button onClick={this.handleReset}>Reset</button>
         </div>
         {columns}
+        <div style={style} className="endGame">
+          <h2>Score: {this.state.boardState.totalCorrect}/{this.state.boardState.totalAnswered}</h2>
+          {message}
+          <button onClick={this.handleReset}>Restart</button>
+        </div>
       </div>
     )
   },
@@ -74,6 +82,17 @@ let Board = React.createClass({
       }
     });
     Actions.choiceDropped(choiceIndex, index);
+  },
+  getMessage: function(){
+    if(this.state.boardState.totalAnswered == this.state.boardState.totalCorrect){
+      return 'Nice job! 100%';
+    }
+    else if(this.state.boardState.totalAnswered/2 > this.state.boardState.totalCorrect){
+      return 'C\'mon, you can do better than that. :-)';
+    }
+    else {
+      return 'Keep on trying! Or, make your own!';
+    }
   }
 });
 

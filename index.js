@@ -21541,6 +21541,10 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function handleLoad(Action, Subaction) {
+	  console.log("The on" + Action + Subaction + " handler was called");
+	};
+	
 	var AppStore = _reflux2.default.createStore({
 	  listenables: [_actions2.default],
 	  init: function init() {
@@ -21550,6 +21554,12 @@
 	  onReset: function onReset() {
 	    this.appState = this.getInitialState();
 	    this.trigger(this.appState);
+	    handleLoad("Reset");
+	  },
+	  onGameOver: function onGameOver() {
+	    this.appState.gameOver = true;
+	    // this.trigger(this.appState);
+	    handleLoad("GameOver");
 	  },
 	  getInitialState: function getInitialState() {
 	    var columns = JSON.parse(localStorage.getItem('game')).columns;
@@ -21557,7 +21567,10 @@
 	    return {
 	      game: {
 	        columns: columns,
-	        choices: choices
+	        choices: choices,
+	        totalCorrect: 0,
+	        totalAnswered: 0,
+	        gameOver: false
 	      }
 	    };
 	  },
@@ -23008,7 +23021,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Actions = _reflux2.default.createActions(["reset", "choiceDropped", "removeChoice", "checkChoice"]);
+	var Actions = _reflux2.default.createActions(["reset", "choiceDropped", "removeChoice", "checkChoice", "gameOver"]);
 	
 	exports.default = Actions;
 
@@ -23038,6 +23051,7 @@
 	    this.listenTo(_AppStore2.default, this.setBoard);
 	  },
 	  setBoard: function setBoard(appState) {
+	    console.log('RESET');
 	    this.boardState = appState.game;
 	    this.trigger(this.boardState);
 	  },
@@ -23047,13 +23061,25 @@
 	    return this.boardState;
 	  },
 	  onGameOver: function onGameOver() {
-	    this.trigger("gameOver");
+	    console.log('GAME OVER');
+	    this.boardState.gameOver = true;
+	    this.trigger(this.boardState);
+	  },
+	  inspectChoice: function inspectChoice(choiceIndex, columnIndex) {
+	    this.boardState.totalAnswered += 1;
+	    if (this.boardState.choices[choiceIndex].correctId == this.boardState.columns[columnIndex].id) {
+	      this.boardState.totalCorrect += 1;
+	    }
 	  },
 	  onChoiceDropped: function onChoiceDropped(choiceIndex, index) {
 	    if (this.boardState) {
 	      var choice = this.boardState.choices[choiceIndex];
+	      this.inspectChoice(choiceIndex, index);
 	      this.boardState.columns[index].list.push(choice);
 	      this.boardState.choices.splice(choiceIndex, 1);
+	      if (this.boardState.choices.length == 0) {
+	        _actions2.default.gameOver();
+	      }
 	      this.trigger(this.boardState);
 	    }
 	  },
@@ -23154,33 +23180,51 @@
 	
 	  mixins: [_reflux2.default.connect(_BoardStore2.default, "boardState")],
 	  componentDidMount: function componentDidMount() {
-	    this.listenTo(_BoardStore2.default, this.handleSetBoard);
+	    // this.listenTo(boardStore, this.handleSetBoard);
 	  },
-	  handleSetBoard: function handleSetBoard(board) {
-	    this.setState({
-	      boardState: {
-	        columns: board.columns,
-	        choices: board.choices
-	      }
-	    });
+	  onGameOver: function onGameOver() {
+	    console.log('SETTING GAME OVER');
+	    this.show = true;
 	  },
 	  render: function render() {
 	    var columns = this.renderColumns();
 	    var choices = this.renderChoices();
+	    var message = this.getMessage();
+	    var style = {
+	      display: 'none'
+	    };
+	    if (this.state.boardState.gameOver == true) {
+	      style = {
+	        display: 'block'
+	      };
+	    }
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'root' },
 	      _react2.default.createElement(
 	        'div',
 	        { style: _ColumnStyle2.default.Test },
-	        choices,
+	        choices
+	      ),
+	      columns,
+	      _react2.default.createElement(
+	        'div',
+	        { style: style, className: 'endGame' },
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Score: ',
+	          this.state.boardState.totalCorrect,
+	          '/',
+	          this.state.boardState.totalAnswered
+	        ),
+	        message,
 	        _react2.default.createElement(
 	          'button',
 	          { onClick: this.handleReset },
-	          'Reset'
+	          'Restart'
 	        )
-	      ),
-	      columns
+	      )
 	    );
 	  },
 	  renderColumns: function renderColumns() {
@@ -23216,6 +23260,15 @@
 	      }
 	    });
 	    _actions2.default.choiceDropped(choiceIndex, index);
+	  },
+	  getMessage: function getMessage() {
+	    if (this.state.boardState.totalAnswered == this.state.boardState.totalCorrect) {
+	      return 'Nice job! 100%';
+	    } else if (this.state.boardState.totalAnswered / 2 > this.state.boardState.totalCorrect) {
+	      return 'C\'mon, you can do better than that. :-)';
+	    } else {
+	      return 'Keep on trying! Or, make your own!';
+	    }
 	  }
 	});
 	
