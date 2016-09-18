@@ -1,7 +1,8 @@
 node_modules
 dist/*
-index.js
-index.map.js
+public/index.js
+public/index.map.js
 public/index.js
 public/index.map.js
 public/index.js.map
+bower_components

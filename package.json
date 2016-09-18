@@ -2,7 +2,6 @@
   "name": "getthefactsstraight",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.js",
   "scripts": {
     "webpack": "webpack --progress --colors --watch"
   },
@@ -17,6 +16,11 @@
   },
   "homepage": "https://github.com/courtneynguyen/getthefactsstraight#readme",
   "dependencies": {
+    "consolidate": "^0.14.1",
+    "dust": "^0.3.0",
+    "express": "^4.14.0",
+    "express-dustjs": "^1.1.1",
+    "mongoose": "^4.6.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-dragndrop": "^1.0.10",

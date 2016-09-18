@@ -1,0 +1,25 @@
+{
+  "name": "get the facts straight",
+  "main": "index.js",
+  "homepage": "https://github.com/courtneynguyen/getthefactsstraight",
+  "authors": [
+    "Courtney Nguyen"
+  ],
+  "description": "quiz game",
+  "keywords": [
+    "react",
+    "bower",
+    "game"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "^15.3.1"
+  }
+}
