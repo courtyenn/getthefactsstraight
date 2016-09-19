@@ -1,0 +1,61 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>Get The Facts Straight!</title>
+    <style>
+    html, body, #app, .root{
+      height: 100%;
+    }
+    * {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    #app, div {
+      position: relative;
+    }
+    .endGame {
+      display: none;
+      position: fixed;
+      width: 450px;
+      height: 200px;
+      background: white;
+      border: 2px solid green;
+      top: 50%;
+      z-index: 10;
+      left: 50%;
+      padding: 30px;
+      margin-left: -250px;
+      margin-top: -100px;
+    }
+    .endGame.show {
+      display: block;
+    }
+    button {
+      display: block;
+      padding: 10px 15px;
+      background: green;
+      color: white;
+      border: none;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <% if (game) { %>
+     <h2>I have a game state!</h2>
+     <script>
+        window.game = <%- game %>;
+        console.log('what is game?', game);
+     </script>
+     <% } %>
+    <script>
+
+
+
+    </script>
+    <script src="/index.js"></script>
+  </body>
+</html>

@@ -1,5 +1,8 @@
 import Reflux from 'reflux';
 import Actions from './actions';
+import CuteData from './cuteData';
+
+CuteData.init();
 
 const AppStore = Reflux.createStore({
   listenables: [Actions],
@@ -14,8 +17,8 @@ const AppStore = Reflux.createStore({
     this.appState.gameOver = true;
   },
   getInitialState: function() {
-    let columns = JSON.parse(localStorage.getItem('game')).columns;
-    let choices = JSON.parse(localStorage.getItem('game')).choices;
+    let columns = window.game ? window.game.columns : JSON.parse(localStorage.getItem('game')).columns;
+    let choices = window.game ? window.game.choices : JSON.parse(localStorage.getItem('game')).choices;
     return {
       game: {
         columns: columns,

@@ -5,8 +5,8 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Get the Facts Straight</title>
         <meta name="description" content="">
-        <link href="/codemirror.css" rel="stylesheet">
-        <link href="/addon/scroll/simplescrollbars.css" rel="stylesheet">
+        <link href="/lib/codemirror.css" rel="stylesheet">
+        <link href="/lib/addon/scroll/simplescrollbars.css" rel="stylesheet">
    </head>
    <style>
    .wrapper {
@@ -15,7 +15,8 @@
   </style>
  <body>
    <div class="wrapper">
-    <textarea id="editor" name="stuff">
+     <form method="POST" action="/quiz">
+    <textarea id="editor" name="quiz">
     {
       "columns": [
         {
@@ -55,11 +56,12 @@
     }
     </textarea>
     <input type="submit" />
+  </form>
   </div>
 
-  <script src="/codemirror.js"></script>
-  <script src="/javascript.js"></script>
-  <script src="/addon/scroll/simplescrollbars.js"></script>
+  <script src="/lib/codemirror.js"></script>
+  <script src="/lib/javascript.js"></script>
+  <script src="/lib/addon/scroll/simplescrollbars.js"></script>
   <script>
   var myTextarea = document.getElementById('editor');
   var editor = CodeMirror.fromTextArea(myTextarea, {
