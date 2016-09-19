@@ -1,20 +1,21 @@
 var express = require('express');
 var path = require('path');
-var dust = require('express-dustjs');
 
 var app = express();
+app.use(express.static(__dirname + '/../lib'));
 
-app.engine('dust', dust.engine({
-  // Use dustjs-helpers
-  useHelpers: true
-}));
-app.set('view engine', 'dust');
+// console.log(cons);
+//
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, './views'));
 
 app.get('/', function(req, res){
-  res.render('index');
+  res.render('index.html');
   // res.send(dust.render('base.dust'));
 });
+
+
 
 
 app.listen(3000, function(){

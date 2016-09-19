@@ -1,0 +1,73 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Get the Facts Straight</title>
+        <meta name="description" content="">
+        <link href="/codemirror.css" rel="stylesheet">
+        <link href="/addon/scroll/simplescrollbars.css" rel="stylesheet">
+   </head>
+   <style>
+   .wrapper {
+    width: 600px;
+  }
+  </style>
+ <body>
+   <div class="wrapper">
+    <textarea id="editor" name="stuff">
+    {
+      "columns": [
+        {
+          "title": "Cute",
+          "id": "1",
+          "list": []
+        },
+        {
+          "title": "Edible",
+          "id": "2",
+          "list": []
+        },
+        {
+          "title": "Horrid",
+          "id": "3",
+          "list": []
+        }
+      ],
+      "choices": [
+        {
+          "title": "Tacos",
+          "correctId": "2"
+        },
+        {
+          "title": "Kitties",
+          "correctId": "1"
+        },
+        {
+          "title": "Smelly socks",
+          "correctId": "3"
+        },
+        {
+          "title": "Ferrets",
+          "correctId": "1"
+        }
+      ]
+    }
+    </textarea>
+    <input type="submit" />
+  </div>
+
+  <script src="/codemirror.js"></script>
+  <script src="/javascript.js"></script>
+  <script src="/addon/scroll/simplescrollbars.js"></script>
+  <script>
+  var myTextarea = document.getElementById('editor');
+  var editor = CodeMirror.fromTextArea(myTextarea, {
+   lineWrapping: true,
+   lineNumbers: true,
+   mode: {name: "javascript", mode: "json"},
+   scrollbarStyle: "simple"
+   });
+  </script>
+</body>
+</html>
