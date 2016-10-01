@@ -1,0 +1,16 @@
+version: "2"
+services:
+   mongo:
+     image: tutum/mongodb
+     ports:
+       - "27017"
+     command: mongod --smallfiles --rest --logpath=/dev/null
+   web:
+     build: .
+     links: 
+       - mongo
+     command: node server/server.js
+     ports: 
+       - "8080:3000"
+     environment:
+       - DbUrl=mongodb://mongo/facts

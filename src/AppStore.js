@@ -17,6 +17,9 @@ const AppStore = Reflux.createStore({
     this.appState.gameOver = true;
   },
   getInitialState: function() {
+    if(window.game){
+      Object.freeze(window.game);
+    }
     let columns = window.game ? window.game.columns : JSON.parse(localStorage.getItem('game')).columns;
     let choices = window.game ? window.game.choices : JSON.parse(localStorage.getItem('game')).choices;
     return {

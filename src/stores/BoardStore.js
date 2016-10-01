@@ -8,7 +8,7 @@ let BoardStore = Reflux.createStore({
     this.listenTo(AppStore, this.setBoard);
   },
   setBoard: function(appState){
-    console.log('RESET')
+    console.log('RESET');
     this.boardState = appState.game;
     this.trigger(this.boardState);
   },

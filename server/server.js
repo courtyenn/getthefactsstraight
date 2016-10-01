@@ -57,5 +57,6 @@ app.get('/quiz/:id', function(req, res){
 
 
 app.listen(3000, function(){
-  console.log('LISTENING');
+  console.log('LISTENING ');
+  console.log(arguments);
 });
