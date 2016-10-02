@@ -19,7 +19,7 @@ app.set('views', path.resolve(__dirname, './views'));
 
 app.get('/', function(req, res){
   console.log('rendering index');
-  res.render('index.html');
+  res.render('game.html');
 });
 
 app.post('/quiz', function(req, res){
