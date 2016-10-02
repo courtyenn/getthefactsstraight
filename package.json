@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "webpack": "webpack --progress --colors --watch",
-    "dev": "webpack --progress --colors --watch && DbUrl=mongodb://localhost:27017/facts nodemon server/server.js"
+    "dev": "webpack --progress --colors --watch && DbUrl=mongodb://localhost:27017/facts nodemon -e js,html server/server.js"
   },
   "repository": {
     "type": "git",

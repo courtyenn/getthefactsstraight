@@ -33,6 +33,9 @@ let Board = React.createClass({
     }
     return (
       <div className="root">
+      <div className="title">
+        <h1>{this.state.boardState.title}</h1>
+      </div>
         <div style={ColumnStyle.Test}>
           {choices}
         </div>

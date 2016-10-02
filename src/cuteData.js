@@ -2,6 +2,7 @@ module.exports = {
   init: function(){
     localStorage.clear();
     localStorage.setItem('game', JSON.stringify({
+      title: 'Common Logic Quiz',
       columns: [
         {
           title: "Cute",

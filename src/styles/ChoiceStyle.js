@@ -1,7 +1,8 @@
 var ChoiceStyle = {
 	"Base": {
 		"display": "inline-block",
-		"backgroundColor": "pink",
+		"backgroundColor": "#4081a7",
+		"color": "white",
 		"width": "100px",
 		"height":"60px",
 		"textAlign": "center",

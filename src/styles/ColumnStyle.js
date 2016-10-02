@@ -2,7 +2,7 @@ var ColumnStyle = {
 	"Base": {
 		"display": "inline-block",
 		"position": "relative",
-		"backgroundColor": "rgb(200, 230, 255)",
+		"backgroundColor": "white",
 		"zIndex": "0",
 		"width": 180,
 		"height": "80%",
@@ -14,7 +14,7 @@ var ColumnStyle = {
   "Test": {
     "display": "inline-block",
     "position": "relative",
-    "backgroundColor": "rgb(200, 230, 255)",
+    "backgroundColor": "white",
     "zIndex": "1",
     "width": 180,
     "height": "80%",

@@ -16,47 +16,49 @@
  <body>
    <div class="wrapper">
      <form method="POST" action="/quiz">
-    <textarea id="editor" name="quiz">
-    {
-      "columns": [
+       <label for="title">Title:</label>
+        <input id="title" type="text" placeholder="Common Logic Quiz" />
+        <textarea id="editor" name="quiz">
         {
-          "title": "Cute",
-          "id": "1",
-          "list": []
-        },
-        {
-          "title": "Edible",
-          "id": "2",
-          "list": []
-        },
-        {
-          "title": "Horrid",
-          "id": "3",
-          "list": []
-        }
-      ],
-      "choices": [
-        {
-          "title": "Tacos",
-          "correctId": "2"
-        },
-        {
-          "title": "Kitties",
-          "correctId": "1"
-        },
-        {
-          "title": "Smelly socks",
-          "correctId": "3"
-        },
-        {
-          "title": "Ferrets",
-          "correctId": "1"
-        }
-      ]
-    }
-    </textarea>
-    <input type="submit" />
-  </form>
+          "columns": [
+            {
+              "title": "Cute",
+              "id": "1",
+              "list": []
+            },
+            {
+              "title": "Edible",
+              "id": "2",
+              "list": []
+            },
+            {
+              "title": "Horrid",
+              "id": "3",
+              "list": []
+            }
+          ],
+          "choices": [
+            {
+              "title": "Tacos",
+              "correctId": "2"
+            },
+            {
+              "title": "Kitties",
+              "correctId": "1"
+            },
+            {
+              "title": "Smelly socks",
+              "correctId": "3"
+            },
+            {
+              "title": "Ferrets",
+              "correctId": "1"
+            }
+            ]
+          }
+          </textarea>
+      <input type="submit" />
+    </form>
   </div>
 
   <script src="/lib/codemirror.js"></script>
