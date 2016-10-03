@@ -96,74 +96,22 @@
  <body>
    <nav>
      <div class="logo">
-       <a href="/">Get the Facts Straight</a>
+      <a href="/">Get the Facts Straight</a>
      </div>
      <div class="menu">
-         <ul >
+         <ul>
            <li><a href="/quiz">Create your own quiz</a></li>
            <li><a href="/quizzes">View others</a></li>
          </ul>
      </div>
    </nav>
    <div class="content">
-     <h1>Creating a Quiz is Easy...</h1>
-     <form method="POST" action="/quiz">
-       <label for="title">Title:</label>
-        <input id="title" type="text" name="title" placeholder="Common Logic Quiz" />
-        <label for="editor">Game:</label>
-        <textarea id="editor" name="quiz" height="600px">
-        {
-          "columns": [
-            {
-              "title": "Cute",
-              "id": "1",
-              "list": []
-            },
-            {
-              "title": "Edible",
-              "id": "2",
-              "list": []
-            },
-            {
-              "title": "Horrid",
-              "id": "3",
-              "list": []
-            }
-          ],
-          "choices": [
-            {
-              "title": "Tacos",
-              "correctId": "2"
-            },
-            {
-              "title": "Kitties",
-              "correctId": "1"
-            },
-            {
-              "title": "Smelly socks",
-              "correctId": "3"
-            },
-            {
-              "title": "Ferrets",
-              "correctId": "1"
-            }
-            ]
-          }
-          </textarea>
-      <input type="submit" />
-    </form>
+     <h1>Quiz Listing</h1>
+     <ul>
+    <% for(var i=0; i<list.length; i++) {%>
+       <li><a href="/quiz/<%= list[i]._id %>"><%= list[i].title %></a></li>
+    <% } %>
+    </ul>
   </div>
-  <script src="/lib/codemirror.js"></script>
-  <script src="/lib/javascript.js"></script>
-  <script src="/lib/addon/scroll/simplescrollbars.js"></script>
-  <script>
-  var myTextarea = document.getElementById('editor');
-  var editor = CodeMirror.fromTextArea(myTextarea, {
-   lineWrapping: true,
-   lineNumbers: true,
-   mode: {name: "javascript", mode: "json"},
-   scrollbarStyle: "simple"
-   });
-  </script>
 </body>
 </html>
