@@ -9,16 +9,104 @@
         <link href="/lib/addon/scroll/simplescrollbars.css" rel="stylesheet">
    </head>
    <style>
-   .wrapper {
+   html, body, #app, .root{
+     height: 100%;
+     background: #f4f0ea;
+   }
+   * {
+     font-family: sans-serif;
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+   }
+   body {
+     background: #f4f0ea;
+   }
+    .wrapper {
     width: 600px;
-  }
+    }
+    nav {
+    background: cadetblue;
+    color: seashell;
+    display: flex;
+    padding: 7px 0;
+    }
+
+    nav .logo {
+    width: 50%;
+    font-size: 20px;
+    font-family: monospace;
+    text-align: center;
+    }
+    nav .menu {
+    list-style-type: none;
+    text-align: right;
+    width: 48%;
+    }
+    nav .menu li {
+    display: inline-block;
+    margin: 0px 15px;
+    }
+    nav .menu li a {
+    text-decoration: none;
+    color: white;
+    font-size: 13px;
+    }
+    .content {
+      padding: 0 15px;
+    }
+    input[type="text"]{
+      font-size: 20px;
+      height: 35px;
+      width: 100%;
+      margin: 0 0 20px 0;
+    }
+    input[type="submit"]{
+      font-size: 20px;
+      height: 35px;
+      background: #69b908;
+      color: white;
+      padding: 6px 10px;
+      border: none;
+          margin-top: 20px;
+    }
+    textarea{
+      height: 800px;
+    }
+    h1 {
+      font-size: 25px;
+      margin: 30px 0 20px;
+      text-align: center;
+      color: black;
+    }
+    label {
+      color: black;
+      font-size: 15px;
+      margin: 0 0 8px;
+      display: block;
+      letter-spacing: 1px;
+      font-weight: 900;
+    }
   </style>
  <body>
-   <div class="wrapper">
+   <nav>
+     <div class="logo">
+       Get the Facts Straight
+     </div>
+     <div class="menu">
+         <ul >
+           <li><a href="/quiz">Create your own quiz</a></li>
+           <li><a href="/quizzes">View others</a></li>
+         </ul>
+     </div>
+   </nav>
+   <div class="content">
+     <h1>Creating a Quiz is Easy...</h1>
      <form method="POST" action="/quiz">
        <label for="title">Title:</label>
         <input id="title" type="text" placeholder="Common Logic Quiz" />
-        <textarea id="editor" name="quiz">
+        <label for="editor">Game:</label>
+        <textarea id="editor" name="quiz" height="600px">
         {
           "columns": [
             {
@@ -60,7 +148,6 @@
       <input type="submit" />
     </form>
   </div>
-
   <script src="/lib/codemirror.js"></script>
   <script src="/lib/javascript.js"></script>
   <script src="/lib/addon/scroll/simplescrollbars.js"></script>

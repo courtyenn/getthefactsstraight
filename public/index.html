@@ -45,9 +45,46 @@
     .title {
       margin: 20px 0;
     }
+    nav {
+    background: cadetblue;
+    color: seashell;
+    display: flex;
+    padding: 7px 0;
+    }
+
+    nav .logo {
+    width: 50%;
+    font-size: 20px;
+    font-family: monospace;
+    }
+    nav .menu {
+    list-style-type: none;
+    text-align: right;
+    width: 48%;
+    }
+    nav .menu li {
+    display: inline-block;
+    margin: 0px 15px;
+    }
+    nav .menu li a {
+    text-decoration: none;
+    color: white;
+    font-size: 13px;
+    }
     </style>
   </head>
   <body>
+    <nav>
+      <div class="logo">
+        Get the Facts Straight
+      </div>
+      <div class="menu">
+          <ul >
+            <li><a href="/quiz">Create your own quiz</a></li>
+            <li><a href="/quizzes">View others</a></li>
+          </ul>
+      </div>
+    </nav>
     <div id="app"></div>
     <script src="./index.js"></script>
   </body>
