@@ -1,7 +1,6 @@
 var ColumnStyle = {
 	"Base": {
 		"display": "inline-block",
-		"position": "relative",
 		"backgroundColor": "white",
 		"zIndex": "0",
 		"width": 180,
@@ -13,7 +12,6 @@ var ColumnStyle = {
 	},
   "Test": {
     "display": "inline-block",
-    "position": "relative",
     "backgroundColor": "white",
     "zIndex": "1",
     "width": 180,
