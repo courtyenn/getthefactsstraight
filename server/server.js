@@ -20,7 +20,7 @@ app.set('views', path.resolve(__dirname, './views'));
 
 app.get('/', function(req, res){
   console.log('rendering index');
-  res.render('game.html', null, {cache: false});
+  res.render('game.html');
 });
 
 app.post('/quiz', function(req, res){
@@ -39,7 +39,7 @@ app.post('/quiz', function(req, res){
 });
 
 app.get('/quiz', function(req, res){
-  res.render('index.html', null, {cache: false});
+  res.render('index.html');
 });
 
 app.get('/quiz/:id', function(req, res){
@@ -59,7 +59,7 @@ app.get('/quiz/:id', function(req, res){
 
 app.get('/quizzes', function(req, res){
   Quiz.find({}).sort({created: 1}).exec(function(err, data){
-    res.render('list.html', {list: data}, {cache: false});
+    res.render('list.html', {list: data});
   });
 });
 
