@@ -39,10 +39,6 @@ let BoardStore = Reflux.createStore({
       }
       this.trigger(this.boardState);
     }
-  },
-  onRemoveChoice: function(index){
-    // this.boardState.choices.splice(index, 1);
-    // this.trigger(this.boardState);
   }
 });
 

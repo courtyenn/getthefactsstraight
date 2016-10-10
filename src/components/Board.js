@@ -77,7 +77,6 @@ let Board = React.createClass({
     Actions.reset();
   },
   handleDroppedDraggable: function(dropTarget, draggable, index){
-    console.log(this.state.boardState);
     var choiceIndex = null;
     this.state.boardState.choices.forEach(function(choice, i){
       if(draggable.props.title == choice.title){
