@@ -17,7 +17,6 @@ app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, './views'));
 
-
 app.get('/', function(req, res){
   console.log('rendering index');
   res.render('game.html');
@@ -28,32 +27,51 @@ app.post('/quiz', function(req, res){
   console.log(req.body);
   console.log(req.body.quiz);
 
-  var quiz = new Quiz();
-  quiz.game = req.body.quiz;
-  quiz.created = Date.now();
-  quiz.title = req.body.title;
-  quiz.save(function(err, data){
-    res.redirect('/quiz/' + data._id);
-  });
+  if(req.query.json){
+    var quiz = new Quiz();
+    quiz.game = req.body.quiz;
+    quiz.created = Date.now();
+    quiz.title = req.body.title;
+    quiz.save(function(err, data){
+      res.redirect('/quiz/' + data._id);
+    });
+  }
+  else {
+    var quiz = new Quiz();
+    quiz.columns = req.body.columns;
+    quiz.choices = req.body.choices;
+    quiz.created = Date.now();
+    quiz.title = req.body.title;
+    quiz.save(function(err, data){
+      res.redirect('/quiz/' + data._id);
+    });
+  }
+
   // res.render('game.html');
 });
 
+app.post('/answer', (req, res) => {
+  
+});
+
 app.get('/quiz', function(req, res){
-  res.render('index.html');
+  res.render('create.html');
 });
 
 app.get('/quiz/:id', function(req, res){
   console.log('GETTING QUIZ ID', req.params.id);
-  Quiz.findOne({_id: req.params.id}, function(err, data){
-    // if(err){
-    //   res.render('index.html');
-    // }
-    // else {
-      var game = data.game;
-      var title = data.title;
+  Quiz.findOne({_id: req.params.id}, function(err, quiz){
+      let game;
+      var title = quiz.title;
+      if(quiz.game){
+        game = quiz.game;
+      }
+      else {
+        game = JSON.stringify({columns: quiz.columns, choices: quiz.choices});
+      }
+      
       console.log(title);
-      res.render('game.html', {game: game, title: data.title});
-    // }
+      res.render('game.html', {game, title});
   });
 });
 
@@ -62,9 +80,6 @@ app.get('/quizzes', function(req, res){
     res.render('list.html', {list: data});
   });
 });
-
-
-
 
 app.listen(3000, function(){
   console.log('LISTENING ');

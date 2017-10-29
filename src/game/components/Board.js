@@ -51,7 +51,7 @@ let Board = React.createClass({
   renderColumns: function(){
     var that = this;
     var columns = this.state.boardState.columns.map(function(column, index){
-
+      
       let handleDrop = function(drop, drag){
         return that.handleDroppedDraggable(drop, drag, index);
       };

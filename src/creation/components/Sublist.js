@@ -3,23 +3,7 @@ import ReactDom from 'react-dom';
 let addons = {};
 import ReactAddons from 'react-addons-update';
 
-let defaultAnswer = function(){
-  return {
-    name: 'choice',
-    value: 'Truthy description',
-    edit: false,
-    id: 'answer-' + Math.random(),
-  }
-};
-let defaultField = function(){
-  return {
-    name: 'title',
-    value: 'Name column',
-    edit: false,
-    id: 'field-' + Math.random(),
-    answers: [defaultAnswer()]
-  }
-};
+
 
 export default class Sublist extends React.Component {
   constructor(){
@@ -28,23 +12,14 @@ export default class Sublist extends React.Component {
     let showField = false;
     this.state = {
       showField: false,
-      list: [defaultField()]
+      columns: [defaultField()]
     };
 
-    this.toggleField = this.toggleField.bind(this);
-    this.addField = this.addField.bind(this);
-    this.removeField = this.removeField.bind(this);
-    this.createList = this.createList.bind(this);
-    this.updateList = this.updateList.bind(this);
-    this.addAnswer = this.addAnswer.bind(this);
-    this.createAnswerList = this.createAnswerList.bind(this);
-    this.updateAnswer = this.updateAnswer.bind(this);
-    this.toggleAnswer = this.toggleAnswer.bind(this);
-    this.removeAnswer = this.removeAnswer.bind(this);
+
 
   }
   createList(){
-    let fields = this.state.list.map((item, i) => {
+    let fields = this.state.columns.map((item, i) => {
       let list = this.createAnswerList(item, i);
       if(!item.edit){
         return (
@@ -58,7 +33,7 @@ export default class Sublist extends React.Component {
       else {
         return (
           <li key={item.id}>
-            <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
+            <span className="addField" onClick={() => {this.addAnswer(i, item.id)}}></span>
             <span className="removeField" onClick={() => {this.removeField(i)}}></span>
             <h3>
               <input
@@ -66,7 +41,7 @@ export default class Sublist extends React.Component {
               className="input-inline"
               type="text"
               onChange={(e, n)=>{this.updateList(e, item)}}
-              onBlur={() => {this.toggleField(i)}} value={item.value} />
+              onBlur={() => {this.toggleField(i)}} placeholder={item.value} />
             </h3>
             {list}
           </li>
@@ -78,47 +53,54 @@ export default class Sublist extends React.Component {
   }
   updateList(e, editItem){
     let itemValue = e.target.value;
-    let list = this.state.list;
+    let list = this.state.columns;
     list.forEach((item, i) => {
       if(item.id == editItem.id){
         list[i].value = itemValue;
       }
     });
     let newState = ReactAddons(this.state, {
-      list: { $set: list }
+      columns: { $set: list }
     });
-    this.setState(newState);
+    this.props.updateGame(newState);
+    // this.setState(newState);
   }
   addField(){
-    let list = this.state.list;
+    let list = this.state.columns;
     let newState = ReactAddons(this.state, {
-      list: { $push: [defaultField()]}
+      columns: { $push: [defaultField()]}
     });
-    this.setState(newState);
+    this.props.updateGame(newState);
+    // this.setState(newState);
   }
   removeField(i){
-    let list = this.state.list;
+    let list = this.state.columns;
     list.splice(i, 1);
     let newState = ReactAddons(this.state, {
-      list: { $set: list}
+      columns: { $set: list}
     });
-    this.setState(newState);
+    this.props.updateGame(newState);
+    // this.setState(newState);
   }
   toggleField(i){
-    let list = this.state.list;
+    let list = this.state.columns;
     list[i].edit = !list[i].edit;
     let newState = ReactAddons(this.state, {
-      list: { $set: list }
+      columns: { $set: list }
     });
-    this.setState(newState);
+    this.props.updateGame(newState);
+    // this.setState(newState);
   }
-  addAnswer(i){
-    let list = this.state.list;
-    list[i].answers.push(defaultAnswer());
+  addAnswer(i, correctId){
+    let list = this.state.columns;
+    let answer = defaultAnswer();
+    answer.correctId = correctId;
+    list[i].answers.push(answer);
     let newState = ReactAddons(this.state, {
-      list: { $set: list }
+      columns: { $set: list }
     });
-    this.setState(newState);
+    this.props.updateGame(newState);
+    // this.setState(newState);
   }
   createAnswerList(fieldColumn, i){
     let answers = fieldColumn.answers.map((answer, j) => {
@@ -153,28 +135,30 @@ export default class Sublist extends React.Component {
   }
   updateAnswer(e, editItem, i, j){
     let itemValue = e.target.value;
-    let list = this.state.list;
+    let list = this.state.columns;
     list[i].answers[j].value = itemValue;
     let newState = ReactAddons(this.state, {
-      list: { $set: list }
+      columns: { $set: list }
     });
-    this.setState(newState);
+    this.props.updateGame(newState);
+    // this.setState(newState);
   }
   removeAnswer(i, j){
-    let list = this.state.list;
+    let list = this.state.columns;
     list[i].answers.splice(j, 1);
     let newState = ReactAddons(this.state, {
-      list: { $set: list }
+      columns: { $set: list }
     });
-    this.setState(newState);
+    this.props.updateGame(newState);
   }
   toggleAnswer(i, j){
-    let list = this.state.list;
+    let list = this.state.columns;
     list[i].answers[j].edit = !list[i].answers[j].edit;
     let newState = ReactAddons(this.state, {
-      list: { $set: list }
+      columns: { $set: list }
     });
-    this.setState(newState);
+    this.props.updateGame(newState);
+    // this.setState(newState);
   }
   render(){
     let editButton = this.createList();
