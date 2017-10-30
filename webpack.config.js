@@ -1,8 +1,8 @@
 var path = require('path');
 module.exports = {
   entry: {
-    "./public/game": "./src/game/index",
-    "./public/creation": "./src/creation/index"
+    "./public/game": ["babel-polyfill", "./src/game/index"],
+    "./public/creation": ["babel-polyfill", "./src/creation/index"]
   },
   output: {
     filename: '[name].js',
@@ -18,7 +18,7 @@ module.exports = {
         loader: "babel-loader",
         include: path.resolve(__dirname, 'src'),
         query: {
-          presets: ['react', 'es2015']
+          presets: ['react', 'es2015', 'es2017']
         }
       }
     ]

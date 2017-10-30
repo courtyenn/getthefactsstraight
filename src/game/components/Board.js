@@ -32,36 +32,37 @@ let Board = React.createClass({
       }
     }
     return (
-      <div className="root">
-      <div className="title">
-        <h1>{this.state.boardState.title}</h1>
-      </div>
-        <div style={ColumnStyle.Test}>
-          {choices}
+        <div className="root">
+            <div className="title">
+                <h1>{this.state.boardState.title}</h1>
+            </div>
+            <div style={ColumnStyle.Container}>
+                <div style={ColumnStyle.Test}>
+                    {choices}
+                </div>
+                {columns}
+                <div style={style} className="endGame">
+                    <h2>Score: {this.state.boardState.totalCorrect}/{this.state.boardState.totalAnswered}</h2>
+                    {message}
+                    <button onClick={this.handleReset}>Restart</button>
+                </div>
+            </div>
         </div>
-        {columns}
-        <div style={style} className="endGame">
-          <h2>Score: {this.state.boardState.totalCorrect}/{this.state.boardState.totalAnswered}</h2>
-          {message}
-          <button onClick={this.handleReset}>Restart</button>
-        </div>
-      </div>
     )
   },
-  renderColumns: function(){
-    var that = this;
-    var columns = this.state.boardState.columns.map(function(column, index){
-      
-      let handleDrop = function(drop, drag){
-        return that.handleDroppedDraggable(drop, drag, index);
-      };
-      return (
-        <Column {...column}
-        manager={dragDropManager}
-        handleDrop={handleDrop}
-        list={column.list}
-        key={index + "-column"} style={ColumnStyle.Base} />
-      );
+    renderColumns: function(){
+        let that = this;
+        let columns = this.state.boardState.columns.map(function(column, index){
+            let handleDrop = function(drop, drag){
+            return that.handleDroppedDraggable(drop, drag, index);
+        };
+        return (
+            <Column {...column}
+            manager={dragDropManager}
+            handleDrop={handleDrop}
+            list={column.list}
+            key={index + "-column"} style={ColumnStyle.Base} />
+        );
     });
     return columns;
   },

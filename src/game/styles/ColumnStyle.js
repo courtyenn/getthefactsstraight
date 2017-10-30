@@ -1,10 +1,15 @@
 var ColumnStyle = {
+    "Container": {
+        "display": "flex",
+        "justifyContent": "center",
+        "marginBottom": "30px",
+        "height": "100%"
+    },
 	"Base": {
 		"display": "inline-block",
 		"backgroundColor": "white",
 		"zIndex": "0",
 		"width": 180,
-		"height": "80%",
 		"textAlign": "center",
 		"padding": "15px",
 		"margin": "0 15px 0 0",
@@ -15,7 +20,6 @@ var ColumnStyle = {
     "backgroundColor": "white",
     "zIndex": "1",
     "width": 180,
-    "height": "80%",
     "textAlign": "center",
     "padding": "15px",
     "margin": "0 15px 0 0",
