@@ -41,8 +41,6 @@ const AppStore = Reflux.createStore({
     let title = window.game ? window.game.title : JSON.parse(localStorage.getItem('game')).title;
     columns.forEach(column => column.list = []);
     choices = shuffle(choices);
-    // let columns = gameColumns.splice();
-    // let choices = gameChoices.splice();
     return {
       game: {
         title: title,

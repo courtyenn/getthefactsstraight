@@ -48,39 +48,51 @@ export default class CreateGame extends React.Component {
         this.updateAnswer = this.updateAnswer.bind(this);
         this.toggleAnswer = this.toggleAnswer.bind(this);
         this.removeAnswer = this.removeAnswer.bind(this);
+        this.detectKey = this.detectKey.bind(this);
     }
     createList(){
         let fields = this.state.columns.map((item, i) => {
           let list = this.createAnswerList(item, i);
           if(!item.edit){
             return (
-              <li key={item.id}>
-                <span className="addField" onClick={() => {this.addAnswer(i, item.id)}}></span>
-                <span className="removeField" onClick={() => {this.removeField(i)}}></span>
-                <h3 onClick={() => {this.toggleField(i)}}>{item.title}</h3>
+              <li key={item.id} className="flex-container">
+                <button className="addField" onClick={() => {this.addAnswer(i, item.id)}}></button>
+                <button className="removeField" onClick={() => {this.removeField(i)}}></button>
+                <button className="btn-h"><h3 onClick={() => {this.toggleField(i)}}>{item.title}</h3></button>
                 {list}
               </li>);
           }
           else {
             return (
-              <li key={item.id}>
-                <span className="addField" onClick={() => {this.addAnswer(i, item.id)}}></span>
-                <span className="removeField" onClick={() => {this.removeField(i)}}></span>
-                <h3>
-                  <input
+              <li key={item.id} className="flex-container">
+                <button className="addField" onClick={() => {this.addAnswer(i, item.id)}}></button>
+                <button className="removeField" onClick={() => {this.removeField(i)}}></button>
+                <button className="btn-h">
+                    <h3 style={{width: 100 + '%'}}><input
                   autoFocus
                   className="input-inline"
                   type="text"
                   onChange={(e, n)=>{this.updateList(e, item)}}
+                  onKeyPress={(e)=> {this.detectKey(e, i)}}
                   onBlur={() => {this.toggleField(i)}} placeholder={item.title} />
-                </h3>
+                </h3></button>
                 {list}
               </li>
             )
           }
         });
-    
+
         return fields;
+      }
+      detectKey(e, i, j){
+        if (e.key === 'Enter') {
+            if(j){
+                this.toggleAnswer(i, j);
+            }
+            else {
+                this.toggleField(i);
+            }
+          }
       }
       updateList(e, editItem){
         let itemValue = e.target.value;
@@ -133,7 +145,7 @@ export default class CreateGame extends React.Component {
             return (
               <li key={answer.id} onClick={()=> {this.toggleAnswer(i, j)}}>
                 <div className="flex-container">
-                  <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
+                  <button className="removeField" onClick={() => {this.removeAnswer(i, j)}}></button>
                   <span className="description">{answer.title}</span>
                 </div>
               </li>
@@ -143,18 +155,19 @@ export default class CreateGame extends React.Component {
             return (
               <li key={answer.id}>
               <div className="flex-container">
-                  <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
+                  <button className="removeField" onClick={() => {this.removeAnswer(i, j)}}></button>
                   <input
                   className="input-inline"
                   type="text"
                   autoFocus
                   onBlur={()=> {this.toggleAnswer(i, j)}}
+                  onKeyPress={(e) => {this.detectKey(e, i, j)}}
                   onChange={(e) => {this.updateAnswer(e, answer, i, j)}} />
                 </div>
               </li>
             );
           }
-    
+
         });
         return React.createElement('ul', {className: 'sub-sublist'}, answers);
     }
