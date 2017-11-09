@@ -58,7 +58,7 @@ export default class CreateGame extends React.Component {
               <li key={item.id} className="flex-container">
                 <button className="addField" onClick={() => {this.addAnswer(i, item.id)}}></button>
                 <button className="removeField" onClick={() => {this.removeField(i)}}></button>
-                <button className="btn-h"><h3 onClick={() => {this.toggleField(i)}}>{item.title}</h3></button>
+                <button className="btn-h" onKeyPress={(e)=> {this.detectKey(e, i)}}><h3 onClick={() => {this.toggleField(i)}}>{item.title}</h3></button>
                 {list}
               </li>);
           }
@@ -68,7 +68,7 @@ export default class CreateGame extends React.Component {
                 <button className="addField" onClick={() => {this.addAnswer(i, item.id)}}></button>
                 <button className="removeField" onClick={() => {this.removeField(i)}}></button>
                 <button className="btn-h">
-                    <h3 style={{width: 100 + '%'}}><input
+                    <h3><input
                   autoFocus
                   className="input-inline"
                   type="text"
@@ -143,10 +143,10 @@ export default class CreateGame extends React.Component {
         let answers = fieldColumn.answers.map((answer, j) => {
           if(!answer.edit){
             return (
-              <li key={answer.id} onClick={()=> {this.toggleAnswer(i, j)}}>
+              <li key={answer.id}>
                 <div className="flex-container">
                   <button className="removeField" onClick={() => {this.removeAnswer(i, j)}}></button>
-                  <span className="description">{answer.title}</span>
+                  <button className="btn-h" onKeyPress={(e)=> {this.detectKey(e, i, j)}} onClick={()=> {this.toggleAnswer(i, j)}}><h4 className="description">{answer.title}</h4></button>
                 </div>
               </li>
             );
@@ -156,13 +156,15 @@ export default class CreateGame extends React.Component {
               <li key={answer.id}>
               <div className="flex-container">
                   <button className="removeField" onClick={() => {this.removeAnswer(i, j)}}></button>
-                  <input
-                  className="input-inline"
-                  type="text"
-                  autoFocus
-                  onBlur={()=> {this.toggleAnswer(i, j)}}
-                  onKeyPress={(e) => {this.detectKey(e, i, j)}}
-                  onChange={(e) => {this.updateAnswer(e, answer, i, j)}} />
+                  <button className="btn-h">
+                      <h3><input
+                    className="input-inline"
+                    type="text"
+                    autoFocus
+                    onBlur={()=> {this.toggleAnswer(i, j)}}
+                    onKeyPress={(e) => {this.detectKey(e, i, j)}}
+                    onChange={(e) => {this.updateAnswer(e, answer, i, j)}} /></h3>
+                  </button>
                 </div>
               </li>
             );
@@ -225,9 +227,9 @@ export default class CreateGame extends React.Component {
                 <ul>
                     {editButton}
                 </ul>
-                <button type="button" onClick={() => {this.addField()}}>Add column</button>
+                <button className="btn" type="button" onClick={() => {this.addField()}}>Add column</button>
             </div>
-            <input type="button" onClick={() => this.submitGame()} value="Submit" />
+            <input className="btn" type="button" onClick={() => this.submitGame()} value="Submit" />
           </div>
         );
     }

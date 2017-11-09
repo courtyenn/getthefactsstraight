@@ -110,25 +110,22 @@
     .sublist li {
         position: relative;
     }
-    h3 {
-        font-size: 20px;
-        display: inline-block;
-        margin-left: 15px;
-        height: 30px;
-        cursor: pointer;
-        color: white;
-        text-align: left;
-    }
     .sublist > ul > li {
-      border-bottom: 1px solid white;
-      padding: 0 0 20px 0;
+        background: #65a1a2;
+        padding: 10px;
+        border-radius: 13px;
+        margin-bottom: 20px;
     }
-    .sublist > ul > li:last-child {
-    border: none;
+    h3{
+        font-size: 20px;
+        color: white;
+    }
+    h4{
+        font-size: 14px;
+        color: white;
     }
     .flex-container{
         display: flex;
-        align-items: end;
         justify-content: space-between;
         flex-wrap: wrap;
     }
@@ -186,8 +183,6 @@
     .sub-sublist .removeField {
         width: 20px;
         height: 20px;
-        margin-right: 15px;
-        margin-left: 0;
         bottom: 0;
     }
     .sub-sublist .removeField::before {
@@ -211,6 +206,16 @@
         background: transparent;
         flex: 1 0 25%;
         text-align: left;
+        margin-left: 15px;
+        cursor: pointer;
+    }
+    .btn {
+        padding: 10px;
+        border-radius: 10px;
+        background: #738e20;
+        color: white;
+        text-transform: uppercase;
+        font-size: 15px;
     }
   </style>
  <body>
