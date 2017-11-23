@@ -12,6 +12,7 @@
     html, body, #app, .root{
         height: 100%;
         background: #f4f0ea;
+        color: black;
     }
    * {
         font-family: sans-serif;
@@ -59,9 +60,6 @@
         color: white;
         font-size: 13px;
     }
-    .content {
-        padding: 0 15px;
-    }
     .input-wide{
         font-size: 20px;
         height: 35px;
@@ -93,16 +91,10 @@
     }
     label {
         color: black;
-        font-size: 15px;
+        font-size: 14px;
         margin: 0 0 8px;
         display: block;
-        letter-spacing: 1px;
         font-weight: 900;
-    }
-    .sublist {
-        background: #458e90;
-        color: white;
-        padding: 20px;
     }
     .sublist ul{
         list-style-type: none;
@@ -111,18 +103,20 @@
         position: relative;
     }
     .sublist > ul > li {
-        background: #65a1a2;
-        padding: 10px;
+        padding: 10px 0;
         border-radius: 13px;
+        margin-bottom: 10px;
+        background: #dbe9ec;
+    }
+    .sublist > ul > li:last-child{
         margin-bottom: 20px;
     }
+
     h3{
         font-size: 20px;
-        color: white;
     }
     h4{
         font-size: 14px;
-        color: white;
     }
     .flex-container{
         display: flex;
@@ -146,8 +140,9 @@
       position: relative;
       width: 30px;
       height: 30px;
-      background: lime;
+      background: #82ce82;
       border-radius: 50%;
+      cursor: pointer;
     }
     .removeField {
       margin-left: 5px;
@@ -156,6 +151,7 @@
       background: #b93434;
       position: relative;
       border-radius: 50%;
+      cursor: pointer;
     }
     .addField:before {
         content: '+';
@@ -194,12 +190,12 @@
         top: -3px;
     }
     .sub-sublist {
-        margin-left: 77px;
+        padding-left: 77px;
         width: 100%;
+        background: #deedf1;
     }
     .sub-sublist li {
-        padding-left: 75px;
-        height: 30px;
+        padding: 10px 0;
     }
     .btn-h {
         border: none;
@@ -211,11 +207,36 @@
     }
     .btn {
         padding: 10px;
-        border-radius: 10px;
-        background: #738e20;
+        background: #5e9ea0;
         color: white;
-        text-transform: uppercase;
         font-size: 15px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .primary {
+        text-transform: uppercase;
+        margin: 0 auto;
+        display: block;
+        font-size: 21px;
+        background: #82ce82;
+    }
+    .title{
+        background: transparent;
+        border: none;
+        font-size: 30px;
+        height: 45px;
+        border-bottom: 4px solid #5e9ea0;
+        text-align: center;
+    }
+    .quiz {
+        padding: 20px 10px 10px;
+        background: white;
+    }
+    .list-header{
+        width: 100%;
+        border-radius: 13px 13px 0 0;
+        background: #dbe9ec;
+        padding: 0 10px 10px;
     }
   </style>
  <body>
