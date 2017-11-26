@@ -119,12 +119,14 @@ export default class Sublist extends React.Component {
           <li key={answer.id}>
           <div className="flex-container">
               <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
+              <span className="description">
               <input
               className="input-inline"
               type="text"
               autoFocus
               onBlur={()=> {this.toggleAnswer(i, j)}}
               onChange={(e) => {this.updateAnswer(e, answer, i, j)}} />
+              </span>
             </div>
           </li>
         );

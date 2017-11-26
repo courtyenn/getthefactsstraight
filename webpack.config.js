@@ -13,7 +13,7 @@ fs.readdirSync('node_modules')
 
 var clientConfig = {
     entry: {
-        "./public/game": ["babel-polyfill", "./src/game/index"],
+        "./public/index": ["babel-polyfill", "./src/base/index"],
         "./public/creation": ["babel-polyfill", "./src/creation/index"]
     },
     output: {

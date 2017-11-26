@@ -162,8 +162,8 @@ export default class CreateGame extends React.Component {
                         <div className="flex-container">
                             <button className="removeField" onClick={() => {this.removeAnswer(i, j)}}></button>
                             <button className="btn-h" onKeyPress={(e)=> {this.detectKey(e, i, j)}}
-                                    onClick={()=> {this.toggleAnswer(i, j)}}><h4
-                                className="description">{answer.title}</h4></button>
+                                    onClick={()=> {this.toggleAnswer(i, j)}}>
+                                <h4 className="description">{answer.title}</h4></button>
                         </div>
                     </li>
                 );
@@ -174,13 +174,13 @@ export default class CreateGame extends React.Component {
                         <div className="flex-container">
                             <button className="removeField" onClick={() => {this.removeAnswer(i, j)}}></button>
                             <button className="btn-h">
-                                <h3><input
+                                <h4 className="description"><input
                                     className="input-inline"
                                     type="text"
                                     autoFocus
                                     onBlur={()=> {this.toggleAnswer(i, j)}}
                                     onKeyPress={(e) => {this.detectKey(e, i, j)}}
-                                    onChange={(e) => {this.updateAnswer(e, answer, i, j)}}/></h3>
+                                    onChange={(e) => {this.updateAnswer(e, answer, i, j)}}/></h4>
                             </button>
                         </div>
                     </li>

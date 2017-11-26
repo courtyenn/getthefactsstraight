@@ -102,9 +102,9 @@ var _mongoose = __webpack_require__(0);
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
 
-var _quiz = __webpack_require__(7);
+var _quiz2 = __webpack_require__(7);
 
-var _quiz2 = _interopRequireDefault(_quiz);
+var _quiz3 = _interopRequireDefault(_quiz2);
 
 var _ejs = __webpack_require__(8);
 
@@ -129,15 +129,15 @@ app.engine('html', _ejs2.default.renderFile);
 app.set('view engine', 'ejs');
 app.set('views', './static/views');
 
-app.get('/', function (req, res) {
-    console.log('rendering index');
-    res.render('game.html');
-});
+// app.get('/', (req, res) => {
+//     console.log('rendering index')
+//     res.render('game.html')
+// })
 
 app.post('/quiz', function (req, res) {
 
     if (req.query.json) {
-        var quiz = new _quiz2.default();
+        var quiz = new _quiz3.default();
         quiz.game = req.body.quiz;
         quiz.created = Date.now();
         quiz.title = req.body.title;
@@ -145,12 +145,12 @@ app.post('/quiz', function (req, res) {
             res.redirect('/quiz/' + data._id);
         });
     } else {
-        var quiz = new _quiz2.default();
-        quiz.columns = req.body.columns;
-        quiz.choices = req.body.choices;
-        quiz.created = Date.now();
-        quiz.title = req.body.title;
-        quiz.save(function (err, data) {
+        var _quiz = new _quiz3.default();
+        _quiz.columns = req.body.columns;
+        _quiz.choices = req.body.choices;
+        _quiz.created = Date.now();
+        _quiz.title = req.body.title;
+        _quiz.save(function (err, data) {
             if (data && data._id) {
                 res.json({ redirect: '/quiz/' + data._id });
             } else {
@@ -164,36 +164,44 @@ app.post('/answer', function (req, res) {
     res.json(_memoryCache2.default.get(req.body.answerId) === req.body.columnId);
 });
 
-app.get('/quiz', function (req, res) {
-    res.render('create.html');
-});
+// app.get('/quiz', (req, res) => {
+//     res.render('create.html')
+// })
 
 app.get('/quiz/:id', function (req, res) {
     console.log('GETTING QUIZ ID', req.params.id);
-    _quiz2.default.findOne({ _id: req.params.id }, function (err, quiz) {
+    _quiz3.default.findOne({ _id: req.params.id }, function (err, quiz) {
         var game = void 0;
-        var title = quiz.title;
+        var title = void 0;
 
-        if (quiz.game) {
-            game = quiz.game;
-        } else {
-            game = JSON.stringify({ columns: quiz.columns, choices: quiz.choices });
+        if (quiz) {
+            var _title = quiz.title;
+            if (quiz.game) {
+                game = quiz.game;
+            } else {
+                game = JSON.stringify({ columns: quiz.columns, choices: quiz.choices });
+            }
+
+            quiz.choices.forEach(function (answer) {
+                _memoryCache2.default.put(answer.id, answer.correctId);
+                delete answer.correctId;
+            });
         }
 
-        quiz.choices.forEach(function (answer) {
-            _memoryCache2.default.put(answer.id, answer.correctId);
-            delete answer.correctId;
-        });
+        res.json({ game: game, title: title });
 
-        console.log(title);
-        res.render('game.html', { game: game, title: title });
+        // res.render('game.html', { game, title })
     }).lean();
 });
 
-app.get('/quizzes', function (req, res) {
-    _quiz2.default.find({}).sort({ created: 1 }).exec(function (err, data) {
-        res.render('list.html', { list: data });
-    });
+// app.get('/quizzes', (req, res) => {
+//     Quiz.find({}).sort({ created: 1 }).exec(function (err, data) {
+//         res.render('list.html', { list: data })
+//     })
+// })
+
+app.get('*', function (req, res) {
+    res.render('index.html');
 });
 
 app.listen(3006, function () {

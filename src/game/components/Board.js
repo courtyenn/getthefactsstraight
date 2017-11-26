@@ -12,18 +12,15 @@ const dragDropManager = new DragDropManager();
 
 let Board = React.createClass({
   mixins: [Reflux.connect(boardStore, "boardState")],
-  componentDidMount: function(){
-    // this.listenTo(boardStore, this.handleSetBoard);
-  },
   onGameOver: function(){
     console.log('SETTING GAME OVER');
     this.show = true;
   },
   render: function(){
-    var columns = this.renderColumns();
-    var choices = this.renderChoices();
-    var message = this.getMessage();
-    var style = {
+    let columns = this.renderColumns();
+    let choices = this.renderChoices();
+    let message = this.getMessage();
+    let style = {
       display: 'none'
     };
     if(this.state.boardState.gameOver == true){

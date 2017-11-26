@@ -1,0 +1,292 @@
+$white : #f4f0ea;
+$black : black;
+$primary : cadetblue;
+$secondary : seashell;
+$family : monospace;
+$success : #69b908;
+$danger : #b93434;
+$card : #ecf0f1;
+$card-border : #e0e0e0;
+$card-shadow : #edf1f3;
+$btn-shadow : #b5b5b5;
+$sub-sublist : #e2e6e6;
+
+* {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body, #app, .root {
+    height: 100%;
+    background: $white;
+    color: $black;
+}
+
+.wrapper {
+    width: 600px;
+}
+
+button {
+    border: none;
+}
+
+input[type="submit"] {
+    font-size: 20px;
+    height: 35px;
+    background: $success;
+    color: $white;
+    padding: 6px 10px;
+    border: none;
+    margin-top: 20px;
+}
+
+textarea {
+    height: 800px;
+}
+
+h1 {
+    font-size: 25px;
+    margin: 30px 0 20px;
+    text-align: center;
+    color: $black;
+}
+
+label {
+    color: $black;
+    font-size: 14px;
+    margin: 0 0 8px;
+    display: block;
+    font-weight: 900;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+h4 {
+    font-size: 14px;
+}
+
+/** LISTS **/
+.sublist {
+    margin: 0 0 30px 0;
+    ul {
+        list-style-type: none;
+    }
+    li {
+        position: relative;
+    }
+
+    > ul > li {
+        padding: 10px 0;
+        border-radius: 13px;
+        margin-bottom: 10px;
+        background: $card;
+        border: 1px solid $card-border;
+        box-shadow: 1px 1px 1px 1px $card-shadow;
+
+        &:last-child {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.sub-sublist {
+    padding-left: 77px;
+    width: 100%;
+    background: $sub-sublist;
+    li {
+        padding: 10px 0;
+    }
+}
+
+.list-header {
+    width: 100%;
+    border-radius: 13px 13px 0 0;
+    padding: 0 10px 10px;
+}
+
+.list-header .btn-h {
+    margin: 0 0 0 15px;
+}
+
+/** END LISTS **/
+
+/** FORMAT **/
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .description {
+        flex: 1 0 53%;
+    }
+}
+.input-wide {
+    font-size: 20px;
+    height: 35px;
+    margin: 0 0 36px 0;
+    width: 100%;
+}
+.input-inline {
+    border: none;
+    height: 26px;
+    font-size: 17px;
+    padding-left: 5px;
+    width: 100%;
+}
+.title {
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    height: 45px;
+    border-bottom: 4px solid #5e9ea0;
+    text-align: center;
+}
+
+/** END FORMAT **/
+
+/** NAVIGATION **/
+nav {
+    background: $primary;
+    color: $secondary;
+    display: flex;
+    padding: 7px 0;
+    .logo {
+        width: 50%;
+        font-size: 20px;
+        font-family: $family;
+        text-align: center;
+        a {
+            color: $white;
+            text-decoration: none;
+            font-family: $family;
+        }
+    }
+    .menu {
+        list-style-type: none;
+        text-align: right;
+        width: 48%;
+        li {
+            display: inline-block;
+            margin: 0px 15px;
+            a {
+                text-decoration: none;
+                color: $white;
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+/** END NAVIGATION **/
+/** GAME **/
+.endGame {
+    display: none;
+    position: fixed;
+    width: 450px;
+    height: 200px;
+    background: $white;
+    border: 2px solid $success;
+    top: 50%;
+    z-index: 10;
+    left: 50%;
+    padding: 30px;
+    margin-left: -250px;
+    margin-top: -100px;
+}
+.endGame.show {
+    display: block;
+}
+
+/** END GAME **/
+
+.addField, .removeField {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 1px $btn-shadow;
+}
+
+.addField {
+    background: $success;
+    &::before {
+        content: '+';
+        display: block;
+        position: absolute;
+        font-size: 30px;
+        font-weight: 900;
+        top: -5px;
+        left: 6px;
+        color: $white;
+    }
+}
+
+.removeField {
+    margin-left: 5px;
+    background: $danger;
+    &::before {
+        content: '-';
+        display: block;
+        position: absolute;
+        font-size: 40px;
+        font-weight: 900;
+        width: 100%;
+        height: inherit;
+        text-align: center;
+        line-height: 1;
+        top: -6px;
+        color: $white;
+    }
+}
+
+.sub-sublist .removeField {
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+}
+
+.sub-sublist .removeField::before {
+    font-size: 25px;
+    font-weight: 900;
+    width: 100%;
+    height: inherit;
+    text-align: center;
+    top: -3px;
+}
+
+.btn-h {
+    border: none;
+    background: transparent;
+    flex: 1 0 25%;
+    text-align: left;
+    margin: 0 10px 0 15px;
+    cursor: pointer;
+    color: #5f5d5d;
+    text-shadow: 0px 1px #cecece;
+}
+
+.btn {
+    padding: 10px;
+    background: #5e9ea0;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.primary {
+    text-transform: uppercase;
+    margin: 0 auto;
+    display: block;
+    font-size: 21px;
+    background: #82ce82;
+}
+
+.quiz {
+    padding: 30px 10px 40px;
+    background: white;
+}
