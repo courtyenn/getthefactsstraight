@@ -18,17 +18,12 @@ app.engine('html', ejs.renderFile)
 app.set('view engine', 'ejs')
 app.set('views', './static/views')
 
-// app.get('/', (req, res) => {
-//     console.log('rendering index')
-//     res.render('game.html')
-// })
-
 app.post('/quiz', (req, res) => {
 
     if (req.query.json) {
         let quiz = new Quiz()
         quiz.game = req.body.quiz
-        quiz.created = Date.now()
+        quiz.createdDate = Date.now()
         quiz.title = req.body.title
         quiz.save((err, data) => {
             res.redirect('/quiz/' + data._id)
@@ -38,7 +33,7 @@ app.post('/quiz', (req, res) => {
         let quiz = new Quiz()
         quiz.columns = req.body.columns
         quiz.choices = req.body.choices
-        quiz.created = Date.now()
+        quiz.createdDate = Date.now()
         quiz.title = req.body.title
         quiz.save((err, data) => {
             if(data && data._id) {
@@ -55,10 +50,6 @@ app.post('/answer', (req, res) => {
     res.json(mcache.get(req.body.answerId) === req.body.columnId)
 })
 
-// app.get('/quiz', (req, res) => {
-//     res.render('create.html')
-// })
-
 app.get('/quiz/:id', (req, res) => {
     console.log('GETTING QUIZ ID', req.params.id)
     Quiz.findOne({ _id: req.params.id }, (err, quiz) => {
@@ -67,8 +58,8 @@ app.get('/quiz/:id', (req, res) => {
 
         if(quiz) {
             let title = quiz.title
-            if (quiz.game) {
-                game = quiz.game
+            if (quiz) {
+                game = quiz
             }
             else {
                 game = JSON.stringify({columns: quiz.columns, choices: quiz.choices})
@@ -82,15 +73,24 @@ app.get('/quiz/:id', (req, res) => {
 
         res.json({game, title});
 
-        // res.render('game.html', { game, title })
     }).lean()
 })
 
-// app.get('/quizzes', (req, res) => {
-//     Quiz.find({}).sort({ created: 1 }).exec(function (err, data) {
-//         res.render('list.html', { list: data })
-//     })
-// })
+app.get('/quizzes', (req, res) => {
+    Quiz.find({}).lean().sort({ createdDate: 1 }).exec(function (err, data) {
+        let quizzes = []
+        quizzes = data.map(quiz => {
+            if(quiz.possibleStars > 0) {
+                quiz.topRated = quiz.totalStars / quiz.possibleStars
+            }
+            else {
+                quiz.topRated = 0
+            }
+            return quiz
+        })
+        res.json({ games: quizzes })
+    })
+})
 
 app.get('*', (req, res) => {
     res.render('index.html')

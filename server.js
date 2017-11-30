@@ -129,17 +129,12 @@ app.engine('html', _ejs2.default.renderFile);
 app.set('view engine', 'ejs');
 app.set('views', './static/views');
 
-// app.get('/', (req, res) => {
-//     console.log('rendering index')
-//     res.render('game.html')
-// })
-
 app.post('/quiz', function (req, res) {
 
     if (req.query.json) {
         var quiz = new _quiz3.default();
         quiz.game = req.body.quiz;
-        quiz.created = Date.now();
+        quiz.createdDate = Date.now();
         quiz.title = req.body.title;
         quiz.save(function (err, data) {
             res.redirect('/quiz/' + data._id);
@@ -148,7 +143,7 @@ app.post('/quiz', function (req, res) {
         var _quiz = new _quiz3.default();
         _quiz.columns = req.body.columns;
         _quiz.choices = req.body.choices;
-        _quiz.created = Date.now();
+        _quiz.createdDate = Date.now();
         _quiz.title = req.body.title;
         _quiz.save(function (err, data) {
             if (data && data._id) {
@@ -164,10 +159,6 @@ app.post('/answer', function (req, res) {
     res.json(_memoryCache2.default.get(req.body.answerId) === req.body.columnId);
 });
 
-// app.get('/quiz', (req, res) => {
-//     res.render('create.html')
-// })
-
 app.get('/quiz/:id', function (req, res) {
     console.log('GETTING QUIZ ID', req.params.id);
     _quiz3.default.findOne({ _id: req.params.id }, function (err, quiz) {
@@ -176,8 +167,8 @@ app.get('/quiz/:id', function (req, res) {
 
         if (quiz) {
             var _title = quiz.title;
-            if (quiz.game) {
-                game = quiz.game;
+            if (quiz) {
+                game = quiz;
             } else {
                 game = JSON.stringify({ columns: quiz.columns, choices: quiz.choices });
             }
@@ -189,16 +180,23 @@ app.get('/quiz/:id', function (req, res) {
         }
 
         res.json({ game: game, title: title });
-
-        // res.render('game.html', { game, title })
     }).lean();
 });
 
-// app.get('/quizzes', (req, res) => {
-//     Quiz.find({}).sort({ created: 1 }).exec(function (err, data) {
-//         res.render('list.html', { list: data })
-//     })
-// })
+app.get('/quizzes', function (req, res) {
+    _quiz3.default.find({}).lean().sort({ createdDate: 1 }).exec(function (err, data) {
+        var quizzes = [];
+        quizzes = data.map(function (quiz) {
+            if (quiz.possibleStars > 0) {
+                quiz.topRated = quiz.totalStars / quiz.possibleStars;
+            } else {
+                quiz.topRated = 0;
+            }
+            return quiz;
+        });
+        res.json({ games: quizzes });
+    });
+});
 
 app.get('*', function (req, res) {
     res.render('index.html');
@@ -427,23 +425,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Schema = _mongoose2.default.Schema;
 
 var Column = {
-  title: String,
-  value: String,
-  id: String
+    title: String,
+    value: String,
+    id: String
 };
 var Choice = {
-  title: String,
-  value: String,
-  id: String,
-  correctId: String
+    title: String,
+    value: String,
+    id: String,
+    correctId: String
 };
 
 var quizSchema = new Schema({
-  title: String,
-  game: String,
-  columns: [Column],
-  choices: [Choice],
-  created: Date
+    title: String,
+    game: String,
+    columns: [Column],
+    choices: [Choice],
+    createdDate: Date,
+    popularity: { type: Number, default: 0 },
+    possibleStars: { type: Number, default: 0 },
+    totalStars: { type: Number, default: 0 }
 });
 
 module.exports = _mongoose2.default.model('Quiz', quizSchema);

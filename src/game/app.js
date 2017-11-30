@@ -1,20 +1,44 @@
-import React from 'react';
+import React from 'react'
+import Reflux from 'reflux'
+import axios from 'axios'
 
-import AppStore from './AppStore';
-import Board from './components/Board';
-import CuteData from './cuteData';
+import AppStore from './AppStore'
+import Actions from './actions'
+import Board from './components/Board'
+import CuteData from './cuteData'
 
-CuteData.init();
+CuteData.init()
 
-let appStore = AppStore;
-let appState = appStore.getInitialState();
+// let appStore = AppStore
+// let appState = appStore.getInitialState()
 
-let App =  React.createClass({
-  render: function(){
-    return (
-      <Board {...appState.game} />
-    )
-  }
-});
+export default class App extends Reflux.Component {
 
-export default App;
+    constructor(){
+        super()
+        this.state = {}
+        this.store = AppStore;
+    }
+    componentDidMount(){
+        if(this.props.match) {
+            let quizId = this.props.match.params.id
+
+            axios.get(`/quiz/${quizId}`).then((res) => {
+                Actions.setGame({game: res.data.game})
+                // appStore.onSetGame({game: res.data.game})
+            })
+        }
+    }
+
+    render () {
+        console.log(this.props);
+        if(this.state.game) {
+            return (
+                <Board {...this.state.game} />
+            )
+        }
+        else {
+            return (<div>Loading...</div>)
+        }
+    }
+}

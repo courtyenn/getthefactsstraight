@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Nav from './Nav';
 import Home from './Home';
 import Game from '../game/app';
-import Create from '../creation/index';
+import Create from '../creation/index'
+import ListGames from './ListGames'
 
 let getTheFactsStraight = () => (
     <div>
@@ -15,7 +16,8 @@ let getTheFactsStraight = () => (
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/create" component={Create} />
-                    <Route exact path="/:id" component={Game} />
+                    <Route exact path="/all" component={ListGames} />
+                    <Route path="/:id" component={Game} />
                 </Switch>
             </div>
         </Router>

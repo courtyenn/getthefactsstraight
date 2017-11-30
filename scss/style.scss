@@ -10,6 +10,7 @@ $card-border : #e0e0e0;
 $card-shadow : #edf1f3;
 $btn-shadow : #b5b5b5;
 $sub-sublist : #e2e6e6;
+$link: #7ecbce;
 
 * {
     font-family: sans-serif;
@@ -22,6 +23,11 @@ html, body, #app, .root {
     height: 100%;
     background: $white;
     color: $black;
+}
+
+a {
+    text-decoration: none;
+    color: $link;
 }
 
 .wrapper {
@@ -143,6 +149,12 @@ h4 {
     height: 45px;
     border-bottom: 4px solid #5e9ea0;
     text-align: center;
+}
+.listing {
+    text-align: center;
+    li {
+        padding: 5px 0;
+    }
 }
 
 /** END FORMAT **/

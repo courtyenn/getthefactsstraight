@@ -4,27 +4,32 @@ import { DropTarget } from 'react-dragndrop';
 import Actions from '../actions';
 import ChoiceStyles from '../styles/ChoiceStyle';
 
-let Column = React.createClass({
-  render: function(){
-    var listItems = this.props.list.map((item, index) => {
-      var style = ChoiceStyles.Correct;
-      if(item.correctId !== this.props.id){
-        style = ChoiceStyles.Incorrect;
-      }
-      return (<li key={"column-" + index} style={style}>{item.title}</li>);
-    });
-    return (
-      <DropTarget
-      manager={this.props.manager}
-      handleDroppedDraggable={this.props.handleDrop}
-      style={this.props.style}>
-        <h2>{this.props.title}</h2>
-        <ul>
-          {listItems}
-        </ul>
-      </DropTarget>
-    );
-  }
-});
-
-export default Column;
+export default class Column extends React.Component {
+    constructor(){
+        super()
+        this.test = this.test.bind(this)
+    }
+    test(drag, drop){
+        this.props.handleDrop(drag, drop, this.props.index)
+    }
+    render () {
+        var listItems = this.props.list.map((item, index) => {
+            var style = ChoiceStyles.Correct
+            if (!item.correct) {
+                style = ChoiceStyles.Incorrect
+            }
+            return (<li key={"column-" + index} style={style}>{item.title}</li>);
+        })
+        return (
+            <DropTarget
+                manager={this.props.manager}
+                handleDroppedDraggable={this.test}
+                style={this.props.style}>
+                <h2>{this.props.title}</h2>
+                <ul>
+                    {listItems}
+                </ul>
+            </DropTarget>
+        );
+    }
+}
