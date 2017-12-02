@@ -4,7 +4,7 @@
     "description": "",
     "scripts": {
         "sass": "gulp",
-        "webpack": "webpack --progress --colors --watch",
+        "webpack": "webpack --progress --colors",
         "prestart": "webpack",
         "start": "node server.js"
     },
@@ -27,6 +27,7 @@
         "express": "^4.16.2",
         "express-dustjs": "^1.1.1",
         "gulp-cli": "^1.2.2",
+        "immutable": "^3.8.2",
         "memory-cache": "^0.2.0",
         "mongoose": "^4.13.0",
         "nodemon": "^1.10.2",

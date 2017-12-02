@@ -15,6 +15,7 @@ export default class Board extends Reflux.Component {
         this.state = {}
         this.store = AppStore
         this.handleDroppedDraggable = this.handleDroppedDraggable.bind(this)
+        this.hideChoice = this.hideChoice.bind(this)
     }
 
     // mixins: [Reflux.connect(boardStore, "boardState")],
@@ -65,6 +66,10 @@ export default class Board extends Reflux.Component {
         Actions.choiceDropped(choiceIndex, index);
     }
 
+    hideChoice(index){
+        Actions.removeChoice(index)
+    }
+
     handleDrop(drop, drag, index){
         this.handleDroppedDraggable(drop, drag, index)
     }
@@ -86,7 +91,7 @@ export default class Board extends Reflux.Component {
     renderChoices () {
         var choices = this.props.choices.map((choice, index) => {
             return (
-                <Choice index={index} {...choice} manager={dragDropManager} key={index + "-choice"}
+                <Choice index={index} {...choice} manager={dragDropManager} handleDrop={() => this.hideChoice(index)} key={index + "-choice"}
                         id={index + "-choice"}/>
             );
         });

@@ -2,6 +2,7 @@ import Reflux from 'reflux'
 import axios from 'axios'
 import Actions from './actions'
 import CuteData from './cuteData'
+import { List, Map } from 'immutable'
 
 CuteData.init();
 
@@ -24,7 +25,6 @@ function shuffle (array) {
     return array;
 }
 
-let originalGame;
 
 export default class AppStore extends Reflux.Store {
 
@@ -32,6 +32,8 @@ export default class AppStore extends Reflux.Store {
         super()
         this.state = {};
         this.listenables = Actions
+        this.originalGame;
+        this.defaultChoices = [];
     }
 
     getInitialState () {
@@ -39,10 +41,10 @@ export default class AppStore extends Reflux.Store {
         let choices
         let title
 
-        if (originalGame) {
-            columns = originalGame.columns
-            choices = originalGame.choices
-            title = originalGame.title
+        if (this.originalGame) {
+            columns = this.originalGame.columns.toJS()
+            choices = this.originalGame.choices.toJS()
+            title = this.originalGame.title
         }
         else if (window.game) {
             columns = JSON.parse(JSON.stringify(window.game.columns))
@@ -55,9 +57,6 @@ export default class AppStore extends Reflux.Store {
             title = JSON.parse(localStorage.getItem('game')).title
         }
 
-
-        columns.forEach(column => column.list = []);
-        choices = shuffle(choices);
         return {
             game: {
                 title: title,
@@ -79,26 +78,43 @@ export default class AppStore extends Reflux.Store {
         return this.state;
     }
     setGame (gameState) {
-        originalGame = Object.assign({}, gameState.game)
-        gameState.game.columns.forEach(column => {
-            column.list = []
+        this.originalGame = Map(gameState.game)
+        this.originalGame.title = gameState.game.title
+        let newColumns = gameState.game.columns.map(column => {
+            column.list = List([])
+            return Map(column)
         })
-        this.state = this.getInitialState()
-        this.trigger(this.state);
+        const clonedChoices = shuffle(gameState.game.choices).map( choice => {
+            return Map(choice)
+        })
+
+        gameState.game.columns.forEach(column => column.list = [])
+        this.originalGame.choices = List(clonedChoices)
+        this.originalGame.columns = List(newColumns)
+
+        this.state = {
+            game: {
+                title: gameState.game.title,
+                columns: gameState.game.columns,
+                choices: shuffle(gameState.game.choices),
+                totalCorrect: 0,
+                totalAnswered: 0,
+                gameOver: false
+            }
+        }
+        this.trigger(this.state)
     }
 
     gameOver () {
-        console.log('GAME OVER');
-        this.state.game.gameOver = true;
-        // this.trigger(this.boardState);
+        console.log('GAME OVER')
+        this.state.game.gameOver = true
     }
 
-    inspectChoice (choiceIndex, columnIndex) {
+    inspectChoice (choiceId, columnId) {
         return new Promise((resolve, reject) => {
-            this.state.game.totalAnswered += 1;
             axios.post('/answer', {
-                columnId: this.state.game.columns[columnIndex].id,
-                answerId: this.state.game.choices[choiceIndex].id
+                columnId: columnId,
+                answerId: choiceId
             }).then(data => {
                 resolve(data.data);
             });
@@ -107,17 +123,26 @@ export default class AppStore extends Reflux.Store {
 
     async choiceDropped (choiceIndex, index) {
         if (this.state) {
-            var choice = this.state.game.choices[choiceIndex];
-            let correct = await this.inspectChoice(choiceIndex, index);
+            let choice = this.state.game.choices[choiceIndex];
+            let column = this.state.game.columns[index];
+            this.state.game.choices.splice(choiceIndex, 1)
+            let correct = await this.inspectChoice(choice.id, column.id);
             choice.correct = correct;
-            this.state.game.totalCorrect += 1;
+            if(correct) {
+                this.state.game.totalCorrect += 1;
+            }
+            this.state.game.totalAnswered += 1;
             this.state.game.columns[index].list.push(choice);
-            this.state.game.choices.splice(choiceIndex, 1);
             if (this.state.game.choices.length == 0) {
                 Actions.gameOver();
             }
             this.trigger(this.state);
         }
     }
+
+    // removeChoice(choiceIndex){
+    //     this.state.game.choices.splice(choiceIndex, 1)
+    //     this.trigger(this.state)
+    // }
 }
 
