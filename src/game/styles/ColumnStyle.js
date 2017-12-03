@@ -2,7 +2,8 @@ var ColumnStyle = {
     "Container": {
         "display": "flex",
         "justifyContent": "center",
-        "marginBottom": "30px"
+        "marginBottom": "30px",
+        "minHeight": "700px"
     },
 	"Base": {
 		"display": "inline-block",

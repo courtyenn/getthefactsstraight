@@ -37,28 +37,30 @@ export default class AppStore extends Reflux.Store {
     }
 
     getInitialState () {
-        let columns
-        let choices
-        let title
+        let columns, choices, title, _id
 
         if (this.originalGame) {
             columns = this.originalGame.columns.toJS()
             choices = this.originalGame.choices.toJS()
             title = this.originalGame.title
+            _id = this.originalGame._id
         }
         else if (window.game) {
             columns = JSON.parse(JSON.stringify(window.game.columns))
             choices = JSON.parse(JSON.stringify(window.game.choices))
             title = window.game.title
+            _id = window.game._id
         }
         else {
             columns = JSON.parse(localStorage.getItem('game')).columns
             choices = JSON.parse(localStorage.getItem('game')).choices
             title = JSON.parse(localStorage.getItem('game')).title
+            _id = JSON.parse(localStorage.getItem('game'))._id
         }
 
         return {
             game: {
+                _id: _id,
                 title: title,
                 columns: columns,
                 choices: choices,
@@ -67,6 +69,10 @@ export default class AppStore extends Reflux.Store {
                 gameOver: false
             }
         }
+    }
+
+    wipeGame(){
+        this.state.game = null
     }
 
     onReset () {
@@ -80,6 +86,7 @@ export default class AppStore extends Reflux.Store {
     setGame (gameState) {
         this.originalGame = Map(gameState.game)
         this.originalGame.title = gameState.game.title
+        this.originalGame._id = gameState.game._id
         let newColumns = gameState.game.columns.map(column => {
             column.list = List([])
             return Map(column)
@@ -124,20 +131,21 @@ export default class AppStore extends Reflux.Store {
 
     async choiceDropped (choiceIndex, index) {
         if (this.state) {
-            let choice = this.state.game.choices[choiceIndex];
-            let column = this.state.game.columns[index];
+            let choice = this.state.game.choices[choiceIndex]
+            let column = this.state.game.columns[index]
             this.state.game.choices.splice(choiceIndex, 1)
-            let correct = await this.inspectChoice(choice.id, column.id);
-            choice.correct = correct;
+            this.trigger(this.state)
+            let correct = await this.inspectChoice(choice.id, column.id)
+            choice.correct = correct
             if(correct) {
-                this.state.game.totalCorrect += 1;
+                this.state.game.totalCorrect += 1
             }
-            this.state.game.totalAnswered += 1;
-            this.state.game.columns[index].list.push(choice);
+            this.state.game.totalAnswered += 1
+            this.state.game.columns[index].list.push(choice)
             if (this.state.game.choices.length == 0) {
-                Actions.gameOver();
+                Actions.gameOver()
             }
-            this.trigger(this.state);
+            this.trigger(this.state)
         }
     }
 

@@ -25,7 +25,6 @@ export default class App extends Reflux.Component {
 
             axios.get(`/quiz/${quizId}`).then((res) => {
                 Actions.setGame({game: res.data.game})
-                // appStore.onSetGame({game: res.data.game})
             })
         }
     }
@@ -34,11 +33,15 @@ export default class App extends Reflux.Component {
         console.log(this.props);
         if(this.state.game) {
             return (
-                <Board {...this.state.game} />
+                <Board {...this.state.game} ref="test"/>
             )
         }
         else {
-            return (<div>Loading...</div>)
+            return (
+                <div>
+                    <Board columns={[]} choices={[]} title={``}/>
+                </div>
+            )
         }
     }
 }

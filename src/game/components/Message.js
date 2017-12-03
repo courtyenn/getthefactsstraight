@@ -11,13 +11,12 @@ export default class Message extends React.Component {
             isBlocking: false
         }
     }
-    handleQuizBusiness(){
-        console.log('handling everything')
-    }
     async componentWillUnmount(){
-        await axios.post(`/quiz/${this.props.quizId}/rate`, {rating: this.state.rating}).then((res) => {
-            console.log(res.data)
-        })
+        if(this.props.quizId) {
+            await axios.post(`/quiz/${this.props.quizId}/rate`, {rating: this.state.rating}).then((res) => {
+                Actions.wipeGame()
+            })
+        }
     }
     handleReset () {
         Actions.reset();
@@ -52,9 +51,17 @@ export default class Message extends React.Component {
         )
     }
     render(){
+        let style = {
+            display: 'none'
+        };
+        if (this.props.gameOver == true) {
+            style = {
+                display: 'block'
+            }
+        }
         let message = this.getMessage();
         return (
-            <div style={this.props.style} className="endGame">
+            <div style={style} className="endGame">
                 <div className="content small">
                     <h2>Score: {this.props.totalCorrect}/{this.props.totalAnswered}</h2>
                     {this.renderStars()}

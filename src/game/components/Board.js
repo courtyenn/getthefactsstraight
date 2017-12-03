@@ -16,26 +16,15 @@ export default class Board extends Reflux.Component {
         this.state = {}
         this.store = AppStore
         this.handleDroppedDraggable = this.handleDroppedDraggable.bind(this)
-        this.hideChoice = this.hideChoice.bind(this)
     }
 
-    // mixins: [Reflux.connect(boardStore, "boardState")],
     onGameOver () {
-        console.log('SETTING GAME OVER');
         this.show = true;
     }
-
     render () {
         let columns = this.renderColumns();
         let choices = this.renderChoices();
-        let style = {
-            display: 'none'
-        };
-        if (this.props.gameOver == true) {
-            style = {
-                display: 'block'
-            }
-        }
+
         return (
             <div className="root">
                 <div className="title">
@@ -46,7 +35,7 @@ export default class Board extends Reflux.Component {
                         {choices}
                     </div>
                     {columns}
-                    <Message style={style} className="endGame" totalCorrect={this.props.totalCorrect} totalAnswered={this.props.totalAnswered} quizId={this.props._id} />
+                    <Message gameOver={this.props.gameOver} className="endGame" totalCorrect={this.props.totalCorrect} totalAnswered={this.props.totalAnswered} quizId={this.props._id} />
                 </div>
             </div>
         )
@@ -62,20 +51,16 @@ export default class Board extends Reflux.Component {
         Actions.choiceDropped(choiceIndex, index);
     }
 
-    hideChoice(index){
-        Actions.removeChoice(index)
-    }
-
-    handleDrop(drop, drag, index){
-        this.handleDroppedDraggable(drop, drag, index)
-    }
+    // hideChoice(index){
+    //     Actions.removeChoice(index)
+    // }
 
     renderColumns () {
         let columns = this.props.columns.map((column, index) => {
             return (
                 <Column {...column}
                         manager={dragDropManager}
-                        handleDrop={this.handleDroppedDraggable}
+                        handleDrop={(a, b, c) => this.handleDroppedDraggable(a, b, c)}
                         list={column.list}
                         index={index}
                         key={index + "-column"} style={ColumnStyle.Base}/>
@@ -87,7 +72,7 @@ export default class Board extends Reflux.Component {
     renderChoices () {
         var choices = this.props.choices.map((choice, index) => {
             return (
-                <Choice index={index} {...choice} manager={dragDropManager} handleDrop={() => this.hideChoice(index)} key={index + "-choice"}
+                <Choice index={index} {...choice} manager={dragDropManager} key={index + "-choice"}
                         id={index + "-choice"}/>
             );
         });
