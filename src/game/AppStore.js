@@ -94,6 +94,7 @@ export default class AppStore extends Reflux.Store {
 
         this.state = {
             game: {
+                _id: gameState.game._id,
                 title: gameState.game.title,
                 columns: gameState.game.columns,
                 choices: shuffle(gameState.game.choices),

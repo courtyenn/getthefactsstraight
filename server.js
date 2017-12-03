@@ -155,6 +155,17 @@ app.post('/quiz', function (req, res) {
     }
 });
 
+app.post('/quiz/:id/rate', function (req, res) {
+    var rating = parseInt(req.body.rating, 10);
+    var possibleStars = 0;
+    if (rating > 0) {
+        possibleStars = 5;
+    }
+    _quiz3.default.update({ _id: req.params.id }, { $inc: { popularity: 1, totalStars: rating, possibleStars: possibleStars } }, function (err, data) {
+        res.json({ success: err ? false : true });
+    });
+});
+
 app.post('/answer', function (req, res) {
     res.json(_memoryCache2.default.get(req.body.answerId) === req.body.columnId);
 });

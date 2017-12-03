@@ -46,6 +46,17 @@ app.post('/quiz', (req, res) => {
     }
 })
 
+app.post('/quiz/:id/rate', (req, res) => {
+    let rating = parseInt(req.body.rating, 10)
+    let possibleStars = 0;
+    if(rating > 0){
+        possibleStars = 5
+    }
+    Quiz.update({_id: req.params.id}, {$inc: {popularity: 1, totalStars: rating, possibleStars}}, (err, data) => {
+        res.json({success: err ? false : true})
+    })
+})
+
 app.post('/answer', (req, res) => {
     res.json(mcache.get(req.body.answerId) === req.body.columnId)
 })

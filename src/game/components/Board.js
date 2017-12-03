@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import { DragDropManager } from 'react-dragndrop';
 import { default as Choice } from './Choice';
 import Column from './Column';
+import Message from './Message';
 import ColumnStyle from './../styles/ColumnStyle';
 import Actions from '../actions';
 import AppStore from '../AppStore';
@@ -27,7 +28,6 @@ export default class Board extends Reflux.Component {
     render () {
         let columns = this.renderColumns();
         let choices = this.renderChoices();
-        let message = this.getMessage();
         let style = {
             display: 'none'
         };
@@ -46,11 +46,7 @@ export default class Board extends Reflux.Component {
                         {choices}
                     </div>
                     {columns}
-                    <div style={style} className="endGame">
-                        <h2>Score: {this.props.totalCorrect}/{this.props.totalAnswered}</h2>
-                        {message}
-                        <button onClick={this.handleReset}>Restart</button>
-                    </div>
+                    <Message style={style} className="endGame" totalCorrect={this.props.totalCorrect} totalAnswered={this.props.totalAnswered} quizId={this.props._id} />
                 </div>
             </div>
         )
@@ -96,21 +92,5 @@ export default class Board extends Reflux.Component {
             );
         });
         return choices;
-    }
-
-    handleReset () {
-        Actions.reset();
-    }
-
-    getMessage () {
-        if (this.props.totalAnswered == this.props.totalCorrect) {
-            return 'Nice job! 100%';
-        }
-        else if (this.props.totalAnswered / 2 > this.props.totalCorrect) {
-            return 'C\'mon, you can do better than that. :-)';
-        }
-        else {
-            return 'Keep on trying! Or, make your own!';
-        }
     }
 }
