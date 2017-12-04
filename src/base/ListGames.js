@@ -43,17 +43,19 @@ export default class ListGames extends React.Component {
     render () {
         let listing = this.createListing();
         return (
-            <div>
+            <div className="quiz-listing">
                 <h1 className="title">Quiz Listings</h1>
-                Filter by:
-                <select onChange={(e) => this.changeFilter(e)} value={this.state.filter}>
-                    <option value="createdDate">Most Recent</option>
-                    <option value="popularity">Most Popular</option>
-                    <option value="topRated">Top Rated</option>
-                </select>
-                <ul className="listing">
-                    {listing}
-                </ul>
+                <div className="content">
+                    Filter by:
+                    <select onChange={(e) => this.changeFilter(e)} value={this.state.filter}>
+                        <option value="createdDate">Most Recent</option>
+                        <option value="popularity">Most Popular</option>
+                        <option value="topRated">Top Rated</option>
+                    </select>
+                    <ul className="listing">
+                        {listing}
+                    </ul>
+                </div>
             </div>
         )
     }

@@ -15,6 +15,7 @@ export default class Choice extends React.Component {
       manager={this.props.manager}
       handleDrop={this.props.handleDrop}
       title={this.props.title}
+      baseClassName="draggable"
       style={this.style}>
         <h2 style={ChoiceStyle.Base}>{this.props.title}</h2>
       </Draggable>

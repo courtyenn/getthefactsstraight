@@ -1,6 +1,6 @@
 $white : #f4f0ea;
 $black : black;
-$primary : cadetblue;
+$primary : rgb(64, 129, 167);
 $secondary : seashell;
 $family : monospace;
 $success : #69b908;
@@ -12,6 +12,14 @@ $btn-shadow : #b5b5b5;
 $sub-sublist : #e2e6e6;
 $link: #7ecbce;
 $lt-success: #82ce82;
+$info: rgb(64, 129, 167);
+
+@mixin user-select($select) {
+    -webkit-user-select: $select;  /* Chrome all / Safari all */
+    -moz-user-select: $select;     /* Firefox all */
+    -ms-user-select: $select;      /* IE 10+ */
+    user-select: $select;
+}
 
 @font-face {
     font-family: 'fontello';
@@ -88,15 +96,16 @@ h4 {
     font-size: 14px;
 }
 
+ul {
+    list-style-type: none;
+}
+li {
+    position: relative;
+}
+
 /** LISTS **/
 .sublist {
     margin: 0 0 30px 0;
-    ul {
-        list-style-type: none;
-    }
-    li {
-        position: relative;
-    }
 
     > ul > li {
         padding: 10px 0;
@@ -297,6 +306,7 @@ nav {
 .btn {
     padding: 10px;
     background: $primary;
+    border: 1px solid darken($primary, 5%);
     color: white;
     font-size: 15px;
     cursor: pointer;
@@ -322,15 +332,16 @@ nav {
     display: block;
     font-size: 21px;
     background: $lt-success;
+    border: 1px solid darken($lt-success, 5%);
 }
 
 .quiz {
-    padding: 30px 10px 40px;
+    padding: 30px 0 40px;
     background: white;
 }
 
 .content {
-    margin: 20px 0;
+    margin: 0 20px;
     &.small {
         margin: 5px 0 33px;
     }
@@ -350,6 +361,10 @@ nav {
 }
 .star:first-child::before {
     margin-left: 0;
+}
+
+.draggable {
+    @include user-select(none);
 }
 
 .icon-star::before { content: '\e800'; } /* '' */
