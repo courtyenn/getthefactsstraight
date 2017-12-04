@@ -314,6 +314,7 @@ nav {
     border-radius: 4px;
     &.success{
         background: $lt-success;
+        border: 1px solid darken($lt-success, 10%);
     }
 }
 
@@ -362,9 +363,17 @@ nav {
 .star:first-child::before {
     margin-left: 0;
 }
-
+.dragging{
+    transform: rotate(-30deg);
+}
 .draggable {
     @include user-select(none);
+}
+.column-h{
+    padding-bottom: 10px;
+}
+.drop-column{
+    box-shadow: 1px 1px 6px 1px rgba(10, 10, 10, .1);
 }
 
 .icon-star::before { content: '\e800'; } /* '' */

@@ -13,8 +13,8 @@ export default class Column extends React.Component {
         this.props.handleDrop(drag, drop, this.props.index)
     }
     render () {
-        var listItems = this.props.list.map((item, index) => {
-            var style = ChoiceStyles.Correct
+        let listItems = this.props.list.map((item, index) => {
+            let style = ChoiceStyles.Correct
             if (!item.correct) {
                 style = ChoiceStyles.Incorrect
             }
@@ -23,9 +23,10 @@ export default class Column extends React.Component {
         return (
             <DropTarget
                 manager={this.props.manager}
+                className="drop-column"
                 handleDroppedDraggable={this.test}
                 style={this.props.style}>
-                <h2>{this.props.title}</h2>
+                <h2 className="column-h">{this.props.title}</h2>
                 <ul>
                     {listItems}
                 </ul>

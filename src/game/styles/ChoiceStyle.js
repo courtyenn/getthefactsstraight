@@ -36,28 +36,28 @@ var ChoiceStyle = {
   },
 	"Correct": {
     "display": "inline-block",
-    "backgroundColor": "seagreen",
+    "backgroundColor": "#2dca72",
     "width": "100px",
-    "height":"60px",
     "textAlign": "center",
     "fontFamily": "sans-serif",
-    "cursor": "-webkit-grab",
     "fontSize": "13px",
     "width": "100%",
     "margin": "0 0 15px 0",
+    "padding": "8px 4px",
+    "minHeight": "60px",
     zIndex: 2
   },
 	"Incorrect": {
     "display": "inline-block",
-    "backgroundColor": "red",
+    "backgroundColor": "#f95e56",
     "width": "100px",
-    "height":"60px",
     "textAlign": "center",
     "fontFamily": "sans-serif",
-    "cursor": "-webkit-grab",
     "fontSize": "12px",
     "width": "100%",
     "margin": "0 0 15px 0",
+    "padding": "8px 4px",
+    "minHeight": "60px",
     zIndex: 2
   }
 };
