@@ -482,17 +482,17 @@ select {
 }
 
 
-.example-leave {
+.example-exit {
     opacity: 1;
     left: 0px;
     position: relative;
 }
 
-.example-leave.example-leave-active {
+.example-exit.example-exit-active {
     opacity: 0.01;
-    left: -1000px;
+    left: -600px;
     position: absolute;
-    transition: all 300ms ease-in;
+    transition: all 800ms ease-in;
 }
 
 .icon-star::before {

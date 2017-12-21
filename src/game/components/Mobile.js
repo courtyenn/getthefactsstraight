@@ -5,13 +5,15 @@ import Column from './Column';
 import Message from './Message';
 import Actions from '../actions';
 import AppStore from '../AppStore';
-import { CSSTransitionGroup } from 'react-transition-group'
+import { CSSTransition } from 'react-transition-group'
 
 export default class Mobile extends Reflux.Component {
     constructor () {
         super()
         this.state = {
-            currentQuestion: 1
+            currentQuestion: 1,
+            loadingNextQ: false,
+            show: true
         }
         this.store = AppStore
         this.incrementCurrentQuestion = this.incrementCurrentQuestion.bind(this)
@@ -34,12 +36,13 @@ export default class Mobile extends Reflux.Component {
         let options = this.renderOptions();
         let index = this.state.currentQuestion;
         return (
-            <CSSTransitionGroup
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1000}
-                transitionAppearTimeout={2000}
-                transitionAppear={true}
-                transitionName="example"
+            <CSSTransition
+                in={this.state.show}
+                timeout={{
+                    enter: 500,
+                    exit: 2000
+                }}
+                classNames="example"
             >
                 <div key={"question-" + (index + 1)}
                      className={`mobile question active`}>
@@ -48,18 +51,25 @@ export default class Mobile extends Reflux.Component {
                         {options}
                     </div>
                 </div>
-            </CSSTransitionGroup>
+            </CSSTransition>
         )
     }
 
     incrementCurrentQuestion () {
+        let currentQuestion = this.state.currentQuestion + 1;
+        setTimeout(() => {
+            this.setState({
+                currentQuestion: currentQuestion,
+                show: true
+            });
+        }, 1000);
         this.setState({
-            currentQuestion: this.state.currentQuestion + 1
+            show: false
         });
     }
 
     render () {
-        let question = this.props.columns.filter((q, i) => {
+        let question = this.props.choices.filter((q, i) => {
             return i === this.state.currentQuestion - 1 ? true : false;
         })[0];
         return (
