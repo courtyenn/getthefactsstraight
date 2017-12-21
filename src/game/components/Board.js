@@ -26,11 +26,11 @@ export default class Board extends Reflux.Component {
         let choices = this.renderChoices();
 
         return (
-            <div className="root">
+            <div>
                 <div className="title">
                     <h1>{this.props.title}</h1>
                 </div>
-                <div style={ColumnStyle.Container}>
+                <div style={ColumnStyle.Container} className="root">
                     <div style={ColumnStyle.Test}>
                         {choices}
                     </div>

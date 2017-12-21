@@ -9,13 +9,10 @@ export default class ListGames extends React.Component {
         this.createListing = this.createListing.bind(this);
         this.changeFilter = this.changeFilter.bind(this);
         this.sortList = this.sortList.bind(this);
-        this.onSearch = this.onSearch.bind(this);
 
         this.state = {
             games: [],
-            filter: 'createdDate',
-            search: '',
-            suggestions: []
+            filter: 'createdDate'
         }
     }
 
@@ -43,11 +40,7 @@ export default class ListGames extends React.Component {
     changeFilter (e) {
         this.setState({
             filter: e.target.value
-        });
-    }
-
-    onSearch (e) {
-        console.log(`searching for ${e}`)
+        })
     }
 
     render () {
@@ -64,14 +57,6 @@ export default class ListGames extends React.Component {
                             <option value="topRated">Top Rated</option>
                         </select>
                     </div>
-                    <Autosuggest
-                        inputProps={{value: this.state.search, onChange: this.onSearch}}
-                        suggestions={this.state.suggestions}
-                        onSuggestionsFetchRequested={this.onSearch}
-                        onSuggestionsClearRequested={this.onSearch}
-                        getSuggestionValue={this.onSearch}
-                        renderSuggestion={this.onSearch}
-                    />
                     <ul className="listing">
                         {listing}
                     </ul>

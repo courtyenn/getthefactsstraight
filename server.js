@@ -209,6 +209,12 @@ app.get('/quizzes', function (req, res) {
     });
 });
 
+app.post('/search', function (req, res) {
+    _quiz3.default.find({ $text: { $search: req.body.search } }, function (err, results) {
+        res.json({ results: results });
+    }).lean();
+});
+
 app.get('*', function (req, res) {
     res.render('index.html');
 });
@@ -448,7 +454,7 @@ var Choice = {
 };
 
 var quizSchema = new Schema({
-    title: String,
+    title: { type: String, text: true },
     game: String,
     columns: [Column],
     choices: [Choice],

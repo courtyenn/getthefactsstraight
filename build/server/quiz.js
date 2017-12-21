@@ -15,7 +15,7 @@ let Choice = {
 }
 
 let quizSchema = new Schema({
-    title: String,
+    title: {type: String, text: true},
     game: String,
     columns: [Column],
     choices: [Choice],

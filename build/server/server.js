@@ -103,6 +103,12 @@ app.get('/quizzes', (req, res) => {
     })
 })
 
+app.post('/search', (req, res) => {
+    Quiz.find({$text: {$search: req.body.search}}, (err, results) => {
+        res.json({results});
+    }).lean();
+});
+
 app.get('*', (req, res) => {
     res.render('index.html')
 })
