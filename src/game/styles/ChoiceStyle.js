@@ -4,7 +4,7 @@ var ChoiceStyle = {
 		"backgroundColor": "#4081a7",
 		"color": "white",
 		"width": "150px",
-		"height":"60px",
+		"minHeight":"60px",
 		"textAlign": "center",
 		"fontFamily": "sans-serif",
 		"cursor": "-webkit-grab",
@@ -15,7 +15,7 @@ var ChoiceStyle = {
 	"Clicking": {
 		"backgroundColor":"pink",
 		"width": "100px",
-		"height":"60px",
+		"minHeight":"60px",
 		"textAlign": "center",
 		"fontFamily": "sans-serif",
 		"transform": "rotate(-2deg)",
@@ -26,7 +26,7 @@ var ChoiceStyle = {
     "display": "inline-block",
     "backgroundColor": "seagreen",
     "width": "100px",
-    "height":"60px",
+    "minHeight":"60px",
     "textAlign": "center",
     "fontFamily": "sans-serif",
     "cursor": "-webkit-grab",
@@ -37,7 +37,6 @@ var ChoiceStyle = {
 	"Correct": {
     "display": "inline-block",
     "backgroundColor": "#2dca72",
-    "width": "100px",
     "textAlign": "center",
     "fontFamily": "sans-serif",
     "fontSize": "13px",
@@ -50,7 +49,6 @@ var ChoiceStyle = {
 	"Incorrect": {
     "display": "inline-block",
     "backgroundColor": "#f95e56",
-    "width": "100px",
     "textAlign": "center",
     "fontFamily": "sans-serif",
     "fontSize": "12px",

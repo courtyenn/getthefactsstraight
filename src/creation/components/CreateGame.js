@@ -55,6 +55,8 @@ export default class CreateGame extends React.Component {
     createList () {
         let fields = this.state.columns.map((item, i) => {
             let list = this.createAnswerList(item, i);
+
+
             if (!item.edit) {
                 return (
                     <li key={item.id} className="flex-container">
@@ -143,6 +145,7 @@ export default class CreateGame extends React.Component {
             columns: {$push: [defaultField()]}
         });
         this.updateGame(newState);
+        // this.toggleField(newState.columns.length - 1);
     }
 
     removeField (i) {
@@ -171,6 +174,7 @@ export default class CreateGame extends React.Component {
             columns: {$set: list}
         });
         this.updateGame(newState);
+        this.toggleAnswer(i, list[i].answers.length-1);
     }
 
     createAnswerList (fieldColumn, i) {
@@ -201,9 +205,11 @@ export default class CreateGame extends React.Component {
                                 this.removeAnswer(i, j)
                             }}></button>
                             <button className="btn-h">
-                                <h4 className="description"><input
+                                <h4 className="description">
+                                    <input
                                     className="input-inline"
                                     type="text"
+                                    value={answer.title}
                                     autoFocus
                                     onBlur={() => {
                                         this.toggleAnswer(i, j)
@@ -221,6 +227,7 @@ export default class CreateGame extends React.Component {
             }
 
         });
+        answers.push(<li key={'fieldColumn-'+fieldColumn.id+'-addButton'}><button className="addField" onClick={() => {this.addAnswer(i, fieldColumn.id)}}></button></li>);
         return React.createElement('ul', {className: 'sub-sublist'}, answers);
     }
 
