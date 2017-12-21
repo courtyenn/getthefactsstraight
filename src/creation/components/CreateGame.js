@@ -174,7 +174,7 @@ export default class CreateGame extends React.Component {
             columns: {$set: list}
         });
         this.updateGame(newState);
-        this.toggleAnswer(i, list[i].answers.length-1);
+        this.toggleAnswer(i, list[i].answers.length - 1);
     }
 
     createAnswerList (fieldColumn, i) {
@@ -207,19 +207,19 @@ export default class CreateGame extends React.Component {
                             <button className="btn-h">
                                 <h4 className="description">
                                     <input
-                                    className="input-inline"
-                                    type="text"
-                                    value={answer.title}
-                                    autoFocus
-                                    onBlur={() => {
-                                        this.toggleAnswer(i, j)
-                                    }}
-                                    onKeyPress={(e) => {
-                                        this.detectKey(e, i, j)
-                                    }}
-                                    onChange={(e) => {
-                                        this.updateAnswer(e, answer, i, j)
-                                    }}/></h4>
+                                        className="input-inline"
+                                        type="text"
+                                        value={answer.title}
+                                        autoFocus
+                                        onBlur={() => {
+                                            this.toggleAnswer(i, j)
+                                        }}
+                                        onKeyPress={(e) => {
+                                            this.detectKey(e, i, j)
+                                        }}
+                                        onChange={(e) => {
+                                            this.updateAnswer(e, answer, i, j)
+                                        }}/></h4>
                             </button>
                         </div>
                     </li>
@@ -227,7 +227,11 @@ export default class CreateGame extends React.Component {
             }
 
         });
-        answers.push(<li key={'fieldColumn-'+fieldColumn.id+'-addButton'}><button className="addField" onClick={() => {this.addAnswer(i, fieldColumn.id)}}></button></li>);
+        answers.push(<li key={'fieldColumn-' + fieldColumn.id + '-addButton'}>
+            <button className="addField" onClick={() => {
+                this.addAnswer(i, fieldColumn.id)
+            }}></button>
+        </li>);
         return React.createElement('ul', {className: 'sub-sublist'}, answers);
     }
 
@@ -283,8 +287,10 @@ export default class CreateGame extends React.Component {
         let editButton = this.createList();
         return (
             <div className="quiz">
-                <input id="title" type="text" name="title" placeholder={this.state.title}
-                       className="input-wide title" onChange={(e) => this.updateName(e.target.value)}/>
+                <div className="title">
+                    <input id="title" type="text" name="title" placeholder={this.state.title}
+                           className="input-wide" onChange={(e) => this.updateName(e.target.value)}/>
+                </div>
                 <div className="content">
                     <label htmlFor="editor">Create columns to compare and contrast</label>
                     <div className="sublist">

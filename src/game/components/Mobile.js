@@ -47,8 +47,12 @@ export default class Mobile extends Reflux.Component {
                 <div key={"question-" + (index + 1)}
                      className={`mobile question active`}>
                     <div key={`question-${index + 1}-question`}>
-                        <h3 className="title mobile">{question.title}</h3>
-                        {options}
+                        <div className="title">
+                            <h3>{question.title}</h3>
+                        </div>
+                        <div className="content">
+                            {options}
+                        </div>
                     </div>
                 </div>
             </CSSTransition>
@@ -73,18 +77,15 @@ export default class Mobile extends Reflux.Component {
             return i === this.state.currentQuestion - 1 ? true : false;
         })[0];
         return (
-            <div className="root">
+            <div>
+                <div className="title">
+                    <h1>{this.props.title}</h1>
+                </div>
+                <div className="content card">
+                    {this.renderQuestion(question)}
 
-                <div>
-                    <div className="title">
-                        <h1>{this.props.title}</h1>
-                    </div>
-                    <div className="content-mobile card">
-                        {this.renderQuestion(question)}
-
-                        <button type="button" className="btn success" onClick={this.incrementCurrentQuestion}>Next
-                        </button>
-                    </div>
+                    <button type="button" className="btn success" onClick={this.incrementCurrentQuestion}>Next
+                    </button>
                 </div>
             </div>
         )

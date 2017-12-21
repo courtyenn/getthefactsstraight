@@ -81,9 +81,14 @@ textarea {
 
 h1 {
     font-size: 25px;
-    margin: 30px 0 20px;
+    margin: 14px 0 20px;
     text-align: center;
     color: $black;
+}
+@media(min-width: 600px){
+    h1 {
+        margin: 30px 0 20px;
+    }
 }
 
 label {
@@ -99,7 +104,7 @@ h3 {
 }
 
 h4 {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 ul {
@@ -157,24 +162,42 @@ li {
     .description {
         flex: 1 0 53%;
     }
+    &.end{
+        justify-content: flex-end;
+    }
     &.radio {
         align-items: baseline;
         justify-content: baseline;
         label {
             flex: 1 1 80%;
-            font-size: 24px;
+            font-size: 19px;
         }
         input[type="radio"]{
             width: 32px;
         }
     }
+    .tiny{
+        flex: 1 1 80%;
+    }
+    .define{
+        flex: 0 1 20%;
+    }
+    @media(min-width: 600px) {
+        .tiny {
+            flex: 0 0 50%;
+        }
+
+    }
 }
 
-.input-wide {
-    font-size: 20px;
-    min-height: 35px;
-    margin: 0 0 36px 0;
-    width: 100%;
+@media(min-width: 600px){
+    .flex-container{
+        &.radio {
+            label {
+                font-size: 24px;
+            }
+        }
+    }
 }
 
 .input-inline {
@@ -185,17 +208,53 @@ li {
     width: 100%;
 }
 
+.input-wide {
+    min-height: 35px;
+    margin: 14px 0 20px;
+    width: 100%;
+}
 .title {
     background: transparent;
     border: none;
-    font-size: 30px;
+    font-size: 28px;
     border-bottom: 4px solid #5e9ea0;
     text-align: center;
-    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 0px;
 
     &.mobile {
         margin-bottom: 20px;
         padding-top: 10px;
+    }
+
+    input {
+        font-size: 25px;
+        border: none;
+        text-align: center;
+        margin: 14px 0 20px;
+        width: 100%;
+        min-height: 35px;
+    }
+
+    h3{
+        padding-bottom: 10px;
+    }
+}
+
+@media(min-width: 600px){
+    .title, .title h1{
+        font-size: 30px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .input-wide{
+        margin: 0 0 18px 0;
+    }
+    .title {
+        input {
+            font-size: 30px;
+            margin: 30px 0 20px;
+        }
     }
 }
 
@@ -203,6 +262,15 @@ li {
     text-align: center;
     li {
         padding: 5px 0;
+    }
+    a {
+        font-size: 20px;
+    }
+
+    @media (min-width: 600px){
+        a {
+            font-size: 18px;
+        }
     }
 }
 
@@ -365,16 +433,42 @@ nav {
 }
 
 .quiz {
-    padding: 30px 0 40px;
+    padding: 0 0 40px;
     background: white;
 }
-
 .content {
-    margin: 0 20px;
+    margin: 21px 12px 0;
     &.small {
         margin: 5px 0 33px;
     }
+    .question {
+        display: none;
+        margin-bottom: 30px;
+        min-height: 200px;
+        @include card-style;
+        &.active {
+            display: block;
+            position: relative;
+        }
+    }
+    .btn {
+        text-align: center;
+        display: block;
+        font-size: 17px;
+    }
+    .title {
+        border-bottom: 3px solid #798788;
+    }
 }
+@media(min-width: 600px){
+    .content {
+        margin: 26px 20px 0;
+        .btn {
+            font-size: 23px;
+        }
+    }
+}
+
 
 .loading {
     position: absolute;
@@ -412,25 +506,6 @@ nav {
     box-shadow: 1px 1px 6px 1px rgba(10, 10, 10, .1);
 }
 
-.content-mobile {
-    .mobile.question {
-        display: none;
-        margin-bottom: 30px;
-        min-height: 200px;
-        @include card-style;
-        &.active {
-            display: block;
-            position: relative;
-        }
-    }
-    .btn {
-        text-align: center;
-        margin: 0 auto;
-        display: block;
-        font-size: 23px;
-    }
-}
-
 select {
     width: 100%;
     display: block;
@@ -439,7 +514,7 @@ select {
     background: #e8e8e8;
     padding: 10px;
 
-    .tiny {
+    &.tiny {
         width: auto;
         display: inline-block;
         font-size: inherit;

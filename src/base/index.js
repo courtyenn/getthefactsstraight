@@ -14,7 +14,7 @@ class GetTheFactsStraight extends React.Component {
         return (
             <div>
                 <Router>
-                    <div>
+                    <div className="quiz">
                         <Nav/>
                         <Switch>
                             <Route exact path="/" component={Home}/>

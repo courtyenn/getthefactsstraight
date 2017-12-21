@@ -4,7 +4,7 @@ import axios from 'axios'
 import Autosuggest from 'react-autosuggest';
 
 export default class ListGames extends React.Component {
-    constructor (){
+    constructor () {
         super();
         this.createListing = this.createListing.bind(this);
         this.changeFilter = this.changeFilter.bind(this);
@@ -18,7 +18,8 @@ export default class ListGames extends React.Component {
             suggestions: []
         }
     }
-    componentWillMount(){
+
+    componentWillMount () {
         axios.get('/quizzes').then((res) => {
             this.setState({
                 games: res.data.games
@@ -26,25 +27,26 @@ export default class ListGames extends React.Component {
         })
     }
 
-    componentWillRender(){
+    componentWillRender () {
         this.sortList();
     }
 
-    createListing() {
-        return this.state.games.sort(this.sortList).map( (game) => (<li key={game._id}><Link to={`/${game._id}`}>{game.title}</Link></li>));
+    createListing () {
+        return this.state.games.sort(this.sortList).map((game) => (
+            <li key={game._id}><Link to={`/${game._id}`}>{game.title}</Link></li>));
     }
 
-    sortList(a, b){
+    sortList (a, b) {
         return a[this.state.filter] < b[this.state.filter]
     }
 
-    changeFilter(e){
+    changeFilter (e) {
         this.setState({
             filter: e.target.value
         });
     }
 
-    onSearch(e){
+    onSearch (e) {
         console.log(`searching for ${e}`)
     }
 
@@ -52,14 +54,16 @@ export default class ListGames extends React.Component {
         let listing = this.createListing();
         return (
             <div className="quiz-listing">
-                <h1 className="title">Quiz Listings</h1>
+                <div className="title"><h1>Quiz Listings</h1></div>
                 <div className="content">
-                    Filter by:
-                    <select className="tiny" onChange={(e) => this.changeFilter(e)} value={this.state.filter}>
-                        <option value="createdDate">Most Recent</option>
-                        <option value="popularity">Most Popular</option>
-                        <option value="topRated">Top Rated</option>
-                    </select>
+                    <div className="flex-container end">
+                        <div className="define">Filter by:</div>
+                        <select className="tiny" onChange={(e) => this.changeFilter(e)} value={this.state.filter}>
+                            <option value="createdDate">Most Recent</option>
+                            <option value="popularity">Most Popular</option>
+                            <option value="topRated">Top Rated</option>
+                        </select>
+                    </div>
                     <Autosuggest
                         inputProps={{value: this.state.search, onChange: this.onSearch}}
                         suggestions={this.state.suggestions}
