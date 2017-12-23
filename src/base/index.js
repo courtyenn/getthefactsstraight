@@ -12,19 +12,17 @@ class GetTheFactsStraight extends React.Component {
 
     render () {
         return (
-            <div>
-                <Router>
-                    <div className="quiz">
-                        <Nav/>
-                        <Switch>
-                            <Route exact path="/" component={Home}/>
-                            <Route exact path="/create" component={Create}/>
-                            <Route exact path="/all" component={ListGames}/>
-                            <Route path="/:id" component={Game}/>
-                        </Switch>
-                    </div>
-                </Router>
-            </div>
+            <Router>
+                <div>
+                    <Nav/>
+                    <Switch>
+                        <Route exact path="/" component={Home}/>
+                        <Route exact path="/create" component={Create}/>
+                        <Route exact path="/all" component={ListGames}/>
+                        <Route path="/:id" component={Game}/>
+                    </Switch>
+                </div>
+            </Router>
         )
     }
 }

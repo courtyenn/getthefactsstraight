@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default () => (
-    <div>
+    <div className="quiz">
         <h1>Welcome to the Homepage!</h1>
     </div>
 )

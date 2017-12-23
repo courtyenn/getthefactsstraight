@@ -17,7 +17,7 @@ var ColumnStyle = {
 	},
   "Test": {
     "display": "inline-block",
-    "backgroundColor": "white",
+    "backgroundColor": "#3a6f8e",
     "zIndex": "1",
     "width": 180,
     "textAlign": "center",

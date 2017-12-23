@@ -31,6 +31,15 @@ export default class App extends Reflux.Component {
         }
     }
 
+    componentDidUpdate(){
+        let quizId = this.props.match.params.id
+        if(quizId !== this.state.game._id){
+            axios.get(`/quiz/${quizId}`).then((res) => {
+                Actions.setGame({game: res.data.game})
+            })
+        }
+    }
+
     render () {
         if(this.state.game) {
             return (

@@ -10,9 +10,10 @@ $card-border: #e0e0e0;
 $card-shadow: #edf1f3;
 $btn-shadow: #b5b5b5;
 $sub-sublist: #e2e6e6;
-$link: #7ecbce;
+$link: #59c2ff;
 $lt-success: #82ce82;
 $info: rgb(64, 129, 167);
+$gray: #424242;
 
 @mixin user-select($select) {
     -webkit-user-select: $select; /* Chrome all / Safari all */
@@ -52,6 +53,33 @@ html, body, #app, .root {
     color: $black;
 }
 
+#app {
+    display: flex;
+}
+
+[data-reactroot] {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+}
+nav {
+    flex: 0 0 61px;
+    [class^="icon-"] {
+        font-size: 38px;
+    }
+}
+@media (min-width: 600px){
+    nav {
+        flex: 0 0 35px;
+        [class^="icon-"] {
+            font-size: 16px;
+        }
+    }
+}
+.root {
+    padding-top: 20px;
+}
+
 a {
     text-decoration: none;
     color: $link;
@@ -81,14 +109,18 @@ textarea {
 
 h1 {
     font-size: 25px;
-    margin: 14px 0 20px;
+    padding: 14px 0 20px;
     text-align: center;
     color: $black;
 }
 @media(min-width: 600px){
     h1 {
-        margin: 30px 0 20px;
+        padding: 30px 0 20px;
     }
+}
+
+.transparent{
+    background: $white;
 }
 
 label {
@@ -184,7 +216,7 @@ li {
     }
     @media(min-width: 600px) {
         .tiny {
-            flex: 0 0 50%;
+            flex: 0 0 10%;
         }
         .define {
             flex: none;
@@ -213,17 +245,15 @@ li {
 
 .input-wide {
     min-height: 35px;
-    margin: 14px 0 20px;
+    padding: 14px 0 20px;
     width: 100%;
 }
 .title {
     background: transparent;
     border: none;
     font-size: 28px;
-    border-bottom: 4px solid #5e9ea0;
+    border-bottom: 4px solid #68a3c5;
     text-align: center;
-    padding-top: 10px;
-    padding-bottom: 0px;
 
     &.mobile {
         margin-bottom: 20px;
@@ -234,7 +264,7 @@ li {
         font-size: 25px;
         border: none;
         text-align: center;
-        margin: 14px 0 20px;
+        padding: 14px 0 20px;
         width: 100%;
         min-height: 35px;
     }
@@ -242,21 +272,23 @@ li {
     h3{
         padding-bottom: 10px;
     }
+    &.secondary {
+        background: $white;
+        color: $gray;
+    }
 }
 
 @media(min-width: 600px){
     .title, .title h1{
         font-size: 30px;
-        padding-top: 0;
-        padding-bottom: 0;
     }
     .input-wide{
-        margin: 0 0 18px 0;
+        padding: 0 0 18px 0;
     }
     .title {
         input {
             font-size: 30px;
-            margin: 30px 0 20px;
+            padding: 30px 0 20px;
         }
     }
 }
@@ -308,6 +340,29 @@ nav {
                 color: $white;
                 font-size: 13px;
             }
+        }
+    }
+    .mobile-navigation{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: $primary;
+        z-index: 100;
+
+        > ul {
+            li {
+                display: block;
+                margin: 10px;
+                text-align: center;
+                a {
+                    font-size: 25px;
+                }
+            }
+        }
+        .icon-cancel {
+            margin-bottom: 20px;
         }
     }
 }
@@ -436,7 +491,7 @@ nav {
 }
 
 .quiz {
-    padding: 0 0 40px;
+    flex: 1 0 90%;
     background: white;
 }
 .content {
@@ -534,7 +589,18 @@ select {
     position: relative;
     overflow: hidden;
 }
+/** CSS Transition Group Animations **/
 
+.fade-enter {
+    opacity: 0.1;
+}
+.fade-enter.face-enter-active{
+    opacity: 1;
+    transition: all 1s linear;
+}
+.fade-exit {
+
+}
 .example-appear {
     opacity: 0.5;
     right: -300px;
@@ -573,16 +639,60 @@ select {
     transition: all 800ms ease-in;
 }
 
-.react-autosuggest__container{
+/** END CSS Transition Group Animations **/
+
+.search-bar{
+    display: flex;
+    background: #2f6686;
+    border-radius: 20px;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px;
+    margin: 0 15px;
+
+    span {
+        font-size: 20px;
+        flex: 0 1 11%;
+        text-align: center;
+    }
 }
-.react-autosuggest__container--open{
-    background: $card;
+.react-autosuggest__container{
+    flex: 1 0 90%;
+    border-radius: 20px;
+    position: relative;
+    input {
+        height: 30px;
+        font-size: 20px;
+        border-radius: 20px;
+        padding: 0 10px;
+    }
+}
+.react-autosuggest__suggestions-list{
+    background: white;
+    border: none;
+    width: 100%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding: 5px 0;
+    li {
+        display: block !important;
+        a > span{
+            color: black;
+        }
+    }
 }
 .react-autosuggest__input {
     background: white;
     width: 100%;
     border: 1px solid gray;
+
 }
+.react-autosuggest__section-container{
+
+}
+
+
 .react-autosuggest__suggestions-list{
 
 }
@@ -654,14 +764,20 @@ select {
 .icon-emo-wink:before { content: '\e806'; } /* '' */
 .icon-minus:before { content: '\e807'; } /* '' */
 .icon-plus:before { content: '\e808'; } /* '' */
-.icon-cancel:before { content: '\e809'; } /* '' */
+.icon-cancel:before {
+    content: '\e809';
+    cursor: pointer;
+} /* '' */
 .icon-cancel-circled:before { content: '\e80a'; } /* '' */
 .icon-export:before { content: '\e80b'; } /* '' */
 .icon-share:before { content: '\e80c'; } /* '' */
 .icon-emo-tongue:before { content: '\e80d'; } /* '' */
 .icon-emo-grin:before { content: '\e80e'; } /* '' */
 .icon-asterisk:before { content: '\e80f'; } /* '' */
-.icon-menu:before { content: '\f0c9'; } /* '' */
+.icon-menu:before {
+    content: '\f0c9';
+    cursor: pointer;
+} /* '' */
 .icon-help:before { content: '\f128'; } /* '' */
 .icon-github:before { content: '\f300'; } /* '' */
 

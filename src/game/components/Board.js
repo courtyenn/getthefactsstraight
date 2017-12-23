@@ -27,7 +27,7 @@ export default class Board extends Reflux.Component {
 
         return (
             <div>
-                <div className="title">
+                <div className="title secondary">
                     <h1>{this.props.title}</h1>
                 </div>
                 <div style={ColumnStyle.Container} className="root">

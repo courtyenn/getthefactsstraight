@@ -46,7 +46,7 @@ export default class ListGames extends React.Component {
     render () {
         let listing = this.createListing();
         return (
-            <div className="quiz-listing">
+            <div className="quiz quiz-listing">
                 <div className="title"><h1>Quiz Listings</h1></div>
                 <div className="content">
                     <div className="flex-container end">
