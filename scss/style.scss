@@ -294,6 +294,7 @@ li {
 }
 
 .listing {
+    margin-top: 17px;
     text-align: center;
     li {
         padding: 5px 0;
@@ -307,6 +308,10 @@ li {
             font-size: 18px;
         }
     }
+}
+
+@media(min-width: 600px){
+    margin-top: 0;
 }
 
 /** END FORMAT **/
