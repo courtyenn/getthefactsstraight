@@ -129,6 +129,19 @@ export default class AppStore extends Reflux.Store {
         });
     }
 
+    async selectChoice (columnId, index) {
+        let correct = await this.inspectChoice(this.state.game.choices[index]._id, columnId)
+        if(correct) {
+            this.state.game.totalCorrect += 1
+        }
+        this.state.game.totalAnswered += 1
+
+        if(this.state.game.choices.length -1 === index){
+            Actions.gameOver()
+        }
+        this.trigger(this.state)
+    }
+
     async choiceDropped (choiceIndex, index) {
         if (this.state) {
             let choice = this.state.game.choices[choiceIndex]

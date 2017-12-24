@@ -137,7 +137,7 @@ app.post('/quiz', function (req, res) {
         quiz.createdDate = Date.now();
         quiz.title = req.body.title;
         quiz.save(function (err, data) {
-            res.redirect('/quiz/' + data._id);
+            res.json({ redirect: '/' + data._id });
         });
     } else {
         var _quiz = new _quiz3.default();
@@ -147,9 +147,9 @@ app.post('/quiz', function (req, res) {
         _quiz.title = req.body.title;
         _quiz.save(function (err, data) {
             if (data && data._id) {
-                res.json({ redirect: '/quiz/' + data._id });
+                res.json({ redirect: '/' + data._id });
             } else {
-                res.redirect('/');
+                res.json({ redirect: '/' });
             }
         });
     }

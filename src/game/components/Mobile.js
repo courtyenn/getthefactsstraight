@@ -13,28 +13,42 @@ export default class Mobile extends Reflux.Component {
         this.state = {
             currentQuestion: 1,
             loadingNextQ: false,
-            show: true
+            show: true,
+            selected: false,
+            error: false,
+            selectedColumn: null
         }
         this.store = AppStore
         this.incrementCurrentQuestion = this.incrementCurrentQuestion.bind(this)
+        this.onSelect = this.onSelect.bind(this)
     }
 
     onGameOver () {
-        this.show = true;
+        this.show = true
+    }
+
+    onSelect (column) {
+        this.setState({
+            selectedColumn: column,
+            selected: true
+        })
     }
 
     renderOptions () {
         return this.props.columns.map(column => {
-            return (<div key={column._id + '-title-column'} className="flex-container radio">
-                <input type="radio" name={`quiz-answers`} value={column._id} id={column._id + '-title-column'}/> <label
-                htmlFor={column._id + '-title-column'}>{column.title}</label>
-            </div>)
+            return (
+                <div key={column._id + '-title-column'} className="flex-container radio"
+                     onClick={() => this.onSelect(column)}>
+                    <input type="radio" name={`quiz-answers`} value={column._id} id={column._id + '-title-column'}/>
+                    <label htmlFor={column._id + '-title-column'}>{column.title}</label>
+                </div>
+            )
         })
     }
 
     renderQuestion (question) {
-        let options = this.renderOptions();
-        let index = this.state.currentQuestion;
+        let options = this.renderOptions()
+        let index = this.state.currentQuestion
         return (
             <CSSTransition
                 in={this.state.show}
@@ -60,16 +74,32 @@ export default class Mobile extends Reflux.Component {
     }
 
     incrementCurrentQuestion () {
-        let currentQuestion = this.state.currentQuestion + 1;
-        setTimeout(() => {
+        if (this.state.selected) {
+            let currentQuestion = this.state.currentQuestion + 1
+            setTimeout(() => {
+                this.setState({
+                    currentQuestion: currentQuestion,
+                    show: true,
+                    selectedColumn: null
+                })
+            }, 1000)
             this.setState({
-                currentQuestion: currentQuestion,
-                show: true
-            });
-        }, 1000);
-        this.setState({
-            show: false
-        });
+                show: false,
+                selected: false
+            })
+
+            Actions.selectChoice(this.state.selectedColumn._id, currentQuestion - 2)
+        }
+        else {
+            this.setState({
+                error: true
+            })
+            setTimeout(() => {
+                this.setState({
+                    error: false
+                })
+            }, 1000)
+        }
     }
 
     render () {
@@ -77,17 +107,20 @@ export default class Mobile extends Reflux.Component {
             return i === this.state.currentQuestion - 1 ? true : false;
         })[0];
         return (
-            <div>
-                <div className="title">
-                    <h1>{this.props.title}</h1>
-                </div>
-                <div className="content card">
-                    {this.renderQuestion(question)}
+            <CSSTransition in={this.state.error} classNames="error" timeout={700}>
+                <div className="quiz transparent">
+                    <div className="title">
+                        <h1>{this.props.title}</h1>
+                    </div>
+                    <div className="content card">
+                        {this.renderQuestion(question)}
 
-                    <button type="button" className="btn success" onClick={this.incrementCurrentQuestion}>Next
-                    </button>
+                        <button type="button" className="btn success" onClick={this.incrementCurrentQuestion}>Next
+                        </button>
+                    </div>
+                    <Message gameOver={this.props.gameOver} className="endGame" totalCorrect={this.props.totalCorrect} totalAnswered={this.props.totalAnswered} quizId={this.props._id} />
                 </div>
-            </div>
+            </CSSTransition>
         )
     }
 }

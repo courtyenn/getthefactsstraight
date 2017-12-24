@@ -8,7 +8,8 @@ let Actions = Reflux.createActions([
     "gameOver",
     "setGame",
     "removeChoice",
-    "wipeGame"
+    "wipeGame",
+    "selectChoice"
 ]);
 
 export default Actions;

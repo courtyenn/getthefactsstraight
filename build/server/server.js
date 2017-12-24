@@ -26,7 +26,7 @@ app.post('/quiz', (req, res) => {
         quiz.createdDate = Date.now()
         quiz.title = req.body.title
         quiz.save((err, data) => {
-            res.redirect('/quiz/' + data._id)
+            res.json({redirect: '/' + data._id})
         })
     }
     else {
@@ -37,10 +37,10 @@ app.post('/quiz', (req, res) => {
         quiz.title = req.body.title
         quiz.save((err, data) => {
             if(data && data._id) {
-                res.json({redirect: '/quiz/'+data._id})
+                res.json({redirect: '/'+data._id})
             }
             else {
-                res.redirect('/')
+                res.json({redirect: '/'})
             }
         })
     }

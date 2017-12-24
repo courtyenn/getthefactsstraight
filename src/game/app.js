@@ -43,7 +43,7 @@ export default class App extends Reflux.Component {
     render () {
         if(this.state.game) {
             return (
-                <div>
+                <div className="quiz transparent">
                     <MediaQuery minDeviceWidth={1224} >
                         <Board {...this.state.game} />
                     </MediaQuery>

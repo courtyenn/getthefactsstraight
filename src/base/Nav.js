@@ -67,6 +67,7 @@ export default class Nav extends React.Component {
     renderSearchBar () {
         return (
             <Autosuggest
+                placeholder="Search..."
                 inputProps={{value: this.state.search, onChange: this.onSearch}}
                 suggestions={this.state.suggestions}
                 onSuggestionsFetchRequested={this.test}
@@ -80,7 +81,7 @@ export default class Nav extends React.Component {
     renderMobile () {
         let search = this.renderSearchBar()
         return (
-            <CSSTransition classNames="fade" timeout={1000}>
+            <CSSTransition classNames="fade" timeout={1000} in={this.state.toggleMobile}>
                 <div className="mobile-navigation">
                     <span className="icon-cancel"
                           onClick={() => this.setState({toggleMobile: !this.state.toggleMobile})}></span>

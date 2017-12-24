@@ -7,7 +7,7 @@ import SubList from './Sublist';
 const defaultAnswer = function (id) {
     return {
         name: 'choice',
-        title: 'Truthy description',
+        title: 'Answer for category',
         edit: false,
         id: 'answer-' + Math.random(),
         correctId: id ? id : null
@@ -16,7 +16,7 @@ const defaultAnswer = function (id) {
 const defaultField = function () {
     let field = {
         name: 'column',
-        title: 'Name column',
+        title: 'Category',
         edit: false,
         id: 'field-' + Math.random()
     };
@@ -101,7 +101,8 @@ export default class CreateGame extends React.Component {
                                     }}
                                     onBlur={() => {
                                         this.toggleField(i)
-                                    }} placeholder={item.title}/>
+                                    }}
+                                    placeholder={item.title}/>
                                 </h3>
                             </button>
                         </div>
@@ -209,7 +210,7 @@ export default class CreateGame extends React.Component {
                                     <input
                                         className="input-inline"
                                         type="text"
-                                        value={answer.title}
+                                        placeholder={answer.title}
                                         autoFocus
                                         onBlur={() => {
                                             this.toggleAnswer(i, j)
@@ -276,7 +277,6 @@ export default class CreateGame extends React.Component {
 
     updateGame (newState) {
         let choices = newState.columns.reduce((columnA, columnB) => {
-            console.log('columnB', columnA, columnB);
             return columnA.length > 0 ? columnA.concat(columnB.answers) : columnB.answers;
         }, []);
         let finalState = ReactAddons(this.state, {$set: {columns: newState.columns, choices}});
@@ -292,14 +292,14 @@ export default class CreateGame extends React.Component {
                            className="input-wide" onChange={(e) => this.updateName(e.target.value)}/>
                 </div>
                 <div className="content">
-                    <label htmlFor="editor">Create columns to compare and contrast</label>
+                    <label htmlFor="editor">Create columns for different categories to compare and contrast</label>
                     <div className="sublist">
                         <ul>
                             {editButton}
                         </ul>
                         <button className="btn" type="button" onClick={() => {
                             this.addField()
-                        }}>Add column
+                        }}>Add Category
                         </button>
                     </div>
                     <input className="btn primary" type="button" onClick={() => this.submitGame()} value="Submit"/>
