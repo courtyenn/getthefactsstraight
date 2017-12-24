@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import { default as Choice } from './Choice';
 import Column from './Column';
 import Message from './Message';
+import GameOver from './GameOver';
 import Actions from '../actions';
 import AppStore from '../AppStore';
 import { CSSTransition } from 'react-transition-group'
@@ -11,7 +12,6 @@ export default class Mobile extends Reflux.Component {
     constructor () {
         super()
         this.state = {
-            currentQuestion: 1,
             loadingNextQ: false,
             show: true,
             selected: false,
@@ -21,6 +21,23 @@ export default class Mobile extends Reflux.Component {
         this.store = AppStore
         this.incrementCurrentQuestion = this.incrementCurrentQuestion.bind(this)
         this.onSelect = this.onSelect.bind(this)
+    }
+
+    componentWillReceiveProps (nextProps) {
+
+        if (this.props.currentQuestion !== nextProps.currentQuestion) {
+            this.setState({
+                show: false,
+                selected: false
+            })
+
+            setTimeout(() => {
+                this.setState({
+                    show: true,
+                    selectedColumn: null
+                })
+            }, 1000)
+        }
     }
 
     onGameOver () {
@@ -48,7 +65,7 @@ export default class Mobile extends Reflux.Component {
 
     renderQuestion (question) {
         let options = this.renderOptions()
-        let index = this.state.currentQuestion
+        let index = this.props.currentQuestion
         return (
             <CSSTransition
                 in={this.state.show}
@@ -75,20 +92,11 @@ export default class Mobile extends Reflux.Component {
 
     incrementCurrentQuestion () {
         if (this.state.selected) {
-            let currentQuestion = this.state.currentQuestion + 1
-            setTimeout(() => {
-                this.setState({
-                    currentQuestion: currentQuestion,
-                    show: true,
-                    selectedColumn: null
-                })
-            }, 1000)
-            this.setState({
-                show: false,
-                selected: false
-            })
+            let currentQuestion = this.props.currentQuestion + 1
+
 
             Actions.selectChoice(this.state.selectedColumn._id, currentQuestion - 2)
+
         }
         else {
             this.setState({
@@ -104,23 +112,33 @@ export default class Mobile extends Reflux.Component {
 
     render () {
         let question = this.props.choices.filter((q, i) => {
-            return i === this.state.currentQuestion - 1 ? true : false;
+            return i === this.props.currentQuestion - 1 ? true : false;
         })[0];
-        return (
-            <CSSTransition in={this.state.error} classNames="error" timeout={700}>
+        if (this.props.gameOver) {
+            return (
                 <div className="quiz transparent">
-                    <div className="title">
-                        <h1>{this.props.title}</h1>
-                    </div>
-                    <div className="content card">
-                        {this.renderQuestion(question)}
-
-                        <button type="button" className="btn success" onClick={this.incrementCurrentQuestion}>Next
-                        </button>
-                    </div>
-                    <Message gameOver={this.props.gameOver} className="endGame" totalCorrect={this.props.totalCorrect} totalAnswered={this.props.totalAnswered} quizId={this.props._id} />
+                    <GameOver choices={this.props.choices}/>
+                    <Message gameOver={this.props.gameOver} className="endGame"
+                             totalCorrect={this.props.totalCorrect} totalAnswered={this.props.totalAnswered}
+                             quizId={this.props._id}/>
                 </div>
-            </CSSTransition>
-        )
+            )
+        }
+        else {
+            return (
+                <CSSTransition in={this.state.error} classNames="error" timeout={700}>
+                    <div className="quiz transparent">
+                        <div className="title">
+                            <h1>{this.props.title}</h1>
+                        </div>
+                        <div className="content card">
+                            {this.renderQuestion(question)}
+                            <button type="button" className="btn success" onClick={this.incrementCurrentQuestion}>Next
+                            </button>
+                        </div>
+                    </div>
+                </CSSTransition>
+            )
+        }
     }
 }

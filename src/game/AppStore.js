@@ -66,7 +66,8 @@ export default class AppStore extends Reflux.Store {
                 choices: choices,
                 totalCorrect: 0,
                 totalAnswered: 0,
-                gameOver: false
+                gameOver: false,
+                currentQuestion: 1
             }
         }
     }
@@ -107,7 +108,8 @@ export default class AppStore extends Reflux.Store {
                 choices: shuffle(gameState.game.choices),
                 totalCorrect: 0,
                 totalAnswered: 0,
-                gameOver: false
+                gameOver: false,
+                currentQuestion: 1
             }
         }
         this.trigger(this.state)
@@ -130,16 +132,20 @@ export default class AppStore extends Reflux.Store {
     }
 
     async selectChoice (columnId, index) {
-        let correct = await this.inspectChoice(this.state.game.choices[index]._id, columnId)
-        if(correct) {
-            this.state.game.totalCorrect += 1
-        }
-        this.state.game.totalAnswered += 1
+        if(this.state) {
+            let correct = await this.inspectChoice(this.state.game.choices[index]._id, columnId)
+            if (correct) {
+                this.state.game.totalCorrect += 1
+            }
+            this.state.game.totalAnswered += 1
 
-        if(this.state.game.choices.length -1 === index){
-            Actions.gameOver()
+            if (this.state.game.choices.length - 1 === index) {
+                Actions.gameOver()
+            }
+
+            this.state.game.currentQuestion += 1;
+            this.trigger(this.state)
         }
-        this.trigger(this.state)
     }
 
     async choiceDropped (choiceIndex, index) {

@@ -381,13 +381,10 @@ nav {
     height: auto;
     background: $white;
     border: 2px solid green;
-    top: 50%;
     z-index: 10;
-    left: 50%;
     padding: 10px 18px;
     margin: 50px 0 0 0;
     align-self: center;
-    justify-self: center;
 }
 
 .endGame.show {
@@ -399,6 +396,8 @@ nav {
         width: 450px;
         height: 200px;
         margin: -100px -250px 0 0;
+        left: 50%;
+        top: 50%;
     }
 }
 
