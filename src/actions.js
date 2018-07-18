@@ -1,4 +1,4 @@
-import Reflux from 'reflux';
+import Redux from 'redux';
 
 let Actions = Reflux.createActions([
   "reset",

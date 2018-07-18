@@ -1,4 +1,4 @@
-import Reflux from 'reflux';
+import Redux from 'redux';
 import Actions from './actions';
 import CuteData from './cuteData';
 

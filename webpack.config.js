@@ -1,24 +1,27 @@
 var path = require('path');
 module.exports = {
   entry: {
-    "./public/game": "./src/game/index",
-    "./public/creation": "./src/creation/index"
+    "./build/bundle": "./src/index.js"
   },
   output: {
-    filename: '[name].js',
-    targetLibrary: 'umd'
+    filename: '[name].js'
   },
-  debug: true,
   devtool: "source-map",
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "babel-loader",
+        exclude: /(node_modules)/,
         include: path.resolve(__dirname, 'src'),
-        query: {
-          presets: ['react', 'es2015']
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [["env", {
+              "targets": {
+                "node": "8.11.3"
+              }
+            }], 'react']
+          }
         }
       }
     ]
