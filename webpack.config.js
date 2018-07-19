@@ -19,6 +19,11 @@ module.exports = {
         include: path.resolve(__dirname, 'src'),
         query: {
           presets: ['react', 'babel-preset-env']
+        },
+        env: {
+          "test": {
+            "plugins": ["transform-es2015-modules-commonjs"]
+          }
         }
       }
     ]

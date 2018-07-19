@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
     "webpack": "webpack --progress --colors --watch",
     "nodemon": "DbUrl=mongodb://localhost:27017/facts nodemon -e js,html server/server.js"
   },

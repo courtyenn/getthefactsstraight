@@ -14,7 +14,20 @@ export const editTitle = (state = '', action) => {
       }
 }
 
-export const rootReducer = combineReducers({
-    title: editTitle
-})
+export const editColumn = (state = [], action) => {
+    switch (action.type) {
+        case 'EDIT_COLUMN':
+            
+            return state
+        case 'ADD_ANSWER': 
 
+          default:
+          return state
+      }
+}
+
+export const rootReducer = combineReducers({
+    title: editTitle,
+    columns: editColumn,
+    answers: []
+})

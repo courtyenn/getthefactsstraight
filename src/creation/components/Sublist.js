@@ -1,5 +1,5 @@
-import {Component} from 'react';
-
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 // let defaultAnswer = () => {
 //   return {
 //     name: 'choice',
@@ -18,7 +18,7 @@ import {Component} from 'react';
 //   }
 // };
 
-export default class Sublist extends Component {
+class Sublist extends Component {
   constructor(){
     super();
 
@@ -174,14 +174,17 @@ export default class Sublist extends Component {
   //   this.setState(newState);
   // }
   render(){
-    let editButton = this.createList();
+    
     return (
       <div className="sublist">
         <ul>
-          {editButton}
+          <li></li>
         </ul>
         <button type="button" onClick={() => {this.addField()}}>Add Column</button>
       </div>
     );
   }
 };
+export default connect(state => ({
+  columns: state.columns
+}))(Sublist)
