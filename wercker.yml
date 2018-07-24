@@ -1,0 +1,6 @@
+build:
+    steps:
+      - npm-install@23.4.1:
+          package: jest
+          strict-ssl: false
+      - npm-test
