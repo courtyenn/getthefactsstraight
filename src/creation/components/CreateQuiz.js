@@ -8,11 +8,11 @@ class CreateQuiz extends PureComponent {
         return (
             <div className="content">
                 <h1>{this.props.title}</h1>
-                <p>Create a quiz by filling out the fields below:</p>
+                <p>Get The Facts Straight helps clarifies subjects of controversy. Create categories that are often muddled and shed light on topics that need clarification. Then, copy the link and play with your friends.</p>
                 <form>
                     <label htmlFor="title">Title:</label>
                     <input id="title" type="text" name="title" placeholder="Common Logic Quiz" className="input-wide" value={this.props.title} onChange={e => this.props.onNameChange(e.target.value)}/>
-                    <label htmlFor="editor">Create columns to compare and contrast</label>
+                    <label htmlFor="editor">Create categories to compare and contrast</label>
                     <Sublist />
                     <input type="submit" />
                 </form>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import * as Actions from '../actions'
 // let defaultAnswer = () => {
 //   return {
 //     name: 'choice',
@@ -40,39 +41,6 @@ class Sublist extends Component {
     // this.removeAnswer = this.removeAnswer.bind(this);
 
   }
-  // createList(){
-  //   let fields = this.state.list.map((item, i) => {
-  //     let list = this.createAnswerList(item, i);
-  //     if(!item.edit){
-  //       return (
-  //         <li key={item.id}>
-  //           <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
-  //           <span className="removeField" onClick={() => {this.removeField(i)}}></span>
-  //           <h3 onClick={() => {this.toggleField(i)}}>{item.value}</h3>
-  //           {list}
-  //         </li>);
-  //     }
-  //     else {
-  //       return (
-  //         <li key={item.id}>
-  //           <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
-  //           <span className="removeField" onClick={() => {this.removeField(i)}}></span>
-  //           <h3>
-  //             <input
-  //             autoFocus
-  //             className="input-inline"
-  //             type="text"
-  //             onChange={(e, n)=>{this.updateList(e, item)}}
-  //             onBlur={() => {this.toggleField(i)}} value={item.value} />
-  //           </h3>
-  //           {list}
-  //         </li>
-  //       )
-  //     }
-  //   });
-
-  //   return fields;
-  // }
   // updateList(e, editItem){
   //   let itemValue = e.target.value;
   //   let list = this.state.list;
@@ -173,18 +141,59 @@ class Sublist extends Component {
   //   });
   //   this.setState(newState);
   // }
+
+  createList(){
+    let {columns} = this.props;
+    let fields = columns.map((item, i) => {
+      // let list = this.createAnswerList(item, i);
+      if(!item.edit){
+        return (
+          <li key={item.id}>
+            {/* <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
+            <span className="removeField" onClick={() => {this.removeField(i)}}></span> */}
+            <h3>{item.title}</h3>
+            {/* <h3 onClick={() => {this.toggleField(i)}}>{item.title}</h3> */}
+            {/* {list} */}
+          </li>);
+      }
+      else {
+        return (
+          <li key={item.id}>
+            {/* <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
+            <span className="removeField" onClick={() => {this.removeField(i)}}></span> */}
+            {/* <h3>
+              <input
+              autoFocus
+              className="input-inline"
+              type="text"
+              onChange={(e, n)=>{this.updateList(e, item)}}
+              onBlur={() => {this.toggleField(i)}} value={item.value} />
+            </h3> */}
+            {/* {list} */}
+          </li>
+        )
+      }
+    });
+
+    return fields;
+  }
   render(){
-    
+    let {onAddColumn, columns} = this.props;
+    let list = this.createList()
     return (
       <div className="sublist">
         <ul>
-          <li></li>
+          {list}
         </ul>
-        <button type="button" onClick={() => {this.addField()}}>Add Column</button>
+        <button type="button" onClick={e => {onAddColumn(columns.length+1)}}>Add Column</button>
       </div>
     );
   }
 };
 export default connect(state => ({
-  columns: state.columns
+  columns: state.columns,
+  answers: state.answers
+}),
+  dispatch => ({
+    onAddColumn: id => { dispatch(Actions.addColumn(id)) }
 }))(Sublist)
