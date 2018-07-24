@@ -1,6 +1,8 @@
 build:
     steps:
-      - npm-install@23.4.1:
-          package: jest
-          strict-ssl: false
+      - npm-install
       - npm-test
+box:
+  id: node:latest
+  ports:
+    - "3000"
