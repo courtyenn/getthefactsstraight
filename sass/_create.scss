@@ -28,9 +28,16 @@
     ul {
         list-style-type: none;
         width: 100%;
+        margin: 20px 0 0 51px;
         li {
             position: relative;
         }
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .sublist ul {
+        margin: 20px 0 0 0;
     }
 }
 
@@ -54,3 +61,46 @@
         line-height: 1;
     }
 }
+
+.sub-sublist .removeField{
+    width: 20px;
+    height: 20px;
+    bottom: -5px;
+    margin-right: 15px;
+
+    &::before{
+        font-size: 20px;
+    }
+  }
+
+.addField {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background: lime;
+    bottom: -5px;
+    border-radius: 50%;
+
+    &::before {
+        content: '+';
+        display: block;
+        position: absolute;
+        font-size: 30px;
+        font-weight: 900;
+        top: -5px;
+        left: 6px;
+    }
+  }
+
+  .sub-sublist .addField{
+    width: 20px;
+    height: 20px;
+    bottom: -5px;
+
+    &::before{
+        font-size: 20px;
+        top: -3px;
+        left: 4px;
+    }
+  }

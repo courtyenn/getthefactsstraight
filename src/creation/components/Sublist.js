@@ -20,27 +20,6 @@ import * as Actions from '../actions'
 // };
 
 class Sublist extends Component {
-  constructor() {
-    super();
-
-    // let showField = false;
-    // this.state = {
-    //   showField: false,
-    //   list: [defaultField()]
-    // };
-
-    // this.toggleField = this.toggleField.bind(this);
-    // this.addField = this.addField.bind(this);
-    // this.removeField = this.removeField.bind(this);
-    // this.createList = this.createList.bind(this);
-    // this.updateList = this.updateList.bind(this);
-    // this.addAnswer = this.addAnswer.bind(this);
-    // this.createAnswerList = this.createAnswerList.bind(this);
-    // this.updateAnswer = this.updateAnswer.bind(this);
-    // this.toggleAnswer = this.toggleAnswer.bind(this);
-    // this.removeAnswer = this.removeAnswer.bind(this);
-
-  }
   // updateList(e, editItem){
   //   let itemValue = e.target.value;
   //   let list = this.state.list;
@@ -85,37 +64,39 @@ class Sublist extends Component {
   //   });
   //   this.setState(newState);
   // }
-  // createAnswerList(fieldColumn, i){
-  //   let answers = fieldColumn.answers.map((answer, j) => {
-  //     if(!answer.edit){
-  //       return (
-  //         <li key={answer.id} onClick={()=> {this.toggleAnswer(i, j)}}>
-  //           <div className="flex-container">
-  //             <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
-  //             <span className="description">{answer.value}</span>
-  //           </div>
-  //         </li>
-  //       );
-  //     }
-  //     else {
-  //       return (
-  //         <li key={answer.id}>
-  //         <div className="flex-container">
-  //             <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
-  //             <input
-  //             className="input-inline"
-  //             type="text"
-  //             autoFocus
-  //             onBlur={()=> {this.toggleAnswer(i, j)}}
-  //             onChange={(e) => {this.updateAnswer(e, answer, i, j)}} />
-  //           </div>
-  //         </li>
-  //       );
-  //     }
+  createAnswerList(i){
+    let answers = this.props.answers.filter(n => n.correctId === i).map((answer, j) => {
+      // if(!answer.edit){
+        return (
+          <li key={answer.id}>
+          {/* <li key={answer.id} onClick={()=> {this.toggleAnswer(i, j)}}> */}
+            <div className="flex-container">
+              <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
+              <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
+              <span className="description">{answer.title}</span>
+            </div>
+          </li>
+        );
+      // }
+      // else {
+      //   return (
+      //     <li key={answer.id}>
+          {/* <div className="flex-container">
+              <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
+              <input
+              className="input-inline"
+              type="text"
+              autoFocus
+              onBlur={()=> {this.toggleAnswer(i, j)}}
+              onChange={(e) => {this.updateAnswer(e, answer, i, j)}} />
+            </div> */}
+      //     </li>
+      //   );
+      // }
 
-  //   });
-  //   return React.createElement('ul', {className: 'sub-sublist'}, answers);
-  // }
+    });
+    return answers;
+  }
   // updateAnswer(e, editItem, i, j){
   //   let itemValue = e.target.value;
   //   let list = this.state.list;
@@ -145,18 +126,16 @@ class Sublist extends Component {
   createList() {
     let { columns, onAddColumn } = this.props;
     let fields = columns.map((item, i) => {
-      // let list = this.createAnswerList(item, i);
+      let list = this.createAnswerList(i+1);
       if (!item.edit) {
         return (
           <div className="sublist" key={item.id}>
             {/* <span className="addField"></span> */}
             <span className="removeField"></span>
             <h3>{item.title}</h3>
-            <ul>
-              <li>
+            <ul className="sub-sublist">
                 {/* <h3 onClick={() => {this.toggleField(i)}}>{item.title}</h3> */}
-                {/* {list} */}
-              </li>
+              {list}
             </ul>
             
           </div>);

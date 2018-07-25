@@ -36,3 +36,9 @@ describe('column reducer', () => {
         expect(editColumn([{id: 1, title: 'hi'}], Action.removeColumn(undefined)).length).toEqual(1)
     })
 })
+
+describe('answer reducer', () => {
+    it('should add a new column when add_column action is fired', () => {
+        expect(editAnswers([], Action.addColumn(4)).length).toEqual(1)
+    })
+})
