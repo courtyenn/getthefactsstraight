@@ -20,7 +20,7 @@ import * as Actions from '../actions'
 // };
 
 class Sublist extends Component {
-  constructor(){
+  constructor() {
     super();
 
     // let showField = false;
@@ -142,19 +142,24 @@ class Sublist extends Component {
   //   this.setState(newState);
   // }
 
-  createList(){
-    let {columns} = this.props;
+  createList() {
+    let { columns, onAddColumn } = this.props;
     let fields = columns.map((item, i) => {
       // let list = this.createAnswerList(item, i);
-      if(!item.edit){
+      if (!item.edit) {
         return (
-          <li key={item.id}>
-            {/* <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
-            <span className="removeField" onClick={() => {this.removeField(i)}}></span> */}
+          <div className="sublist" key={item.id}>
+            {/* <span className="addField"></span> */}
+            <span className="removeField"></span>
             <h3>{item.title}</h3>
-            {/* <h3 onClick={() => {this.toggleField(i)}}>{item.title}</h3> */}
-            {/* {list} */}
-          </li>);
+            <ul>
+              <li>
+                {/* <h3 onClick={() => {this.toggleField(i)}}>{item.title}</h3> */}
+                {/* {list} */}
+              </li>
+            </ul>
+            
+          </div>);
       }
       else {
         return (
@@ -177,17 +182,10 @@ class Sublist extends Component {
 
     return fields;
   }
-  render(){
-    let {onAddColumn, columns} = this.props;
+  render() {
+    let { columns } = this.props;
     let list = this.createList()
-    return (
-      <div className="sublist">
-        <ul>
-          {list}
-        </ul>
-        <button type="button" onClick={e => {onAddColumn(columns.length+1)}}>Add Column</button>
-      </div>
-    );
+  return (<div>{list}<button type="button" onClick={e => { onAddColumn(columns.length + 1) }}>Add Column</button></div>);
   }
 };
 export default connect(state => ({
@@ -196,4 +194,4 @@ export default connect(state => ({
 }),
   dispatch => ({
     onAddColumn: id => { dispatch(Actions.addColumn(id)) }
-}))(Sublist)
+  }))(Sublist)

@@ -38,27 +38,37 @@ export const editColumn = (state = [], action) => {
 }
 
 export const editAnswers = (state = [], action) => {
-    switch(action.type){
+    const clone = state.slice(0)
+    switch (action.type) {
+        case ADD_COLUMN:
+            if (action.id) {
+                clone.push({
+                    title: 'Something relevant',
+                    id: action.id + '-choice',
+                    correctId: action.id
+                })
+                return clone
+            }
         default:
-        return state;
+            return state;
     }
 }
 
 export const columnToEdit = (state = null, action) => {
-    switch(action.type){
+    switch (action.type) {
         case EDIT_COLUMN_TITLE:
-        return action.id
+            return action.id
         default:
-        return state;
+            return state;
     }
 }
 
 export const choiceToEdit = (state = null, action) => {
-    switch(action.type){
+    switch (action.type) {
         case EDIT_CHOICE_TITLE:
-        return action.id
+            return action.id
         default:
-        return state;
+            return state;
     }
 }
 

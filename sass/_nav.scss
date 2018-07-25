@@ -1,0 +1,36 @@
+nav {
+    background: cadetblue;
+    color: seashell;
+    display: flex;
+    padding: 7px 0;
+  }
+
+  nav .logo {
+    width: 50%;
+    font-size: 20px;
+    font-family: monospace;
+    text-align: center;
+  }
+
+  nav .logo a {
+    color: white;
+    text-decoration: none;
+    font-family: monospace;
+  }
+
+  nav .menu {
+    list-style-type: none;
+    text-align: right;
+    width: 48%;
+  }
+
+  nav .menu li {
+    display: inline-block;
+    margin: 0px 15px;
+  }
+
+  nav .menu li a {
+    text-decoration: none;
+    color: white;
+    font-size: 13px;
+  }

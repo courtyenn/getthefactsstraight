@@ -6,73 +6,12 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Get the Facts Straight</title>
   <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/lib/codemirror.css" rel="stylesheet">
   <link href="/lib/addon/scroll/simplescrollbars.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
 </head>
 <style>
-  html,
-  body,
-  #app,
-  .root {
-    height: 100%;
-    background: #f4f0ea;
-  }
-
-  * {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    background: #f4f0ea;
-  }
-
-  .wrapper {
-    width: 600px;
-  }
-
-  nav {
-    background: cadetblue;
-    color: seashell;
-    display: flex;
-    padding: 7px 0;
-  }
-
-  nav .logo {
-    width: 50%;
-    font-size: 20px;
-    font-family: monospace;
-    text-align: center;
-  }
-
-  nav .logo a {
-    color: white;
-    text-decoration: none;
-    font-family: monospace;
-  }
-
-  nav .menu {
-    list-style-type: none;
-    text-align: right;
-    width: 48%;
-  }
-
-  nav .menu li {
-    display: inline-block;
-    margin: 0px 15px;
-  }
-
-  nav .menu li a {
-    text-decoration: none;
-    color: white;
-    font-size: 13px;
-  }
-
-  .content {
-    padding: 0 15px;
-  }
 
   .input-wide {
     font-size: 20px;
@@ -127,36 +66,6 @@
     font-weight: 900;
   }
 
-  .sublist {
-    background: #458e90;
-    color: white;
-    padding: 20px;
-  }
-
-  .sublist ul {
-    list-style-type: none;
-  }
-
-  .sublist li {
-    position: relative;
-  }
-
-  .sublist h3 {
-    display: inline-block;
-    margin-left: 15px;
-    height: 30px;
-    cursor: pointer;
-  }
-
-  .sublist>ul>li {
-    border-bottom: 1px solid white;
-    padding: 10px 0;
-  }
-
-  .sublist>ul>li:last-child {
-    border: none;
-  }
-
   .sublist>ul>li .flex-container {
     display: flex;
     flex-grow: 1;
@@ -189,17 +98,6 @@
     border-radius: 50%;
   }
 
-  .removeField {
-    margin-left: 5px;
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    background: red;
-    bottom: -10px;
-    position: relative;
-    border-radius: 50%;
-  }
-
   span.addField:before {
     content: '+';
     display: block;
@@ -208,18 +106,6 @@
     font-weight: 900;
     top: -5px;
     left: 6px;
-  }
-
-  span.removeField:before {
-    content: '-';
-    display: block;
-    position: absolute;
-    font-size: 30px;
-    font-weight: 900;
-    width: 100%;
-    height: inherit;
-    text-align: center;
-    line-height: 1;
   }
 
   .sub-sublist .removeField {
@@ -266,45 +152,6 @@
   </nav>
 
   <div id="creation"></div>
-  <!-- <textarea id="editor" name="quiz" height="600px">
-        {
-          "columns": [
-            {
-              "title": "Cute",
-              "id": "1",
-              "list": []
-            },
-            {
-              "title": "Edible",
-              "id": "2",
-              "list": []
-            },
-            {
-              "title": "Horrid",
-              "id": "3",
-              "list": []
-            }
-          ],
-          "choices": [
-            {
-              "title": "Tacos",
-              "correctId": "2"
-            },
-            {
-              "title": "Kitties",
-              "correctId": "1"
-            },
-            {
-              "title": "Smelly socks",
-              "correctId": "3"
-            },
-            {
-              "title": "Ferrets",
-              "correctId": "1"
-            }
-            ]
-          }
-          </textarea> -->
   </div>
   <script src="creation.js"></script>
   <!-- <script src="/lib/codemirror.js"></script>
