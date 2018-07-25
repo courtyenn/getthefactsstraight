@@ -35,8 +35,4 @@ describe('column reducer', () => {
     it('should not mutate state', () => {
         expect(editColumn([{id: 1, title: 'hi'}], Action.removeColumn(undefined)).length).toEqual(1)
     })
-
-    it('should fail', () => {
-        expect(editAnswers([], Action.editColumnTitle(undefined)).length).toEqual(1)
-    })
 })

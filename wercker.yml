@@ -1,6 +1,7 @@
 build:
     steps:
-      - npm-install
+      - npm-install:
+          package: jest
       - npm-test
 box:
   id: node:latest
