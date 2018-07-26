@@ -3,7 +3,7 @@ import { rootReducer } from './reducer'
 
 const store = createStore(rootReducer, {
   editColumnTitle: null,
-  editChoiceTitle: null,
+  editChoiceId: null,
   title: 'Common Logic Quiz',
   columns: [
     {

@@ -1,23 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as Actions from '../actions'
-// let defaultAnswer = () => {
-//   return {
-//     name: 'choice',
-//     value: 'Truthy description',
-//     edit: false,
-//     id: 'answer-' + Math.random(),
-//   }
-// };
-// let defaultField = () => {
-//   return {
-//     name: 'title',
-//     value: 'Name column',
-//     edit: false,
-//     id: 'field-' + Math.random(),
-//     answers: [defaultAnswer()]
-//   }
-// };
 
 class Sublist extends Component {
   // updateList(e, editItem){
@@ -65,34 +48,36 @@ class Sublist extends Component {
   //   this.setState(newState);
   // }
   createAnswerList(i){
+    let {editChoiceId, onEditChoice, onEditChoiceTitle} = this.props;
     let answers = this.props.answers.filter(n => n.correctId === i).map((answer, j) => {
-      // if(!answer.edit){
+      if(answer.id !== editChoiceId){
         return (
           <li key={answer.id}>
           {/* <li key={answer.id} onClick={()=> {this.toggleAnswer(i, j)}}> */}
             <div className="flex-container">
               <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
               <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
-              <span className="description">{answer.title}</span>
+              <span className="description" onClick={e => onEditChoice(answer.id)}>{answer.title}</span>
             </div>
           </li>
         );
-      // }
-      // else {
-      //   return (
-      //     <li key={answer.id}>
-          {/* <div className="flex-container">
+      }
+      else {
+        return (
+          <li key={answer.id}>
+          <div className="flex-container">
+              <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
               <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
               <input
               className="input-inline"
               type="text"
-              autoFocus
-              onBlur={()=> {this.toggleAnswer(i, j)}}
-              onChange={(e) => {this.updateAnswer(e, answer, i, j)}} />
-            </div> */}
-      //     </li>
-      //   );
-      // }
+              onChange={e => onEditChoiceTitle(answer.id, e.target.value)}
+              onBlur={e => onEditChoice(null)}
+              autoFocus />
+            </div>
+          </li>
+        );
+      }
 
     });
     return answers;
@@ -124,15 +109,15 @@ class Sublist extends Component {
   // }
 
   createList() {
-    let { columns, onAddColumn } = this.props;
+    let { columns, onEditColumn, onEditColumnTitle, editColumnTitle } = this.props;
     let fields = columns.map((item, i) => {
       let list = this.createAnswerList(i+1);
-      if (!item.edit) {
+      if (item.id !== editColumnTitle) {
         return (
           <div className="sublist" key={item.id}>
             {/* <span className="addField"></span> */}
             <span className="removeField"></span>
-            <h3>{item.title}</h3>
+            <h3 onClick={e => onEditColumn(item.id)}>{item.title}</h3>
             <ul className="sub-sublist">
                 {/* <h3 onClick={() => {this.toggleField(i)}}>{item.title}</h3> */}
               {list}
@@ -142,19 +127,20 @@ class Sublist extends Component {
       }
       else {
         return (
-          <li key={item.id}>
-            {/* <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
-            <span className="removeField" onClick={() => {this.removeField(i)}}></span> */}
-            {/* <h3>
-              <input
+          <div className="sublist" key={item.id}>
+            {/* <span className="addField"></span> */}
+            <span className="removeField"></span>
+            <h3><input
               autoFocus
               className="input-inline"
-              type="text"
-              onChange={(e, n)=>{this.updateList(e, item)}}
-              onBlur={() => {this.toggleField(i)}} value={item.value} />
-            </h3> */}
-            {/* {list} */}
-          </li>
+              onChange={e => onEditColumnTitle(item.id, e.target.value)}
+              onBlur={e => onEditColumn(null)}
+              type="text" /></h3>
+            <ul className="sub-sublist">
+                {/* <h3 onClick={() => {this.toggleField(i)}}>{item.title}</h3> */}
+              {list}
+            </ul>
+          </div>
         )
       }
     });
@@ -162,15 +148,21 @@ class Sublist extends Component {
     return fields;
   }
   render() {
-    let { columns } = this.props;
+    let { columns, onAddColumn } = this.props;
     let list = this.createList()
   return (<div>{list}<button type="button" onClick={e => { onAddColumn(columns.length + 1) }}>Add Column</button></div>);
   }
 };
 export default connect(state => ({
   columns: state.columns,
-  answers: state.answers
+  answers: state.answers,
+  editColumnTitle: state.editColumnTitle,
+  editChoiceId: state.editChoiceId
 }),
   dispatch => ({
-    onAddColumn: id => { dispatch(Actions.addColumn(id)) }
+    onAddColumn: id => { dispatch(Actions.addColumn(id)) },
+    onEditColumn: id => { dispatch(Actions.editColumn(id)) },
+    onEditColumnTitle: (id, val) => {dispatch(Actions.editColumnTitle(id, val))},
+    onEditChoice: (id, val) => {dispatch(Actions.editChoice(id))},
+    onEditChoiceTitle: (id, val) => {dispatch(Actions.editChoiceTitle(id, val))},
   }))(Sublist)

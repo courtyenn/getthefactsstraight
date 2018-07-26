@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_COLUMN, CREATE_QUIZ, EDIT_TITLE, COLUMN_NAME_CHANGE, REMOVE_COLUMN, EDIT_COLUMN_TITLE, EDIT_CHOICE_TITLE } from './actions'
+import { ADD_COLUMN, CREATE_QUIZ, EDIT_CHOICE, REMOVE_COLUMN, EDIT_COLUMN, EDIT_COLUMN_TITLE, EDIT_CHOICE_TITLE } from './actions'
 import { STATES } from 'mongoose';
 
 // TODO: Use Immutable.js?
@@ -32,6 +32,10 @@ export const editColumn = (state = [], action) => {
 
         case REMOVE_COLUMN:
             return clone.filter(column => column.id !== action.id)
+            
+        case EDIT_COLUMN_TITLE:
+            return state.map((s, i) => s.id === action.id ? Object.assign({}, s, {title: action.title}) : s)
+
         default:
             return state
     }
@@ -49,6 +53,8 @@ export const editAnswers = (state = [], action) => {
                 })
                 return clone
             }
+            case EDIT_CHOICE_TITLE:
+            return state.map((s, i) => s.id === action.id ? Object.assign({}, s, {title: action.title}) : s)
         default:
             return state;
     }
@@ -56,7 +62,7 @@ export const editAnswers = (state = [], action) => {
 
 export const columnToEdit = (state = null, action) => {
     switch (action.type) {
-        case EDIT_COLUMN_TITLE:
+        case EDIT_COLUMN:
             return action.id
         default:
             return state;
@@ -65,7 +71,7 @@ export const columnToEdit = (state = null, action) => {
 
 export const choiceToEdit = (state = null, action) => {
     switch (action.type) {
-        case EDIT_CHOICE_TITLE:
+        case EDIT_CHOICE:
             return action.id
         default:
             return state;
@@ -74,7 +80,7 @@ export const choiceToEdit = (state = null, action) => {
 
 export const rootReducer = combineReducers({
     editColumnTitle: columnToEdit,
-    editChoiceTitle: choiceToEdit,
+    editChoiceId: choiceToEdit,
     title: editTitle,
     columns: editColumn,
     answers: editAnswers

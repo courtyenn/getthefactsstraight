@@ -39,6 +39,14 @@
     .sublist ul {
         margin: 20px 0 0 0;
     }
+
+    span.removeField, span.addField {
+        display: none;
+    }
+
+    .sublist h3 {
+        margin-left: 0;
+    }
 }
 
 .removeField {
@@ -103,4 +111,12 @@
         top: -3px;
         left: 4px;
     }
+  }
+
+.flex-container {
+    display: flex;
+    flex-grow: 1;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }

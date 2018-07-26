@@ -35,6 +35,14 @@ describe('column reducer', () => {
     it('should not mutate state', () => {
         expect(editColumn([{id: 1, title: 'hi'}], Action.removeColumn(undefined)).length).toEqual(1)
     })
+
+    it('should edit column name', () => {
+        expect(editColumn([{id: 1, title: 'hi'}, {id: 2, title:'what'}], Action.editColumnTitle(2, 'hey'))[1].title).toEqual('hey')
+    })
+
+    it('should not edit column name', () => {
+        expect(editColumn([{id: 1, title: 'hi'}, {id: 2, title:'what'}], Action.editColumnTitle(3, 'hey'))[1].title).toEqual('what')
+    })
 })
 
 describe('answer reducer', () => {
