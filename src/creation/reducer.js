@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_COLUMN, CREATE_QUIZ, EDIT_CHOICE, REMOVE_COLUMN, EDIT_COLUMN, EDIT_COLUMN_TITLE, EDIT_CHOICE_TITLE } from './actions'
-import { STATES } from 'mongoose';
+import { ADD_COLUMN, ADD_CHOICE, EDIT_CHOICE, REMOVE_COLUMN, REMOVE_CHOICE, EDIT_COLUMN, EDIT_COLUMN_TITLE, EDIT_CHOICE_TITLE } from './actions'
 
 // TODO: Use Immutable.js?
 
@@ -21,10 +20,10 @@ export const editColumn = (state = [], action) => {
 
     switch (action.type) {
         case ADD_COLUMN:
-            if (action.id) {
+            if (action.columnId && action.id) {
                 clone.push({
                     title: 'New Category',
-                    id: action.id
+                    id: action.columnId
                 })
                 return clone
             }
@@ -32,9 +31,8 @@ export const editColumn = (state = [], action) => {
 
         case REMOVE_COLUMN:
             return clone.filter(column => column.id !== action.id)
-            
         case EDIT_COLUMN_TITLE:
-            return state.map((s, i) => s.id === action.id ? Object.assign({}, s, {title: action.title}) : s)
+            return state.map((s, i) => s.id === action.id ? Object.assign({}, s, { title: action.title }) : s)
 
         default:
             return state
@@ -45,16 +43,20 @@ export const editAnswers = (state = [], action) => {
     const clone = state.slice(0)
     switch (action.type) {
         case ADD_COLUMN:
-            if (action.id) {
+        case ADD_CHOICE:
+            if (action.columnId && action.id) {
                 clone.push({
                     title: 'Something relevant',
-                    id: action.id + '-choice',
-                    correctId: action.id
+                    id: action.id,
+                    correctId: action.columnId
                 })
                 return clone
             }
-            case EDIT_CHOICE_TITLE:
-            return state.map((s, i) => s.id === action.id ? Object.assign({}, s, {title: action.title}) : s)
+            return state
+        case REMOVE_CHOICE:
+            return clone.filter(choice => choice.id !== action.id)
+        case EDIT_CHOICE_TITLE:
+            return state.map(s => s.id === action.id ? Object.assign({}, s, { title: action.title }) : s)
         default:
             return state;
     }

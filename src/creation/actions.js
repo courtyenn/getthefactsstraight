@@ -3,13 +3,25 @@ export const editTitle = title => ({
     title
 })
 
-export const addColumn = id => ({
+export const addColumn = (columnId, id) => ({
     type: ADD_COLUMN,
+    columnId,
     id
+})
+
+export const addChoice = (id, columnId) => ({
+    type: ADD_CHOICE,
+    id,
+    columnId
 })
 
 export const removeColumn = id => ({
     type: REMOVE_COLUMN,
+    id
+})
+
+export const removeChoice = id => ({
+    type: REMOVE_CHOICE,
     id
 })
 
@@ -38,7 +50,9 @@ export const editChoiceTitle = (id, title) => ({
 export const EDIT_TITLE = 'EDIT_TITLE'
 export const EDIT_DESCRIPTION = 'EDIT_DESCRIPTION'
 export const ADD_COLUMN = 'ADD_COLUMN'
+export const ADD_CHOICE = 'ADD_CHOICE'
 export const REMOVE_COLUMN = 'REMOVE_COLUMN'
+export const REMOVE_CHOICE = 'REMOVE_CHOICE'
 export const EDIT_CHOICE = 'EDIT_CHOICE'
 export const EDIT_CHOICE_TITLE = 'EDIT_CHOICE_TITLE'
 export const EDIT_COLUMN = 'EDIT_COLUMN'

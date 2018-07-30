@@ -33,14 +33,17 @@
     "mongoose": "^4.6.0",
     "nodemon": "^1.10.2",
     "npm": "^6.2.0",
+    "rc-swipeout": "^2.0.11",
     "react": "^15.3.2",
     "react-addons-update": "^15.3.2",
     "react-dom": "^15.0.2",
     "react-dragndrop": "^1.0.10",
     "react-redux": "^5.0.7",
+    "react-responsive": "^5.0.0",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0",
-    "reflux": "^0.4.1"
+    "reflux": "^0.4.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel": "^6.5.2",
