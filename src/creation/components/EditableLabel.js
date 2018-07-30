@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 
+//TODO: Allow component to specify parent wrapper and remove description
 export default class EditableLabel extends PureComponent {
     render() {
         const {label, editLabel, blurLabel} = this.props
