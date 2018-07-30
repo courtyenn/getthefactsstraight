@@ -53,6 +53,8 @@ export const editAnswers = (state = [], action) => {
                 return clone
             }
             return state
+        case REMOVE_COLUMN:
+            return clone.filter(choice => choice.correctId !== action.id)
         case REMOVE_CHOICE:
             return clone.filter(choice => choice.id !== action.id)
         case EDIT_CHOICE_TITLE:

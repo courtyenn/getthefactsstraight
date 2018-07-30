@@ -2,42 +2,26 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as Actions from '../actions'
 import uuidv1 from 'uuid/v1';
+import EditableLabel from './EditableLabel';
+import AddButton from './AddButton';
 
 class Sublist extends Component {
   createAnswerList(i) {
     let { editChoiceId, onEditChoice, onEditChoiceTitle, onRemoveChoice, onAddChoice, answers } = this.props;
     const filtered = answers.filter(n => n.correctId === i);
     return filtered.map((answer, j) => {
-      if (answer.id !== editChoiceId) {
-        return (
-          <li key={answer.id}>
-            {/* <li key={answer.id} onClick={()=> {this.toggleAnswer(i, j)}}> */}
-            <div className="flex-container">
-              <span className="addField" onClick={() => { onAddChoice(uuidv1(), answer.correctId) }}></span>
-              {filtered.length > 1 ? <span className="removeField" onClick={e => { onRemoveChoice(answer.id) }}></span> : null}
-              <span className="description" onClick={e => onEditChoice(answer.id)}>{answer.title}</span>
-            </div>
-          </li>
-        );
-      }
-      else {
-        return (
-          <li key={answer.id}>
-            <div className="flex-container">
-              <span className="addField" onClick={() => { this.addAnswer(i) }}></span>
-              <span className="removeField" onClick={() => { this.removeAnswer(i, j) }}></span>
-              <input
-                className="input-inline"
-                type="text"
-                value={answer.title}
-                onChange={e => onEditChoiceTitle(answer.id, e.target.value)}
-                onBlur={e => onEditChoice(null)}
-                autoFocus />
-            </div>
-          </li>
-        );
-      }
-
+      // if (answer.id !== editChoiceId) {
+      return React.createElement('li', { key: answer.id }, (
+        <EditableLabel
+          label={{ value: answer.title, id: answer.id }}
+          edit={answer.id !== editChoiceId}
+          clickLabel={onEditChoice}
+          blurLabel={onEditChoice}
+          changeLabel={onEditChoiceTitle}>
+          <span className="addField" onClick={() => { onAddChoice(uuidv1(), answer.correctId) }}></span>
+          {filtered.length > 1 ? <span className="removeField" onClick={e => { onRemoveChoice(answer.id) }}></span> : null}
+        </EditableLabel>
+      ))
     });
   }
 
