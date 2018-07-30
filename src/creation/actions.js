@@ -47,6 +47,10 @@ export const editChoiceTitle = (id, title) => ({
     title
 })
 
+export const createQuiz = () => ({
+    type: CREATE_QUIZ
+})
+
 export const EDIT_TITLE = 'EDIT_TITLE'
 export const EDIT_DESCRIPTION = 'EDIT_DESCRIPTION'
 export const ADD_COLUMN = 'ADD_COLUMN'

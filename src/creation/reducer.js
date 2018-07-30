@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
-import { ADD_COLUMN, ADD_CHOICE, EDIT_CHOICE, REMOVE_COLUMN, REMOVE_CHOICE, EDIT_COLUMN, EDIT_COLUMN_TITLE, EDIT_CHOICE_TITLE } from './actions'
+import createSagaMiddleware from 'redux-saga'
+import { ADD_COLUMN, ADD_CHOICE, EDIT_CHOICE, REMOVE_COLUMN, REMOVE_CHOICE, EDIT_COLUMN, EDIT_COLUMN_TITLE, EDIT_CHOICE_TITLE, CREATE_QUIZ } from './actions'
 
 // TODO: Use Immutable.js?
 
@@ -82,10 +83,19 @@ export const choiceToEdit = (state = null, action) => {
     }
 }
 
-export const rootReducer = combineReducers({
+const appReducer = combineReducers({
     editColumnTitle: columnToEdit,
     editChoiceId: choiceToEdit,
     title: editTitle,
     columns: editColumn,
     answers: editAnswers
 })
+
+export const rootReducer = (state, action) => {
+    if (action.type === CREATE_QUIZ) {
+        state = undefined
+    }
+
+    return appReducer(state, action)
+}
+

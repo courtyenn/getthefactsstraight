@@ -1,5 +1,10 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 import { rootReducer } from './reducer'
+
+import mySaga from './sagas'
+
+const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(rootReducer, {
   editColumnTitle: null,
@@ -41,6 +46,7 @@ const store = createStore(rootReducer, {
       correctId: 1
     }
   ]
-})
+}, applyMiddleware(sagaMiddleware))
+sagaMiddleware.run(mySaga)
 
 export default store

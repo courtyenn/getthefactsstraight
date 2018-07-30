@@ -1,8 +1,9 @@
 var path = require('path');
+// const babel_polyfill = require('babel-polyfill');
 module.exports = {
   entry: {
     "./public/game": "./src/game/index",
-    "./public/creation": "./src/creation/index"
+    "./public/creation": ['babel-polyfill', "./src/creation/index"]
   },
   output: {
     filename: '[name].js',
@@ -22,7 +23,10 @@ module.exports = {
         },
         env: {
           "test": {
-            "plugins": ["transform-es2015-modules-commonjs", "transform-object-rest-spread"]
+            "plugins": [
+              "transform-es2015-modules-commonjs",
+              "transform-object-rest-spread"
+            ]
           }
         }
       }
