@@ -1,40 +1,40 @@
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
+import React from 'react'
+import express from 'express'
+import path from 'path'
+import bodyParser from 'body-parser'
+import mongoose from 'mongoose'
+import {renderToString} from 'react-dom/server'
+import { StaticRouter } from 'react-router-dom'
 
-var mongoose = require('mongoose');
-var Quiz = require('./quiz');
-var ejs = require('ejs');
+import Root from '../src/creation/index'
+
+import Quiz from './quiz'
+// import ejs from 'ejs'
 mongoose.connect(process.env.DbUrl);
 
-var app = express();
+const app = express();
 app.use(express.static(__dirname + '/../public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
-app.engine('html', ejs.renderFile);
-app.set('view engine', 'ejs');
-app.set('views', path.resolve(__dirname, './views'));
+// app.engine('html', ejs.renderFile);
+// app.set('view engine', 'ejs');
+// app.set('views', path.resolve(__dirname, './views'));
 
-
-app.get('/', function(req, res){
-  console.log('rendering index');
-  res.render('game.html');
+app.get('/', (req, res) => {
+  const content = renderToString(<StaticRouter location={req.url} context={{}}><Root /></StaticRouter>);
+  res.send(content);
 });
 
 app.post('/quiz', function(req, res){
-  console.log('POSTING...');
-  console.log(req.body);
-  console.log(req.body.quiz);
 
-  var quiz = new Quiz();
+  const quiz = new Quiz();
   quiz.game = req.body.quiz;
   quiz.created = Date.now();
   quiz.title = req.body.title;
-  quiz.save(function(err, data){
-    res.redirect('/quiz/' + data._id);
-  });
+  // const data = await quiz.save();
+  // res.redirect('/quiz/' + data._id);
   // res.render('game.html');
 });
 
@@ -49,8 +49,8 @@ app.get('/quiz/:id', function(req, res){
     //   res.render('index.html');
     // }
     // else {
-      var game = data.game;
-      var title = data.title;
+      const game = data.game;
+      const title = data.title;
       console.log(title);
       res.render('game.html', {game: game, title: data.title});
     // }
@@ -63,10 +63,6 @@ app.get('/quizzes', function(req, res){
   });
 });
 
-
-
-
-app.listen(3000, function(){
-  console.log('LISTENING ');
-  console.log(arguments);
+app.listen(process.env.PORT, function(){
+  console.log(`LISTENING ${process.env.PORT}`);
 });

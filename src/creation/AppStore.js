@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { rootReducer } from './reducer'
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { connectRouter, routerMiddleware } from 'connected-react-router'
 
 import mySaga from './sagas'
 
@@ -46,7 +48,7 @@ const store = createStore(rootReducer, {
       correctId: 1
     }
   ]
-}, applyMiddleware(sagaMiddleware))
+}, composeWithDevTools(applyMiddleware(sagaMiddleware)))
 sagaMiddleware.run(mySaga)
 
 export default store
