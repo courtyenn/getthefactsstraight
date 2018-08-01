@@ -1,0 +1,301 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Get the Facts Straight</title>
+    <meta name="description" content="">
+</head>
+<style>
+    html, body, #app, .root {
+        height: 100%;
+        background: #f4f0ea;
+        color: black;
+    }
+
+    * {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: #f4f0ea;
+    }
+
+    .wrapper {
+        width: 600px;
+    }
+
+    nav {
+        background: cadetblue;
+        color: seashell;
+        display: flex;
+        padding: 7px 0;
+    }
+
+    button {
+        border: none;
+    }
+
+    nav .logo {
+        width: 50%;
+        font-size: 20px;
+        font-family: monospace;
+        text-align: center;
+    }
+
+    nav .logo a {
+        color: white;
+        text-decoration: none;
+        font-family: monospace;
+    }
+
+    nav .menu {
+        list-style-type: none;
+        text-align: right;
+        width: 48%;
+    }
+
+    nav .menu li {
+        display: inline-block;
+        margin: 0px 15px;
+    }
+
+    nav .menu li a {
+        text-decoration: none;
+        color: white;
+        font-size: 13px;
+    }
+
+    .input-wide {
+        font-size: 20px;
+        height: 35px;
+        margin: 0 0 36px 0;
+        width: 100%;
+    }
+
+    input[type="submit"] {
+        font-size: 20px;
+        height: 35px;
+        background: #69b908;
+        color: white;
+        padding: 6px 10px;
+        border: none;
+        margin-top: 20px;
+    }
+
+    textarea {
+        height: 800px;
+    }
+
+    h1 {
+        font-size: 25px;
+        margin: 30px 0 20px;
+        text-align: center;
+        color: black;
+    }
+
+    label {
+        color: black;
+        font-size: 14px;
+        margin: 0 0 8px;
+        display: block;
+        font-weight: 900;
+    }
+
+    .sublist {
+        margin: 0 0 30px 0;
+    }
+
+    .sublist ul {
+        list-style-type: none;
+    }
+
+    .sublist li {
+        position: relative;
+    }
+
+    .sublist > ul > li {
+        padding: 10px 0;
+        border-radius: 13px;
+        margin-bottom: 10px;
+        background: #ecf0f1;
+        border: 1px solid #e0e0e0;
+        box-shadow: 1px 1px 1px 1px #edf1f3;
+    }
+
+    .sublist > ul > li:last-child {
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    h4 {
+        font-size: 14px;
+    }
+
+    .flex-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .input-inline {
+        border: none;
+        height: 26px;
+        font-size: 17px;
+        padding-left: 5px;
+        width: 100%;
+    }
+
+    .flex-container .description {
+        flex: 1 0 53%;
+    }
+
+    .addField {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        background: #82ce82;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 1px 1px 1px 1px #b5b5b5;
+    }
+
+    .removeField {
+        margin-left: 5px;
+        width: 30px;
+        height: 30px;
+        background: #b93434;
+        position: relative;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 1px 1px 1px 1px #b5b5b5;
+    }
+
+    .addField:before {
+        content: '+';
+        display: block;
+        position: absolute;
+        font-size: 30px;
+        font-weight: 900;
+        top: -5px;
+        left: 6px;
+        color: white;
+    }
+
+    .removeField:before {
+        content: '-';
+        display: block;
+        position: absolute;
+        font-size: 40px;
+        font-weight: 900;
+        width: 100%;
+        height: inherit;
+        text-align: center;
+        line-height: 1;
+        top: -6px;
+        color: white;
+    }
+
+    .sub-sublist .removeField {
+        width: 20px;
+        height: 20px;
+        bottom: 0;
+    }
+
+    .sub-sublist .removeField::before {
+        font-size: 25px;
+        font-weight: 900;
+        width: 100%;
+        height: inherit;
+        text-align: center;
+        top: -3px;
+    }
+
+    .sub-sublist {
+        padding-left: 77px;
+        width: 100%;
+        background: #e2e6e6;
+    }
+
+    .sub-sublist li {
+        padding: 10px 0;
+    }
+
+    .btn-h {
+        border: none;
+        background: transparent;
+        flex: 1 0 25%;
+        text-align: left;
+        margin: 0 10px 0 15px;
+        cursor: pointer;
+        color: #5f5d5d;
+        text-shadow: 0px 1px #cecece;
+    }
+
+    .btn {
+        padding: 10px;
+        background: #5e9ea0;
+        color: white;
+        font-size: 15px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .primary {
+        text-transform: uppercase;
+        margin: 0 auto;
+        display: block;
+        font-size: 21px;
+        background: #82ce82;
+    }
+
+    .title {
+        background: transparent;
+        border: none;
+        font-size: 30px;
+        height: 45px;
+        border-bottom: 4px solid #5e9ea0;
+        text-align: center;
+    }
+
+    .quiz {
+        padding: 30px 10px 40px;
+        background: white;
+    }
+
+    .list-header {
+        width: 100%;
+        border-radius: 13px 13px 0 0;
+        padding: 0 10px 10px;
+    }
+
+    .list-header .btn-h {
+        margin: 0 0 0 15px;
+    }
+
+</style>
+<body>
+<nav>
+    <div class="logo">
+        <a href="/">Get the Facts Straight</a>
+    </div>
+    <div class="menu">
+        <ul>
+            <li><a href="/quiz">Create your own quiz</a></li>
+            <li><a href="/quizzes">View others</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="content">
+    <div id="creation"></div>
+    </form>
+</div>
+<script src="creation.js"></script>
+</body>
+</html>

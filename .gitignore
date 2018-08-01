@@ -1,3 +1,6 @@
+*-compiled.js
+*.map
+.idea
 node_modules
 dist/*
 public/index.js
@@ -5,6 +8,7 @@ public/index.map.js
 public/index.js
 public/index.map.js
 public/index.js.map
+public/style.css
 bower_components
 public/creation.js
 public/game.js
