@@ -1,5 +1,19 @@
-import React from 'react';
-import ReactDom from 'react-dom';
-import Sublist from './components/Sublist';
+import React, {PureComponent} from 'react'
+import ReactDom from 'react-dom'
+import { Provider } from 'react-redux'
 
-ReactDom.render(<Sublist />, document.getElementById('creation'));
+import App from './App'
+import AppStore from './AppStore'
+
+
+export default class Root extends PureComponent {
+    render() { return(
+        <Provider store={AppStore}>
+            <App />
+        </Provider>
+    )}
+}
+
+// ReactDom.render(
+    
+// )

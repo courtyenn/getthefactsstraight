@@ -1,190 +1,84 @@
-import React from 'react';
-import ReactDom from 'react-dom';
-let addons = {};
-import ReactAddons from 'react-addons-update';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import * as Actions from '../actions'
+import uuidv1 from 'uuid/v1';
+import EditableLabel from './EditableLabel';
+import AddButton from './AddButton';
 
-let defaultAnswer = function(){
-  return {
-    name: 'choice',
-    value: 'Truthy description',
-    edit: false,
-    id: 'answer-' + Math.random(),
+class Sublist extends Component {
+  createAnswerList(i) {
+    let { editChoiceId, onEditChoice, onEditChoiceTitle, onRemoveChoice, onAddChoice, answers } = this.props;
+    const filtered = answers.filter(n => n.correctId === i);
+    return filtered.map((answer, j) => {
+      // if (answer.id !== editChoiceId) {
+      return React.createElement('li', { key: answer.id }, (
+        <EditableLabel
+          label={{ value: answer.title, id: answer.id }}
+          edit={answer.id !== editChoiceId}
+          clickLabel={onEditChoice}
+          blurLabel={onEditChoice}
+          changeLabel={onEditChoiceTitle}>
+          <span className="addField" onClick={() => { onAddChoice(uuidv1(), answer.correctId) }}></span>
+          {filtered.length > 1 ? <span className="removeField" onClick={e => { onRemoveChoice(answer.id) }}></span> : null}
+        </EditableLabel>
+      ))
+    });
   }
-};
-let defaultField = function(){
-  return {
-    name: 'title',
-    value: 'Name column',
-    edit: false,
-    id: 'field-' + Math.random(),
-    answers: [defaultAnswer()]
-  }
-};
 
-export default class Sublist extends React.Component {
-  constructor(){
-    super();
-
-    let showField = false;
-    this.state = {
-      showField: false,
-      list: [defaultField()]
-    };
-
-    this.toggleField = this.toggleField.bind(this);
-    this.addField = this.addField.bind(this);
-    this.removeField = this.removeField.bind(this);
-    this.createList = this.createList.bind(this);
-    this.updateList = this.updateList.bind(this);
-    this.addAnswer = this.addAnswer.bind(this);
-    this.createAnswerList = this.createAnswerList.bind(this);
-    this.updateAnswer = this.updateAnswer.bind(this);
-    this.toggleAnswer = this.toggleAnswer.bind(this);
-    this.removeAnswer = this.removeAnswer.bind(this);
-
-  }
-  createList(){
-    let fields = this.state.list.map((item, i) => {
-      let list = this.createAnswerList(item, i);
-      if(!item.edit){
+  createList() {
+    let { columns, onEditColumn, onEditColumnTitle, editColumnTitle, onRemoveColumn } = this.props;
+    let fields = columns.map(item => {
+      let list = this.createAnswerList(item.id);
+      if (item.id !== editColumnTitle) {
         return (
-          <li key={item.id}>
-            <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
-            <span className="removeField" onClick={() => {this.removeField(i)}}></span>
-            <h3 onClick={() => {this.toggleField(i)}}>{item.value}</h3>
-            {list}
-          </li>);
+          <div className="sublist" key={item.id}>
+            <span className="removeField" onClick={e => onRemoveColumn(item.id)}></span>
+            <h3 onClick={e => onEditColumn(item.id)}>{item.title}</h3>
+            <ul className="sub-sublist">
+              {list}
+            </ul>
+          </div>);
       }
       else {
         return (
-          <li key={item.id}>
-            <span className="addField" onClick={() => {this.addAnswer(i)}}></span>
-            <span className="removeField" onClick={() => {this.removeField(i)}}></span>
-            <h3>
-              <input
+          <div className="sublist" key={item.id}>
+            <span className="removeField"></span>
+            <h3><input
               autoFocus
               className="input-inline"
-              type="text"
-              onChange={(e, n)=>{this.updateList(e, item)}}
-              onBlur={() => {this.toggleField(i)}} value={item.value} />
-            </h3>
-            {list}
-          </li>
+              value={item.title}
+              onChange={e => onEditColumnTitle(item.id, e.target.value)}
+              onBlur={e => onEditColumn(null)}
+              type="text" /></h3>
+            <ul className="sub-sublist">
+              {list}
+            </ul>
+          </div>
         )
       }
     });
 
     return fields;
   }
-  updateList(e, editItem){
-    let itemValue = e.target.value;
-    let list = this.state.list;
-    list.forEach((item, i) => {
-      if(item.id == editItem.id){
-        list[i].value = itemValue;
-      }
-    });
-    let newState = ReactAddons(this.state, {
-      list: { $set: list }
-    });
-    this.setState(newState);
-  }
-  addField(){
-    let list = this.state.list;
-    let newState = ReactAddons(this.state, {
-      list: { $push: [defaultField()]}
-    });
-    this.setState(newState);
-  }
-  removeField(i){
-    let list = this.state.list;
-    list.splice(i, 1);
-    let newState = ReactAddons(this.state, {
-      list: { $set: list}
-    });
-    this.setState(newState);
-  }
-  toggleField(i){
-    let list = this.state.list;
-    list[i].edit = !list[i].edit;
-    let newState = ReactAddons(this.state, {
-      list: { $set: list }
-    });
-    this.setState(newState);
-  }
-  addAnswer(i){
-    let list = this.state.list;
-    list[i].answers.push(defaultAnswer());
-    let newState = ReactAddons(this.state, {
-      list: { $set: list }
-    });
-    this.setState(newState);
-  }
-  createAnswerList(fieldColumn, i){
-    let answers = fieldColumn.answers.map((answer, j) => {
-      if(!answer.edit){
-        return (
-          <li key={answer.id} onClick={()=> {this.toggleAnswer(i, j)}}>
-            <div className="flex-container">
-              <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
-              <span className="description">{answer.value}</span>
-            </div>
-          </li>
-        );
-      }
-      else {
-        return (
-          <li key={answer.id}>
-          <div className="flex-container">
-              <span className="removeField" onClick={() => {this.removeAnswer(i, j)}}></span>
-              <input
-              className="input-inline"
-              type="text"
-              autoFocus
-              onBlur={()=> {this.toggleAnswer(i, j)}}
-              onChange={(e) => {this.updateAnswer(e, answer, i, j)}} />
-            </div>
-          </li>
-        );
-      }
-
-    });
-    return React.createElement('ul', {className: 'sub-sublist'}, answers);
-  }
-  updateAnswer(e, editItem, i, j){
-    let itemValue = e.target.value;
-    let list = this.state.list;
-    list[i].answers[j].value = itemValue;
-    let newState = ReactAddons(this.state, {
-      list: { $set: list }
-    });
-    this.setState(newState);
-  }
-  removeAnswer(i, j){
-    let list = this.state.list;
-    list[i].answers.splice(j, 1);
-    let newState = ReactAddons(this.state, {
-      list: { $set: list }
-    });
-    this.setState(newState);
-  }
-  toggleAnswer(i, j){
-    let list = this.state.list;
-    list[i].answers[j].edit = !list[i].answers[j].edit;
-    let newState = ReactAddons(this.state, {
-      list: { $set: list }
-    });
-    this.setState(newState);
-  }
-  render(){
-    let editButton = this.createList();
-    return (
-      <div className="sublist">
-        <ul>
-          {editButton}
-        </ul>
-        <button type="button" onClick={() => {this.addField()}}>Add column</button>
-      </div>
-    );
+  render() {
+    let { columns, onAddColumn } = this.props;
+    let list = this.createList()
+    return (<div>{list}<button type="button" onClick={e => { onAddColumn(uuidv1(), uuidv1()) }}>Add Column</button></div>);
   }
 };
+export default connect(state => ({
+  columns: state.columns,
+  answers: state.answers,
+  editColumnTitle: state.editColumnTitle,
+  editChoiceId: state.editChoiceId
+}),
+  dispatch => ({
+    onAddColumn: (columnId, id) => { dispatch(Actions.addColumn(columnId, id)) },
+    onAddChoice: (id, columnId) => { dispatch(Actions.addChoice(id, columnId)) },
+    onRemoveColumn: id => { dispatch(Actions.removeColumn(id)) },
+    onRemoveChoice: id => { dispatch(Actions.removeChoice(id)) },
+    onEditColumn: id => { dispatch(Actions.editColumn(id)) },
+    onEditColumnTitle: (id, val) => { dispatch(Actions.editColumnTitle(id, val)) },
+    onEditChoice: (id, val) => { dispatch(Actions.editChoice(id)) },
+    onEditChoiceTitle: (id, val) => { dispatch(Actions.editChoiceTitle(id, val)) },
+  }))(Sublist)

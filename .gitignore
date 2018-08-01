@@ -5,8 +5,11 @@ public/index.map.js
 public/index.js
 public/index.map.js
 public/index.js.map
+public/styles.css
 bower_components
 public/creation.js
 public/game.js
 public/creation.js.map
 public/game.js.map
+coverage
+build

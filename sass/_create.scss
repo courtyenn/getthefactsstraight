@@ -1,0 +1,145 @@
+.sublist {
+    background: #458e90;
+    color: white;
+    padding: 20px;
+    display: flex;
+    /* justify-content: stretch; */
+    flex-flow: row wrap;
+    align-items: center;
+
+    h3 {
+        margin-left: 15px;
+        cursor: pointer;
+        width: 50%;
+        flex-grow: 1;
+        position: relative;
+        &::after {
+            border-bottom: 1px solid rgba(254, 255, 255, .3);
+            content: '';
+            padding-top: 10px;
+            height: 1px;
+            position: absolute;
+            width: 100%;
+            bottom: -10px;
+            left: 0;
+        }
+    }
+
+    ul {
+        list-style-type: none;
+        width: 100%;
+        margin: 20px 0 0 51px;
+        li {
+            position: relative;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .sublist ul {
+        margin: 20px 0 0 0;
+    }
+
+    span.removeField, span.addField {
+        display: none;
+    }
+
+    .sublist h3 {
+        margin-left: 0;
+    }
+}
+
+.removeField {
+    margin-left: 5px;
+    width: 31px;
+    height: 30px;
+    display: inline-block;
+    background: red;
+    position: relative;
+    border-radius: 50%;
+    &::before{
+        content: '-';
+        display: block;
+        position: absolute;
+        font-size: 30px;
+        font-weight: 900;
+        width: 100%;
+        height: inherit;
+        text-align: center;
+        line-height: 1;
+    }
+}
+
+.sub-sublist .removeField{
+    width: 20px;
+    height: 20px;
+    bottom: -5px;
+
+    &::before{
+        font-size: 20px;
+    }
+  }
+
+.addField {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background: lime;
+    bottom: -5px;
+    border-radius: 50%;
+
+    &::before {
+        content: '+';
+        display: block;
+        position: absolute;
+        font-size: 30px;
+        font-weight: 900;
+        top: -5px;
+        left: 6px;
+    }
+  }
+
+  .sub-sublist .addField{
+    width: 20px;
+    height: 20px;
+    bottom: -5px;
+
+    &::before{
+        font-size: 20px;
+        top: -3px;
+        left: 4px;
+    }
+  }
+
+.flex-container {
+    display: flex;
+    flex-grow: 1;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+
+  .input-inline {
+    height: 20px;
+    border: none;
+    flex-grow: 1;
+    height: 26px;
+    padding: 3px 0;
+    font-size: 17px;
+    padding-left: 5px;
+  }
+
+  .description {
+    flex-grow: 1;
+    margin-left: 15px;
+  }
+  }
+
+  @media only screen and (max-width: 600px){
+    .flex-container {
+        .description {
+            margin-left: 0;
+        }
+    }
+  }

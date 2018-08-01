@@ -1,0 +1,9 @@
+build:
+    steps:
+      - npm-install:
+          package: jest
+      - npm-test
+box:
+  id: node:latest
+  ports:
+    - "3000"

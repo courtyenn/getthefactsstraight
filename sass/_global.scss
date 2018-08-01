@@ -1,0 +1,50 @@
+
+  .wrapper {
+    width: 600px;
+  }
+
+  .content {
+    padding: 0 15px 15px 15px;
+  }
+
+@media only screen and (max-width: 600px){
+    button {
+        width: 100%;
+    }
+}
+
+.input-wide {
+    font-size: 20px;
+    height: 35px;
+    margin: 0 0 20px 0;
+    width: 100%;
+  }
+
+  .input-inline {
+    background: transparent;
+    color: white;
+    height: 20px;
+    font-size: 22px;
+    flex-grow: 1;
+    display: block;
+    border: none;
+  }
+
+  input[type="submit"] {
+    font-size: 20px;
+    height: 35px;
+    background: #69b908;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    margin-top: 20px;
+  }
+
+  button {
+    font-size: 14px;
+    background: rgba(0, 0, 0, .1);
+    color: black;
+    border: 2px solid rgba(0, 0, 0, .2);
+    padding: 5px;
+    margin-top: 20px;
+  }

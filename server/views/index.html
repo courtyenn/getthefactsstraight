@@ -1,269 +1,57 @@
 <!doctype html>
 <html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Get the Facts Straight</title>
-        <meta name="description" content="">
-        <link href="/lib/codemirror.css" rel="stylesheet">
-        <link href="/lib/addon/scroll/simplescrollbars.css" rel="stylesheet">
-   </head>
-   <style>
-   html, body, #app, .root{
-     height: 100%;
-     background: #f4f0ea;
-   }
-   * {
-     font-family: sans-serif;
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-   }
-   body {
-     background: #f4f0ea;
-   }
-    .wrapper {
-    width: 600px;
-    }
-    nav {
-    background: cadetblue;
-    color: seashell;
-    display: flex;
-    padding: 7px 0;
-    }
 
-    nav .logo {
-    width: 50%;
-    font-size: 20px;
-    font-family: monospace;
-    text-align: center;
-    }
-    nav .logo a {
-      color: white;
-      text-decoration: none;
-      font-family: monospace;
-    }
-    nav .menu {
-    list-style-type: none;
-    text-align: right;
-    width: 48%;
-    }
-    nav .menu li {
-    display: inline-block;
-    margin: 0px 15px;
-    }
-    nav .menu li a {
-    text-decoration: none;
-    color: white;
-    font-size: 13px;
-    }
-    .content {
-      padding: 0 15px;
-    }
-    .input-wide{
-      font-size: 20px;
-      height: 35px;
-      margin: 0 0 20px 0;
-      width: 100%;
-    }
-    .input-inline{
-      font-size: 20px;
-      height: 20px;
-      border: none;
-      flex-grow: 100;
-    }
-    input[type="submit"]{
-      font-size: 20px;
-      height: 35px;
-      background: #69b908;
-      color: white;
-      padding: 6px 10px;
-      border: none;
-      margin-top: 20px;
-    }
-    textarea{
-      height: 800px;
-    }
-    h1 {
-      font-size: 25px;
-      margin: 30px 0 20px;
-      text-align: center;
-      color: black;
-    }
-    label {
-      color: black;
-      font-size: 15px;
-      margin: 0 0 8px;
-      display: block;
-      letter-spacing: 1px;
-      font-weight: 900;
-    }
-    .sublist {
-    background: #458e90;
-    color: white;
-    padding: 20px;
-    }
-    .sublist ul{
-      list-style-type: none;
-    }
-    .sublist li {
-      position: relative;
-    }
-    .sublist h3 {
-      display: inline-block;
-      margin-left: 15px;
-      height: 30px;
-      cursor: pointer;
-    }
-    .sublist > ul > li {
-      border-bottom: 1px solid white;
-      padding: 0 0 20px 0;
-    }
-    .sublist > ul > li:last-child {
-    border: none;
-    }
-    .sublist > ul > li .flex-container{
-      display: flex;
-      flex-grow: 1;
-      align-items: baseline;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    .flex-container .input-inline {
-        height: 20px;
-        border: none;
-        flex-grow: 1;
-        height: 26px;
-        padding: 3px 0;
-        font-size: 17px;
-        padding-left: 5px;
-    }
-    .flex-container .description {
-      flex-grow: 1;
-    }
-    .addField{
-      position: relative;
-      width: 30px;
-      height: 30px;
-      display: inline-block;
-      background: lime;
-      bottom: -10px;
-      border-radius: 50%;
-    }
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Get the Facts Straight</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/lib/codemirror.css" rel="stylesheet">
+  <link href="/lib/addon/scroll/simplescrollbars.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<style>
 
-    .removeField {
-      margin-left: 5px;
-      width: 30px;
-      height: 30px;
-      display: inline-block;
-      background: red;
-      bottom: -10px;
-      position: relative;
-      border-radius: 50%;
-    }
-    span.addField:before {
-    content: '+';
-    display: block;
-    position: absolute;
-    font-size: 30px;
-    font-weight: 900;
-    top: -5px;
-    left: 6px;
-    }
-    span.removeField:before {
-    content: '-';
-    display: block;
-    position: absolute;
-    font-size: 30px;
-    font-weight: 900;
-    width: 100%;
-    height: inherit;
+  textarea {
+    height: 800px;
+  }
+
+  h1 {
+    font-size: 25px;
+    margin: 30px 0 20px;
     text-align: center;
-    line-height: 1;
-    }
-    .sub-sublist .removeField {
-      width: 20px;
-      height: 20px;
-      bottom: -5px;
-      margin-right: 15px;
-    }
-    .sub-sublist span.removeField:before {
-      font-size: 20px;
-      font-weight: 900;
-      width: 100%;
-      height: inherit;
-      text-align: center;
-      line-height: 1;
-      }
-    }
-    .sub-sublist {
-      margin-left: 77px;
-    }
-    .sub-sublist li {
-          padding-left: 75px;
-          height: 30px;
-    }
-  </style>
- <body>
-   <nav>
-     <div class="logo">
-       <a href="/">Get the Facts Straight</a>
-     </div>
-     <div class="menu">
-         <ul >
-           <li><a href="/quiz">Create your own quiz</a></li>
-           <li><a href="/quizzes">View others</a></li>
-         </ul>
-     </div>
-   </nav>
-   <div class="content">
-     <h1>Creating a Quiz is Easy...</h1>
-     <form method="POST" action="/quiz">
-       <label for="title">Title:</label>
-        <input id="title" type="text" name="title" placeholder="Common Logic Quiz" class="input-wide" />
-        <label for="editor">Create columns to compare and contrast</label>
-        <div id="creation"></div>
-        <!-- <textarea id="editor" name="quiz" height="600px">
-        {
-          "columns": [
-            {
-              "title": "Cute",
-              "id": "1",
-              "list": []
-            },
-            {
-              "title": "Edible",
-              "id": "2",
-              "list": []
-            },
-            {
-              "title": "Horrid",
-              "id": "3",
-              "list": []
-            }
-          ],
-          "choices": [
-            {
-              "title": "Tacos",
-              "correctId": "2"
-            },
-            {
-              "title": "Kitties",
-              "correctId": "1"
-            },
-            {
-              "title": "Smelly socks",
-              "correctId": "3"
-            },
-            {
-              "title": "Ferrets",
-              "correctId": "1"
-            }
-            ]
-          }
-          </textarea> -->
-      <input type="submit" />
-    </form>
+    color: black;
+  }
+
+  label {
+    color: black;
+    font-size: 15px;
+    margin: 0 0 8px;
+    display: block;
+    letter-spacing: 1px;
+    font-weight: 900;
+  }
+</style>
+
+<body>
+  <nav>
+    <div class="logo">
+      <a href="/">Get the Facts Straight</a>
+    </div>
+    <div class="menu">
+      <ul>
+        <li>
+          <a href="/quiz">Create your own quiz</a>
+        </li>
+        <li>
+          <a href="/quizzes">View others</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="creation"></div>
   </div>
   <script src="creation.js"></script>
   <!-- <script src="/lib/codemirror.js"></script>
@@ -279,4 +67,5 @@
    });
   </script> -->
 </body>
+
 </html>
