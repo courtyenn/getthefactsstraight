@@ -1,0 +1,135 @@
+/** CSS Transition Group Animations **/
+
+.fade-appear {
+    opacity: 0.1;
+}
+
+.fade-appear.fade-appear-active {
+    opacity: 1;
+    transition: all 2s linear;
+}
+.fade-enter {
+    opacity: 0.1;
+}
+.fade-enter{
+    opacity: 1;
+    transition: all 1s linear;
+}
+.example-appear {
+    opacity: 0.5;
+    right: -300px;
+}
+
+.example-appear.example-appear-active {
+    opacity: 1;
+    right: 0;
+    position: relative;
+    transition: all 0.5s linear;
+}
+
+.example-enter {
+    opacity: 0.5;
+    right: -300px;
+}
+
+.example-enter.example-enter-active {
+    opacity: 1;
+    right: 0;
+    position: relative;
+    transition: all 0.5s linear;
+}
+
+@-webkit-keyframes test {
+    0% { background-color: rgba(255, 105, 100, 0); }
+    80% { background-color: rgba(255, 137, 135, 1); }
+    100% { background-color: $white; }
+}
+@keyframes test {
+    0% { background-color: rgba(255, 105, 100, 0); }
+    80% { background-color: rgba(255, 137, 135, 1); }
+    100% { background-color: $white; }
+}
+
+.error-enter {
+    animation: test 700ms;
+}
+
+.example-exit {
+    opacity: 1;
+    left: 0px;
+    position: relative;
+}
+
+.example-exit.example-exit-active {
+    opacity: 0.01;
+    left: -600px;
+    position: absolute;
+    transition: all 800ms ease-in;
+}
+
+/** END CSS Transition Group Animations **/
+
+.search-bar{
+    display: flex;
+    background: #2f6686;
+    border-radius: 20px;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px;
+    margin: 0 15px;
+
+    span {
+        font-size: 20px;
+        flex: 0 1 11%;
+        text-align: center;
+    }
+}
+.react-autosuggest__container{
+    flex: 1 0 90%;
+    border-radius: 20px;
+    position: relative;
+    input {
+        height: 30px;
+        font-size: 20px;
+        border-radius: 20px;
+        padding: 0 10px;
+    }
+}
+.react-autosuggest__suggestions-list{
+    background: white;
+    border: none;
+    width: 100%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding: 5px 0;
+    li {
+        display: block !important;
+        a > span{
+            color: black;
+        }
+    }
+}
+.react-autosuggest__input {
+    background: white;
+    width: 100%;
+    border: 1px solid gray;
+
+}
+.react-autosuggest__section-container{
+
+}
+
+
+.react-autosuggest__suggestions-list{
+
+}
+.react-autosuggest__suggestion{
+
+}
+.react-autosuggest__suggestion--first{
+
+}
+.react-autosuggest__suggestion--highlighted{
+
+}

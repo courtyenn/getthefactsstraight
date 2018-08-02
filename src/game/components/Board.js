@@ -3,99 +3,79 @@ import Reflux from 'reflux';
 import { DragDropManager } from 'react-dragndrop';
 import { default as Choice } from './Choice';
 import Column from './Column';
+import Message from './Message';
 import ColumnStyle from './../styles/ColumnStyle';
 import Actions from '../actions';
-import appStore from '../AppStore';
-import boardStore from '../stores/BoardStore';
+import AppStore from '../AppStore';
 
 const dragDropManager = new DragDropManager();
 
-let Board = React.createClass({
-  mixins: [Reflux.connect(boardStore, "boardState")],
-  componentDidMount: function(){
-    // this.listenTo(boardStore, this.handleSetBoard);
-  },
-  onGameOver: function(){
-    console.log('SETTING GAME OVER');
-    this.show = true;
-  },
-  render: function(){
-    var columns = this.renderColumns();
-    var choices = this.renderChoices();
-    var message = this.getMessage();
-    var style = {
-      display: 'none'
-    };
-    if(this.state.boardState.gameOver == true){
-      style = {
-        display: 'block'
-      }
+export default class Board extends Reflux.Component {
+    constructor () {
+        super()
+        this.state = {}
+        this.store = AppStore
+        this.handleDroppedDraggable = this.handleDroppedDraggable.bind(this)
     }
-    return (
-      <div className="root">
-      <div className="title">
-        <h1>{this.state.boardState.title}</h1>
-      </div>
-        <div style={ColumnStyle.Test}>
-          {choices}
-        </div>
-        {columns}
-        <div style={style} className="endGame">
-          <h2>Score: {this.state.boardState.totalCorrect}/{this.state.boardState.totalAnswered}</h2>
-          {message}
-          <button onClick={this.handleReset}>Restart</button>
-        </div>
-      </div>
-    )
-  },
-  renderColumns: function(){
-    var that = this;
-    var columns = this.state.boardState.columns.map(function(column, index){
 
-      let handleDrop = function(drop, drag){
-        return that.handleDroppedDraggable(drop, drag, index);
-      };
-      return (
-        <Column {...column}
-        manager={dragDropManager}
-        handleDrop={handleDrop}
-        list={column.list}
-        key={index + "-column"} style={ColumnStyle.Base} />
-      );
-    });
-    return columns;
-  },
-  renderChoices: function(){
-    var choices = this.state.boardState.choices.map(function(choice, index){
-      return (
-        <Choice index={index} {...choice} manager={dragDropManager} key={index + "-choice"} id={index+"-choice"} />
-      );
-    });
-    return choices;
-  },
-  handleReset: function(){
-    Actions.reset();
-  },
-  handleDroppedDraggable: function(dropTarget, draggable, index){
-    var choiceIndex = null;
-    this.state.boardState.choices.forEach(function(choice, i){
-      if(draggable.props.title == choice.title){
-        choiceIndex = i;
-      }
-    });
-    Actions.choiceDropped(choiceIndex, index);
-  },
-  getMessage: function(){
-    if(this.state.boardState.totalAnswered == this.state.boardState.totalCorrect){
-      return 'Nice job! 100%';
+    onGameOver () {
+        this.show = true;
     }
-    else if(this.state.boardState.totalAnswered/2 > this.state.boardState.totalCorrect){
-      return 'C\'mon, you can do better than that. :-)';
-    }
-    else {
-      return 'Keep on trying! Or, make your own!';
-    }
-  }
-});
+    render () {
+        let columns = this.renderColumns();
+        let choices = this.renderChoices();
 
-export default Board;
+        return (
+            <div>
+                <div className="title secondary">
+                    <h1>{this.props.title}</h1>
+                </div>
+                <div style={ColumnStyle.Container} className="root">
+                    <div style={ColumnStyle.Test}>
+                        {choices}
+                    </div>
+                    {columns}
+                    <Message gameOver={this.props.gameOver} className="endGame" totalCorrect={this.props.totalCorrect} totalAnswered={this.props.totalAnswered} quizId={this.props._id} />
+                </div>
+            </div>
+        )
+    }
+
+    handleDroppedDraggable (dropTarget, draggable, index) {
+        var choiceIndex = null;
+        this.props.choices.forEach(function (choice, i) {
+            if (draggable.props.title == choice.title) {
+                choiceIndex = i;
+            }
+        });
+        Actions.choiceDropped(choiceIndex, index);
+    }
+
+    // hideChoice(index){
+    //     Actions.removeChoice(index)
+    // }
+
+    renderColumns () {
+        let columns = this.props.columns.map((column, index) => {
+            return (
+                <Column {...column}
+                        manager={dragDropManager}
+                        handleDrop={(a, b, c) => this.handleDroppedDraggable(a, b, c)}
+                        list={column.list}
+                        index={index}
+                        key={index + "-column"} style={ColumnStyle.Base}/>
+            );
+        });
+        return columns;
+    }
+
+    renderChoices () {
+        var choices = this.props.choices.map((choice, index) => {
+            return (
+                <Choice index={index} {...choice} manager={dragDropManager} key={index + "-choice"}
+                        id={index + "-choice"}/>
+            );
+        });
+        return choices;
+    }
+}

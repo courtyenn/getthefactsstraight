@@ -1,0 +1,149 @@
+
+.btn-h {
+    border: none;
+    background: transparent;
+    flex: 1 0 25%;
+    text-align: left;
+    margin: 0 10px 0 15px;
+    cursor: pointer;
+    color: #5f5d5d;
+    text-shadow: 0px 1px #cecece;
+}
+
+.btn {
+    padding: 10px;
+    background: $primary;
+    border: 1px solid darken($primary, 5%);
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 4px;
+    &.success {
+        background: $lt-success;
+        border: 1px solid darken($lt-success, 10%);
+    }
+}
+
+.btn-group {
+    button, a {
+        margin: 0 8px;
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+}
+
+.primary {
+    text-transform: uppercase;
+    margin: 0 auto;
+    display: block;
+    font-size: 21px;
+    background: $lt-success;
+    border: 1px solid darken($lt-success, 5%);
+}
+
+.quiz {
+    flex: 1 0 90%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+.content {
+    margin: 21px 12px 0;
+    &.small {
+        margin: 5px 0 33px;
+    }
+    .question {
+        display: none;
+        margin-bottom: 30px;
+        min-height: 200px;
+        @include card-style;
+        &.active {
+            display: block;
+            position: relative;
+        }
+        .title {
+            margin-top: 10px;
+        }
+    }
+    .btn {
+        text-align: center;
+        display: block;
+        font-size: 17px;
+    }
+    .title {
+        border-bottom: 3px solid #798788;
+    }
+}
+@media(min-width: 600px){
+    .content {
+        margin: 26px 20px 0;
+        .btn {
+            font-size: 23px;
+        }
+    }
+}
+
+
+.loading {
+    position: absolute;
+}
+
+.stars {
+    margin: 5px 0 14px;
+}
+
+.star::before {
+    font-family: 'fontello';
+    cursor: pointer;
+    font-size: 28px;
+    margin: 0 5px;
+    color: #d8af0b;
+}
+
+.star:first-child::before {
+    margin-left: 0;
+}
+
+.dragging {
+    transform: rotate(-30deg);
+}
+
+.draggable {
+    @include user-select(none);
+}
+
+.column-h {
+    padding-bottom: 10px;
+}
+
+.drop-column {
+    box-shadow: 1px 1px 6px 1px rgba(10, 10, 10, .1);
+}
+
+select {
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-size: 27px;
+    background: #e8e8e8;
+    padding: 10px;
+
+    &.tiny {
+        width: auto;
+        display: inline-block;
+        font-size: inherit;
+        padding: 0;
+    }
+}
+
+.card {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+}
+.card {
+    position: relative;
+    overflow: hidden;
+}

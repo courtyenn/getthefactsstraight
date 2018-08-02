@@ -1,4 +1,159 @@
+$white: #f4f0ea;
+$black: black;
+$primary: rgb(64, 129, 167);
+$secondary: seashell;
+$family: monospace;
+$success: #69b908;
+$danger: #b93434;
+$card: #ecf0f1;
+$card-border: #e0e0e0;
+$card-shadow: #edf1f3;
+$btn-shadow: #b5b5b5;
+$sub-sublist: #e2e6e6;
+$link: #59c2ff;
+$lt-success: #82ce82;
+$info: rgb(64, 129, 167);
+$gray: #424242;
 
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+.icon-star::before {
+  content: '\e800';
+}
+
+/* '' */
+.icon-star-empty::before {
+  content: '\e801';
+}
+
+/* '' */
+.icon-star-half::before {
+  content: '\e802';
+}
+
+/* '' */
+.icon-star-half-alt::before {
+  content: '\f123';
+}
+.icon-search:before { content: '\e803'; } /* '' */
+.icon-emo-happy:before { content: '\e804'; } /* '' */
+.icon-emo-unhappy:before { content: '\e805'; } /* '' */
+.icon-emo-wink:before { content: '\e806'; } /* '' */
+.icon-minus:before { content: '\e807'; } /* '' */
+.icon-plus:before { content: '\e808'; } /* '' */
+.icon-cancel:before {
+  content: '\e809';
+  cursor: pointer;
+} /* '' */
+.icon-cancel-circled:before { content: '\e80a'; } /* '' */
+.icon-export:before { content: '\e80b'; } /* '' */
+.icon-share:before { content: '\e80c'; } /* '' */
+.icon-emo-tongue:before { content: '\e80d'; } /* '' */
+.icon-emo-grin:before { content: '\e80e'; } /* '' */
+.icon-asterisk:before { content: '\e80f'; } /* '' */
+.icon-menu:before {
+  content: '\f0c9';
+  cursor: pointer;
+} /* '' */
+.icon-help:before { content: '\f128'; } /* '' */
+.icon-github:before { content: '\f300'; } /* '' */
+
+/* '' */
+
+
+@mixin user-select($select) {
+    -webkit-user-select: $select; /* Chrome all / Safari all */
+    -moz-user-select: $select; /* Firefox all */
+    -ms-user-select: $select; /* IE 10+ */
+    user-select: $select;
+}
+
+@mixin card-style {
+    background: $card;
+    border: 1px solid $card-border;
+    box-shadow: 1px 1px 1px 1px $card-shadow;
+}
+
+@font-face {
+    font-family: 'fontello';
+    src: url('lib/font/fontello.eot?67649133');
+    src: url('lib/font/fontello.eot?67649133#iefix') format('embedded-opentype'),
+    url('lib/font/fontello.woff2?67649133') format('woff2'),
+    url('lib/font/fontello.woff?67649133') format('woff'),
+    url('lib/font/fontello.ttf?67649133') format('truetype'),
+    url('lib/font/fontello.svg?67649133#fontello') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body, #app, .root {
+    height: 100%;
+    background: $white;
+    color: $black;
+}
+
+#app {
+    display: flex;
+}
+
+[data-reactroot] {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+}
+nav {
+    flex: 0 0 61px;
+    [class^="icon-"] {
+        font-size: 38px;
+    }
+}
+@media (min-width: 600px){
+    nav {
+        flex: 0 0 35px;
+        [class^="icon-"] {
+            font-size: 16px;
+        }
+    }
+}
   .wrapper {
     width: 600px;
   }

@@ -7,10 +7,10 @@ services:
      command: mongod --smallfiles --rest --logpath=/dev/null
    web:
      build: .
-     links: 
+     links:
        - mongo
-     command: node server/server.js
-     ports: 
-       - "8080:3000"
+     command: node server.js
+     ports:
+       - "3007:3006"
      environment:
        - DbUrl=mongodb://mongo/facts
