@@ -9,8 +9,8 @@
     "coverage": "jest --coverage",
     "webpack": "webpack --progress --colors --watch",
     "nodemon": "DbUrl=mongodb://localhost:27017/facts PORT=3000 nodemon --exec babel-node -e js,html server/server.js",
-    "dev:build:server": "webpack --config webpack.server.js",
-    "dev:start:server": "DbUrl=mongodb://localhost:27017/facts PORT=3000 node build/bundle.js"
+    "dev:build:server": "webpack --config webpack.server.js --watch",
+    "dev:server": "DbUrl=mongodb://localhost:27017/facts PORT=3000 nodemon --watch bundle.js --exec \"node bundle.js\""
   },
   "repository": {
     "type": "git",
@@ -61,8 +61,10 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-react": "^6.5.0",
+    "css-loader": "^1.0.0",
     "gulp": "^4.0.0",
     "gulp-sass": "^4.0.1",
+    "style-loader": "^0.21.0",
     "webpack": "^3.5.6"
   }
 }

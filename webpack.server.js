@@ -4,8 +4,7 @@ module.exports = {
     target: 'node',
     entry: ['babel-polyfill', './server/server.js'],
     output: {
-        filename: 'bundle.js', 
-        path: path.resolve(__dirname, 'build')
+        filename: 'bundle.js'
     },
     module: {
         loaders: [
@@ -14,8 +13,15 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 options: {
-                    presets: ['react', ['env', {targets: { browsers: ["last 2 versions"]}}]]
+                    presets: ['react', ['env', { targets: { browsers: ["last 2 versions"] } }]]
                 }
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
             }
         ]
     }

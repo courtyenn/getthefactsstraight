@@ -8,7 +8,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    targetLibrary: 'umd'
+    path: path.resolve(__dirname, 'public')
   },
   debug: true,
   devtool: "source-map",

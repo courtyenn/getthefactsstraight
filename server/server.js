@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import {renderToString} from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
+// import style from '../public/style.css'
 
 import Root from '../src/creation/index'
 
@@ -25,6 +26,15 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
   const content = renderToString(<StaticRouter location={req.url} context={{}}><Root /></StaticRouter>);
   res.send(content);
+});
+
+app.get('/quiz', (req, res) => {
+  const content = renderToString(<StaticRouter location={req.url} context={{}}><Root /></StaticRouter>);
+  res.send(content);
+});
+
+app.get('/public/style.css', (req, res) => {
+  res.sendFile(path.resolve('./public/style.css'));
 });
 
 app.post('/quiz', function(req, res){
