@@ -7,12 +7,10 @@ import {renderToString} from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config';
 import routes from '../src/creation/routes'
-// import style from '../public/style.css'
 
 import Root from '../src/creation/index'
 
 import Quiz from './quiz'
-// import ejs from 'ejs'
 mongoose.connect(process.env.DbUrl);
 
 const app = express();
