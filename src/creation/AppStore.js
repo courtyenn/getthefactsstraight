@@ -7,8 +7,8 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 import mySaga from './sagas'
 
 const sagaMiddleware = createSagaMiddleware()
-
-const store = createStore(rootReducer, {
+const store = createStore(rootReducer, 
+{
   editColumnTitle: null,
   editChoiceId: null,
   title: 'Common Logic Quiz',

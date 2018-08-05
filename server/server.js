@@ -5,6 +5,8 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import {renderToString} from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
+import { renderRoutes } from 'react-router-config';
+import routes from '../src/creation/routes'
 // import style from '../public/style.css'
 
 import Root from '../src/creation/index'
@@ -14,27 +16,34 @@ import Quiz from './quiz'
 mongoose.connect(process.env.DbUrl);
 
 const app = express();
-app.use(express.static(__dirname + '/../public'));
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// parse application/json
 app.use(bodyParser.json());
-// app.engine('html', ejs.renderFile);
-// app.set('view engine', 'ejs');
-// app.set('views', path.resolve(__dirname, './views'));
 
-app.get('/', (req, res) => {
-  const content = renderToString(<StaticRouter location={req.url} context={{}}><Root /></StaticRouter>);
-  res.send(content);
-});
-
-app.get('/quiz', (req, res) => {
-  const content = renderToString(<StaticRouter location={req.url} context={{}}><Root /></StaticRouter>);
-  res.send(content);
-});
-
-app.get('/public/style.css', (req, res) => {
-  res.sendFile(path.resolve('./public/style.css'));
+app.get('*', (req, res) => {
+  let context = {}
+  const content = renderToString(<StaticRouter location={req.url} context={context}>{renderRoutes(routes)}</StaticRouter>);
+  const html = `
+  <html>
+    <head>
+      <meta charSet="utf-8" />
+      <title>Get The Facts Straight!</title>
+      <link rel="stylesheet" href="style.css" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0,
+    maximum-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+      <div id="app">${content}</div>
+      <script src="client-bundle.js"></script>
+    </body>
+  </html>`
+  
+  if (context.url) {
+    res.writeHead(301, {
+      Location: context.url
+    })
+  }
+  res.send(html);
 });
 
 app.post('/quiz', function(req, res){

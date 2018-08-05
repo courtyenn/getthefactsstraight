@@ -1,3 +1,6 @@
+public/client-bundle.js
+bundle.js
+public/bundle.js
 *-compiled.js
 *.map
 .idea
