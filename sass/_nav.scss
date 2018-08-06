@@ -1,36 +1,69 @@
 nav {
-    background: cadetblue;
-    color: seashell;
-    display: flex;
-    padding: 7px 0;
+  flex: 0 0 61px;
+  [class^="icon-"] {
+      font-size: 38px;
   }
+}
+@media (min-width: 600px){
+  nav {
+      flex: 0 0 35px;
+      [class^="icon-"] {
+          font-size: 16px;
+      }
+  }
+}
 
-  nav .logo {
-    width: 50%;
-    font-size: 20px;
-    font-family: monospace;
-    text-align: center;
+nav {
+  background: $primary;
+  color: $secondary;
+  display: flex;
+  padding: 7px 0;
+  .logo {
+      width: 50%;
+      font-size: 20px;
+      font-family: $family;
+      text-align: center;
+      a {
+          color: $white;
+          text-decoration: none;
+          font-family: $family;
+      }
   }
+  .menu {
+      list-style-type: none;
+      text-align: right;
+      width: 48%;
+      li {
+          display: inline-block;
+          margin: 0px 15px;
+          a {
+              text-decoration: none;
+              color: $white;
+              font-size: 13px;
+          }
+      }
+  }
+  .mobile-navigation{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $primary;
+      z-index: 100;
 
-  nav .logo a {
-    color: white;
-    text-decoration: none;
-    font-family: monospace;
+      > ul {
+          li {
+              display: block;
+              margin: 10px;
+              text-align: center;
+              a {
+                  font-size: 25px;
+              }
+          }
+      }
+      .icon-cancel {
+          margin-bottom: 20px;
+      }
   }
-
-  nav .menu {
-    list-style-type: none;
-    text-align: right;
-    width: 48%;
-  }
-
-  nav .menu li {
-    display: inline-block;
-    margin: 0px 15px;
-  }
-
-  nav .menu li a {
-    text-decoration: none;
-    color: white;
-    font-size: 13px;
-  }
+}

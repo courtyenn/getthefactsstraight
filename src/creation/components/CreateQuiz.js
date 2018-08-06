@@ -7,8 +7,11 @@ class CreateQuiz extends PureComponent {
     render() {
         const {onCreate} = this.props
         return (
-            <div className="content">
-                <h1>{this.props.title}</h1>
+            <div>
+                <div className="title"> 
+                    <h1>{this.props.title}</h1>
+                </div>
+                <div className="content">
                 <p>Get The Facts Straight helps clarifies subjects of controversy. Create categories that are often muddled and shed light on topics that need clarification. Then, copy the link and play with your friends.</p>
                 <form>
                     <label htmlFor="title">Title:</label>
@@ -17,6 +20,7 @@ class CreateQuiz extends PureComponent {
                     <Sublist />
                     <input type="submit" onClick={e => { e.preventDefault(); onCreate()}} />
                 </form>
+                </div>
             </div>
         )
     }

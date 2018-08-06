@@ -1,6 +1,7 @@
 import App from './App';
 import HomePage from './components/HomePage';
 import CreateQuiz from './components/CreateQuiz';
+import ListGames from '../base/ListGames';
 
 const routes = [
   { component: App,
@@ -10,7 +11,12 @@ const routes = [
         component: HomePage
       },
       { path: '/quiz',
+        exact: true,
         component: CreateQuiz
+      },
+      { path: '/quizzes',
+        exact: true,
+        component: ListGames
       }
     ]
   }

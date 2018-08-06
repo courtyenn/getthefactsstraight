@@ -7,8 +7,8 @@ import {renderToString} from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config';
 import routes from '../src/creation/routes'
-
-import Root from '../src/creation/index'
+import AppStore from '../src/creation/AppStore'
+import {Provider} from 'react-redux'
 
 import Quiz from './quiz'
 mongoose.connect(process.env.DbUrl);
@@ -20,13 +20,13 @@ app.use(bodyParser.json());
 
 app.get('*', (req, res) => {
   let context = {}
-  const content = renderToString(<StaticRouter location={req.url} context={context}>{renderRoutes(routes)}</StaticRouter>);
+  const content = renderToString(<Provider store={AppStore}><StaticRouter location={req.url} context={context}>{renderRoutes(routes)}</StaticRouter></Provider>);
   const html = `
   <html>
     <head>
       <meta charSet="utf-8" />
       <title>Get The Facts Straight!</title>
-      <link rel="stylesheet" href="style.css" />
+      <link rel="stylesheet" href="styles.css" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0,
     maximum-scale=1.0, user-scalable=no" />
     </head>
